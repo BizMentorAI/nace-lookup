@@ -1,0 +1,31 @@
+:host {
+  padding: 20px 0 0 0;
+  text-align: center;
+}
+
+:host h1 {
+  margin: 7px 0;
+  color: rgb(90, 196, 189);
+}
+
+h1, ul {
+  margin: 5px 0;
+  text-transform: uppercase;
+  color: grey;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+}
+
+li {
+}
+
+li + li::before {
+  content: " | ";
+  padding: 12px;
+}
