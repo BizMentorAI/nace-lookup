@@ -1,11 +1,13 @@
 (let [response (js/await (js/fetch "/workers/autocomplete/data.json"))
       body (js/await (.-body response))
       reader (.getReader body)]
-  ;; (js/console.log :response body reader {:read (.read reader)})
+  (js/console.log :HERE)
+
+  (js/console.log :response body reader {:read (.read reader)})
   )
 
 ;; (defn- format-l4-item [item]
-;;   {:label (:label item) :items []}) ; TODO: Match 6 item.
+;;   {:label (:label item) :items []}) ; TODO: Match L6 item.
 
 ;; (defn- l4-item-matches [item]
 ;;   true)
