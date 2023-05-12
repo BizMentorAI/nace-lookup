@@ -37,6 +37,8 @@ NACE code finder.
 #+end_src
 
 ** Hosting
+https://app.netlify.com/sites/rococo-panda-597db4/overview
+https://rococo-panda-597db4.netlify.app/
 - [[https://precious-creponne-1ffef4.netlify.app/][Deployed app]].
 - [[https://app.netlify.com/sites/precious-creponne-1ffef4/overview][Netlify app dashboard]].
 

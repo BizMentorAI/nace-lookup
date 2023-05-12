@@ -60,9 +60,9 @@ class Layout extends BMElement {
   }
 
   screenSize() {
-    return Object.entries({XS: 600, SM: 900, LG: 1200}).find(([ _, breakpoint ]) =>
+    return Object.entries({XS: 600, SM: 900}).find(([ _, breakpoint ]) =>
       window.matchMedia(`(max-width: ${breakpoint}px)`).matches
-    )
+    ) || ["LG", 1200]
   }
 }
 
