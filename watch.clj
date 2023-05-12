@@ -29,5 +29,4 @@
 (fw/watch "src" move {:recursive true})
 
 (println "~ Watching src.\n")
-; compile src/workers/autocomplete.cljs && cat src/workers/autocomplete.mjs | sed 's/cherry-cljs\/lib/\/js/' > public/workers/autocomplete/autocomplete.js && bat public/workers/autocomplete/autocomplete.js
 @(promise)
