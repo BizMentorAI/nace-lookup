@@ -25,6 +25,6 @@
 
 (set! js/self.onmessage
       (fn [event]
-        (js/console.log "Worker received:" event.data)
+        (js/console.log "Worker received:" #js {:term event.data})
         (js/postMessage #js {:a 1})
         ,))

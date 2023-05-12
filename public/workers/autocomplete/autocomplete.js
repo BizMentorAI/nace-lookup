@@ -8,7 +8,7 @@ return null;
 }
 ;
 self.onmessage = function (event) {
-console.log("Worker received:", event.data);
+console.log("Worker received:", ({ "term": event.data }));
 return postMessage(({ "a": 1 }));
 };
 

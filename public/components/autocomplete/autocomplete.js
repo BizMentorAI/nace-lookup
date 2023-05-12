@@ -9,7 +9,6 @@ class Autocomplete extends BMElement {
 
   connectedCallback() {
     this.worker
-    console.log(this.worker)
   }
 
   disconnectedCallback() {
@@ -33,8 +32,7 @@ class Autocomplete extends BMElement {
 
     const worker = new Worker("/workers/autocomplete/autocomplete.js", {name: "ac", type: "module"})
     worker.addEventListener("message", (e) => this.handleMessage(e))
-    worker.onmessage = (e) => this.handleMessage(e)
-    worker.onerror = () => console.log("ERR", arguments)
+    worker.addEventListener("error", () => console.log("ERR", arguments))
 
     return this._worker = worker
   }
