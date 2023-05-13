@@ -47,6 +47,8 @@ class Autocomplete extends BMElement {
   handleInput() {
     if (this.value.length > 2) {
       this.worker.postMessage(this.value)
+    } else {
+      this.results.replaceChildren()
     }
   }
 
