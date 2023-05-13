@@ -37,7 +37,7 @@ input {
 }
 
 .highlight {
-  color: yellow;
+  background: yellow;
 }
 
 .label {}

@@ -56,7 +56,12 @@ class Autocomplete extends BMElement {
     this.buildMenu(event.data)
   }
 
-  // TODO: highlight search term.
+  highlight(label) {
+    return label.replace(
+      new RegExp(`\\b${this.value}`),
+        `<span class="highlight">${this.value}</span>`)
+  }
+
   buildMenu(items) {
     this.results.replaceChildren(...
       items.reduce((elements, { label, items }) => {
@@ -64,7 +69,7 @@ class Autocomplete extends BMElement {
         items.forEach(({ code, label }) => {
           elements.push(tag("div", {className: "l6-item"}, [
             tag("span", {className: "code"}, code),
-            tag("span", {className: "label"}, label)
+            tag("span", {className: "label"}, this.highlight(label))
           ]))
         })
 
