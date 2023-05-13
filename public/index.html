@@ -7,17 +7,23 @@
     <title>NACE code lookup</title>
 
     <!-- From view-source:https://squint-cljs.github.io/cherry/ -->
+    <!-- "cherry-cljs/cljs.core.js": "https://cdn.jsdelivr.net/npm/cherry-cljs@0.0.1/cljs.core.js", -->
+    <!-- "cherry-cljs": "https://cdn.jsdelivr.net/npm/cherry-cljs@0.0.1/index.js", -->
     <script type="importmap">
       {
         "imports": {
-          "cherry-cljs": "https://cdn.jsdelivr.net/npm/cherry-cljs@0.0.1/index.js",
-          "cherry-cljs/cljs.core.js": "https://cdn.jsdelivr.net/npm/cherry-cljs@0.0.1/cljs.core.js"
+          "cherry-cljs": "https://cdn.jsdelivr.net/npm/cherry-cljs@0.0.1",
+          "cherry-cljs/lib/cljs_core.js": "https://cdn.jsdelivr.net/npm/cherry-cljs@0.0.1/lib/cljs_core.js",
+
+          "components": "/components",
+          "workers": "/workers",
+          "framework": "/js/framework/main.js"
         }
       }
     </script>
 
-    <script type="module" src="/components/layout/layout.js"></script>
-    <script type="module" src="/components/nace-lookup/nace-lookup.js"></script>
+    <script type="module" src="components/layout/layout.js"></script>
+    <script type="module" src="components/nace-lookup/nace-lookup.js"></script>
 
     <style>
       html {

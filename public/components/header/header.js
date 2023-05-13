@@ -1,15 +1,17 @@
-import { BMElement, tag } from "/js/framework/main.js"
+import { BMElement, tag, createStyleLink } from "framework"
 
 class Header extends BMElement {
   constructor() {
     super()
     this.shadowRoot.appendChild(this.style)
-    this.shadowRoot.appendChild(this.logo)
-    this.shadowRoot.appendChild(this.tagLine)
+    this.style.addEventListener("load", (e) => {
+      this.shadowRoot.appendChild(this.logo)
+      this.shadowRoot.appendChild(this.tagLine)
+    })
   }
 
   get style() {
-    return this._style ||= tag("link", {rel: "stylesheet", href: "/components/header/header.css"})
+    return this._style ||= createStyleLink("components/header/header.css")
   }
 
   get logo() {
@@ -17,7 +19,9 @@ class Header extends BMElement {
   }
 
   get tagLine() {
-    return this._tagLine ||= tag("ul", "<li>fast</li><li>easy</li><li>accurate</li>")
+    return this._tagLine ||= (
+      tag("ul", ["fast", "easy", "accurate"].map(word => tag("li", word)))
+    )
   }
 }
 

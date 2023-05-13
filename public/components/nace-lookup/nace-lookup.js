@@ -1,4 +1,4 @@
-import { BMElement, tag } from "/js/framework/main.js"
+import { BMElement, tag, createStyleLink } from "framework"
 
 class NaceLookup extends BMElement {
   constructor() {
@@ -9,7 +9,7 @@ class NaceLookup extends BMElement {
   }
 
   get style() {
-    return this._style ||= tag("link", {rel: "stylesheet", href: "/components/nace-lookup/nace-lookup.css"})
+    return this._style ||= createStyleLink("components/nace-lookup/nace-lookup.css")
   }
 
   get heading() {
@@ -23,4 +23,4 @@ class NaceLookup extends BMElement {
 
 customElements.define("bm-nace-lookup", NaceLookup)
 
-import("/components/autocomplete/autocomplete.js")
+import("../autocomplete/autocomplete.js")

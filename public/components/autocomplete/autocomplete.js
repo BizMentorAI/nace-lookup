@@ -1,4 +1,4 @@
-import { BMElement, tag } from "/js/framework/main.js"
+import { BMElement, tag, createStyleLink, createWorker } from "framework"
 
 class Autocomplete extends BMElement {
   constructor() {
@@ -9,6 +9,7 @@ class Autocomplete extends BMElement {
 
   connectedCallback() {
     this.worker
+    console.log("worker", this.worker) ////////
   }
 
   disconnectedCallback() {
@@ -16,25 +17,23 @@ class Autocomplete extends BMElement {
   }
 
   get style() {
-    return this._style ||= tag("link", {rel: "stylesheet", href: "/components/autocomplete/autocomplete.css"})
+    return this._style ||= createStyleLink("components/autocomplete/autocomplete.css")
   }
 
   get autocomplete() {
     if (this._autocomplete) return this._autocomplete
 
-    const input = tag("input", {placeholder: "🔎  Type in a product or service keyword."})
+    const placeholder = "🔎  Type in a product or service keyword."
+    const input = tag("input", {placeholder})
     input.addEventListener("input", (e) => this.handleInput())
     return this._autocomplete = input
   }
 
   get worker() {
-    if (this._worker) return this._worker
-
-    const worker = new Worker("/workers/autocomplete/autocomplete.js", {name: "ac", type: "module"})
-    worker.addEventListener("message", (e) => this.handleMessage(e))
-    worker.addEventListener("error", () => console.log("ERR", arguments))
-
-    return this._worker = worker
+    return this._worker ||= (
+      createWorker("/workers/autocomplete/autocomplete.js",
+                   (e) => this.handleMessage(e))
+    )
   }
 
   get value() {
@@ -42,6 +41,7 @@ class Autocomplete extends BMElement {
   }
 
   handleInput() {
+    console.log("handleInput", {term: this.value}) ///////
     this.worker.postMessage(this.value)
   }
 
@@ -56,8 +56,3 @@ class Autocomplete extends BMElement {
 }
 
 customElements.define("bm-autocomplete", Autocomplete)
-
-//                  (event-listener autocomplete :input (.handleInput this))))
-//                      (set! worker (js* "new Worker('/js/workers/autocomplete.js', {type: 'module'})"))
-//                      (event-listener worker :message (.handleMessage this)))
-//   (handleMessage [this] (fn [event] (.buildMenu this (.-data event))))

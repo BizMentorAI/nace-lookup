@@ -1,4 +1,4 @@
-import { BMElement, tag } from "/js/framework/main.js"
+import { BMElement, tag, createStyleLink } from "framework"
 
 class Footer extends BMElement {
   constructor() {
@@ -8,7 +8,7 @@ class Footer extends BMElement {
   }
 
   get style() {
-    return this._style ||= tag("link", {rel: "stylesheet", href: "/components/footer/footer.css"})
+    return this._style ||= createStyleLink("components/footer/footer.css")
   }
 
   get footer() {

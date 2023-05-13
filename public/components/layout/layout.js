@@ -1,4 +1,4 @@
-import { BMElement, tag } from "/js/framework/main.js"
+import { BMElement, tag, createStyleLink } from "framework"
 
 class Layout extends BMElement {
   constructor() {
@@ -25,7 +25,7 @@ class Layout extends BMElement {
   }
 
   get style() {
-    return this._style ||= tag("link", {rel: "stylesheet", href: "/components/layout/layout.css"})
+    return this._style ||= createStyleLink("components/layout/layout.css")
   }
 
   get screen() {
@@ -68,5 +68,7 @@ class Layout extends BMElement {
 
 customElements.define("bm-layout", Layout)
 
-import("/components/header/header.js")
-import("/components/footer/footer.js")
+// Import map doesn't work with import().
+// Doesn't it? It most definitely should based on the docs.
+import("../header/header.js")
+import("../footer/footer.js")

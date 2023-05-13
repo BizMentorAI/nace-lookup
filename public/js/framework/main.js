@@ -3,6 +3,8 @@ function setContent (element, content) {
     element.innerHTML = content
   } else if (content.nodeName) {
     element.appendChild(content)
+  } else if (content.forEach) {
+    content.forEach(i => setContent(element, i))
   }
 
   return element
@@ -26,6 +28,21 @@ export function tag (tag, ...args) {
   } else {
     return _tag(tag, {}, args[0])
   }
+}
+
+export function createStyleLink (path) {
+  return tag("link", {rel: "stylesheet", href: path})
+}
+
+// Can I use import map with workers?
+export function createWorker (path, messageHandler) {
+  const name = path.replace(/.*\/([^/]+)\.js$/, '$1')
+  const worker = new Worker(path, {name, type: "module"})
+
+  worker.addEventListener("message", messageHandler)
+  worker.addEventListener("error", (e) => console.log("Worker error", e))
+
+  return worker
 }
 
 export class BMElement extends HTMLElement {
