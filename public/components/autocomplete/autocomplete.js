@@ -50,7 +50,7 @@ class Autocomplete extends BMElement {
   }
 
   buildMenu(items) {
-    console.log("buildMenu", items)
+    // console.log("buildMenu", items)
   }
 }
 
