@@ -8,53 +8,49 @@ return body2;
 var data = (await fetch_data.call(null))
 ;
 var match_l6_item = function (fields, search_term) {
-console.log("match-l6-item");
 return cherry_core.first.call(null, cherry_core.filter.call(null, function (field) {
-return cherry_core.re_find.call(null, search_term, field);
+return field.match(new RegExp(cherry_core.str.call(null, "^", search_term), "i"));
 }, fields));
 }
 ;
 var match_l6_items = function (items, search_term) {
-console.log("match-l6-items");
-return cherry_core.map.call(null, function (p__3) {
+return cherry_core.filter.call(null, function (p__3) {
 let map__45 = p__3;
 let map__46 = cherry_core.__destructure_map.call(null, map__45);
 let code7 = map__46["code"];
 let label8 = map__46["label"];
-if (cherry_core.truth_(match_l6_item.call(null, cherry_core.vector(label8)))) {
+let extra9 = map__46["extra"];
+if (cherry_core.truth_(match_l6_item.call(null, cherry_core.vector(label8, extra9), search_term))) {
 return cherry_core.array_map(cherry_core.keyword("code"), code7, cherry_core.keyword("label"), label8);}
 }, items);
 }
 ;
-var item_matches = function (p__9, search_term) {
-let map__1011 = p__9;
-let map__1012 = cherry_core.__destructure_map.call(null, map__1011);
-let code13 = map__1012["code"];
-let label14 = map__1012["label"];
-let items15 = map__1012["items"];
-console.log("item-matches");
-let matched_items16 = match_l6_items.call(null, items15, search_term);
-if (cherry_core.truth_(cherry_core.empty_QMARK_.call(null, matched_items16))) {
+var item_matches = function (p__10, search_term) {
+let map__1112 = p__10;
+let map__1113 = cherry_core.__destructure_map.call(null, map__1112);
+let code14 = map__1113["code"];
+let label15 = map__1113["label"];
+let items16 = map__1113["items"];
+let matched_items17 = match_l6_items.call(null, items16, search_term);
+if (cherry_core.truth_(cherry_core.empty_QMARK_.call(null, matched_items17))) {
 return null;} else {
-return cherry_core.array_map(cherry_core.keyword("code"), code13, cherry_core.keyword("label"), cherry_core.keyword("label"), cherry_core.keyword("items"), matched_items16);}
+return cherry_core.array_map(cherry_core.keyword("code"), code14, cherry_core.keyword("label"), label15, cherry_core.keyword("items"), matched_items17);}
 }
 ;
 var filter_items = function (data, search_term) {
-console.log("filter-items");
 return cherry_core.reduce.call(null, function (acc, l4_item) {
-let match_result17 = item_matches.call(null, l4_item, search_term);
-if (cherry_core.truth_(match_result17)) {
-null};
-cherry_core.conj.call(null, acc, match_result17);
-return match_result17;
-}, cherry_core.array_map(), data);
+let match_result18 = item_matches.call(null, l4_item, search_term);
+if (cherry_core.truth_(match_result18)) {
+return cherry_core.conj.call(null, acc, match_result18);} else {
+return acc;}
+}, cherry_core.vector(), data);
 }
 ;
 var handle_message = function (event) {
-let search_term18 = event.data;
-console.log("Worker received:", ({ "term": search_term18 }));
-let result19 = filter_items.call(null, data, search_term18);
-return postMessage(cherry_core.clj__GT_js.call(null, result19));
+let search_term19 = event.data;
+console.log("Worker received:", ({ "term": search_term19 }));
+let result20 = filter_items.call(null, data, search_term19);
+return postMessage(cherry_core.clj__GT_js.call(null, result20));
 }
 ;
 self.onmessage = handle_message;

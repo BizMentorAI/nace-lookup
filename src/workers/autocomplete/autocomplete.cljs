@@ -6,27 +6,24 @@
 (def data (js/await (fetch-data)))
 
 (defn- match-l6-item [fields search-term]
-  ; TODO: ^search-term
-  (js/console.log "match-l6-item")
-  (first (filter (fn [field] (re-find search-term field)) fields)))
+  (first (filter (fn [field]
+                   (.match field (new js/RegExp (str "^" search-term) "i"))
+                   ) fields)))
 
 (defn- match-l6-items [items search-term]
-  (js/console.log "match-l6-items")
-  (map (fn [^:js {:keys [code label]}]  ; TODO: extra
-         (when (match-l6-item [label])  ; TODO: extra
-           {:code code :label label})) items))
+  (filter (fn [^:js {:keys [code label extra]}]
+            (when (match-l6-item [label extra] search-term)
+              {:code code :label label})) items))
 
 (defn- item-matches [^:js {:keys [code label items]} search-term]
-  (js/console.log "item-matches")
   (let [matched-items (match-l6-items items search-term)]
     (when-not (empty? matched-items)
-      {:code code :label :label :items matched-items})))
+      {:code code :label label :items matched-items})))
 
 (defn- filter-items [data search-term]
-  (js/console.log "filter-items")
   (reduce (fn [acc l4-item]
             (let [match-result (item-matches l4-item search-term)]
-              (if match-result) (conj acc match-result) match-result)) {} data))
+              (if match-result (conj acc match-result) acc))) [] data))
 
 (defn handle-message [event]
   (let [search-term event.data]

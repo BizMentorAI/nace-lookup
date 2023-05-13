@@ -23,8 +23,7 @@
       (println "~ Moving" path "->" public-path)
       ; This will fail if the dir hasn't been created yet, whatever.
       ;(shell "mv" path public-path)
-      (spit public-path (str/replace (slurp path) "cherry-cljs/lib/" "/js/"))
-      )))
+      (spit public-path (str/replace (slurp path) "cherry-cljs/lib/" "/js/")))))
 
 (fw/watch "src" prn {:recursive true})
 (fw/watch "src" compile {:recursive true})
