@@ -28,7 +28,7 @@
 
 (defn handle-message [event]
   (let [search-term event.data]
-    (js/console.log "Worker received:" #js {:term search-term})
+    ;(js/console.log "Worker received:" #js {:term search-term})
     (let [result (filter-items data search-term)]
       (js/postMessage (clj->js result)))))
 

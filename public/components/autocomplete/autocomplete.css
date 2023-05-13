@@ -10,9 +10,19 @@ input {
   color: var(--neutral-medium);
 }
 
+#error {
+  color: white;
+  background: indianred;
+  padding: 10px;
+}
+
+#error h3 {
+  margin-top: 7px;
+}
+
 #results {
   margin-top: 10px;
-  border: 1px solid darkgrey;
+  border: 1px solid var(--neutral-dark);
 }
 
 #results:empty {
@@ -20,11 +30,11 @@ input {
 }
 
 .l4-item {
-  background: var(--brand-dark);
+  background: var(--brand-light);
   padding: 10px;
   text-transform: uppercase;
   font-weight: bold;
-  color: var(--brand-light);
+  color: var(--brand-dark);
   font-size: 12px;
 }
 
@@ -39,8 +49,8 @@ input {
   width: 70px;
 }
 
+.label {}
+
 .highlight {
   background: var(--highlight);
 }
-
-.label {}

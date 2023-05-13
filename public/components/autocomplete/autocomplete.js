@@ -24,7 +24,9 @@ class Autocomplete extends BMElement {
     if (this._autocomplete) return this._autocomplete
 
     const placeholder = "🔎  Type in a product or service keyword."
-    const input = tag("input", {placeholder})
+    // Autocorrect is Safari-only.
+    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search
+    const input = tag("input", {placeholder, type: "search", autocorrect: "off"})
     input.addEventListener("input", (e) => this.handleInput())
     return this._autocomplete = input
   }
@@ -36,8 +38,8 @@ class Autocomplete extends BMElement {
   get worker() {
     return this._worker ||= (
       createWorker("/workers/autocomplete/autocomplete.js",
-                   (e) => this.handleMessage(e))
-    )
+                   (e) => this.handleMessage(e),
+                   (e) => this.handleWorkerError(e)))
   }
 
   get value() {
@@ -52,13 +54,22 @@ class Autocomplete extends BMElement {
     }
   }
 
+  handleWorkerError(event) {
+    this.results.replaceChildren(
+      tag("div", {id: "error"}, [
+        tag("h3", "Error"),
+        tag("p", "An unexpected error occurred. We'd be very thankful if you could write us to EMAIL and let us know. Thank you!")
+      ])
+    )
+  }
+
   handleMessage(event) {
     this.buildMenu(event.data)
   }
 
   highlight(label) {
     return label.replace(
-      new RegExp(`\\b${this.value}`),
+      new RegExp(`\\b${this.value}`, "i"),
         `<span class="highlight">${this.value}</span>`)
   }
 

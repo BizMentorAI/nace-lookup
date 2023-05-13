@@ -1,3 +1,6 @@
+// Would this be better written in Cherry?
+// The multiple arities we have in CLJ would solve all that nonsense
+// matching shit.
 function setContent (element, content) {
   if (typeof content === "string") {
     element.innerHTML = content
@@ -35,12 +38,13 @@ export function createStyleLink (path) {
 }
 
 // Can I use import map with workers?
-export function createWorker (path, messageHandler) {
+export function createWorker (path, messageHandler, errorHandler) {
   const name = path.replace(/.*\/([^/]+)\.js$/, '$1')
   const worker = new Worker(path, {name, type: "module"})
 
   worker.addEventListener("message", messageHandler)
-  worker.addEventListener("error", (e) => console.log("Worker error", e))
+  worker.addEventListener("error", (e) => console.error("Worker error", e))
+  worker.addEventListener("error", errorHandler)
 
   return worker
 }

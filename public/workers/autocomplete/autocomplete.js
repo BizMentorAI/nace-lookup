@@ -48,7 +48,6 @@ return acc;}
 ;
 var handle_message = function (event) {
 let search_term19 = event.data;
-console.log("Worker received:", ({ "term": search_term19 }));
 let result20 = filter_items.call(null, data, search_term19);
 return postMessage(cherry_core.clj__GT_js.call(null, result20));
 }
