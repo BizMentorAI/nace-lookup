@@ -9,7 +9,7 @@ var data = (await fetch_data.call(null))
 ;
 var match_l6_item = function (fields, search_term) {
 return cherry_core.first.call(null, cherry_core.filter.call(null, function (field) {
-return field.match(new RegExp(cherry_core.str.call(null, "^", search_term), "i"));
+return field.match(new RegExp(cherry_core.str.call(null, "\\b", search_term), "i"));
 }, fields));
 }
 ;

@@ -7,3 +7,35 @@ input {
   border: 1px solid darkgrey;
   color: grey;
 }
+
+#results {
+  margin-top: 10px;
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+  background: aliceblue;
+}
+
+#results:empty {
+  display: none;
+}
+
+.l4-item {
+  background: lightgreen;
+  padding: 10px;
+}
+
+.l6-item {
+  color: grey;
+  padding: 7px;
+}
+
+.code {
+  display: inline-block;
+  width: 70px;
+}
+
+.highlight {
+  color: yellow;
+}
+
+.label {}

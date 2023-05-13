@@ -5,6 +5,7 @@ class Autocomplete extends BMElement {
     super()
     this.shadowRoot.appendChild(this.style)
     this.shadowRoot.appendChild(this.autocomplete)
+    this.shadowRoot.appendChild(this.results)
   }
 
   connectedCallback() {
@@ -28,6 +29,10 @@ class Autocomplete extends BMElement {
     return this._autocomplete = input
   }
 
+  get results() {
+    return this._results ||= tag("div", {id: "results"})
+  }
+
   get worker() {
     return this._worker ||= (
       createWorker("/workers/autocomplete/autocomplete.js",
@@ -40,17 +45,30 @@ class Autocomplete extends BMElement {
   }
 
   handleInput() {
-    console.log("handleInput", {term: this.value}) ///////
-    this.worker.postMessage(this.value)
+    if (this.value.length > 2) {
+      this.worker.postMessage(this.value)
+    }
   }
 
   handleMessage(event) {
-    console.log("Main thread got back: ", event.data)
     this.buildMenu(event.data)
   }
 
+  // TODO: highlight search term.
   buildMenu(items) {
-    // console.log("buildMenu", items)
+    this.results.replaceChildren(...
+      items.reduce((elements, { label, items }) => {
+        elements.push(tag("div", {className: "l4-item"} , label))
+        items.forEach(({ code, label }) => {
+          elements.push(tag("div", {className: "l6-item"}, [
+            tag("span", {className: "code"}, code),
+            tag("span", {className: "label"}, label)
+          ]))
+        })
+
+        return elements
+      }, [])
+    )
   }
 }
 

@@ -6,9 +6,10 @@
 (def data (js/await (fetch-data)))
 
 (defn- match-l6-item [fields search-term]
-  (first (filter (fn [field]
-                   (.match field (new js/RegExp (str "^" search-term) "i"))
-                   ) fields)))
+  (first (filter
+          (fn [field]
+            (.match field (new js/RegExp (str "\\b" search-term) "i")))
+          fields)))
 
 (defn- match-l6-items [items search-term]
   (filter (fn [^:js {:keys [code label extra]}]
