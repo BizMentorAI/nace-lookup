@@ -9,7 +9,6 @@ class Autocomplete extends BMElement {
 
   connectedCallback() {
     this.worker
-    console.log("worker", this.worker) ////////
   }
 
   disconnectedCallback() {
