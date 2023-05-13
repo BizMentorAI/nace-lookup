@@ -5,12 +5,19 @@ let body2 = (await response1.json());
 return body2;
 }
 ;
-console.log((await fetch_data.call(null)));
+var data = (await fetch_data.call(null))
+;
+var filter_items = function (search_term) {
+return cherry_core.array_map(cherry_core.keyword("a"), 7);
+}
+;
 var handle_message = function (event) {
-console.log("Worker received:", ({ "term": event.data }));
-return postMessage(({ "a": 1 }));
+let search_term3 = event.data;
+console.log("Worker received:", ({ "term": search_term3 }));
+let result4 = filter_items.call(null, search_term3);
+return postMessage(cherry_core.clj__GT_js.call(null, result4));
 }
 ;
 self.onmessage = handle_message;
 
-export { fetch_data, handle_message }
+export { fetch_data, data, filter_items, handle_message }

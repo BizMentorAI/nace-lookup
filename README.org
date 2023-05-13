@@ -1,3 +1,5 @@
+TODO: ADD CLJS devtools
+
 src: cherry
 public/js: write JS modules directly there
   normally it'd be in an org file, but it'll do for now.

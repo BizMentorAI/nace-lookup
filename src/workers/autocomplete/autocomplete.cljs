@@ -3,8 +3,9 @@
         body (js/await (.json response))]
     body))
 
-(js/console.log (js/await (fetch-data)))
+(def data (js/await (fetch-data)))
 
+; :js/keys [a] for JS keys destructuring.
 ;; (defn- format-l4-item [item]
 ;;   {:label (:label item) :items []}) ; TODO: Match L6 item.
 
@@ -14,15 +15,15 @@
 ;; (defn- match-l4-item [item]
 ;;   (when (l4-item-matches item) (format-l4-item item)))
 
-;; (defn- filter-items [search-term]
-;;   (filter identity
-;;           (map (fn [l4-item] (match-l4-item l4-item)) data)))
+(defn- filter-items [search-term]
+  {:a 7})
+  ;; (filter identity
+  ;;         (map (fn [l4-item] (match-l4-item l4-item)) data)))
 
 (defn handle-message [event]
-  ;; (let [search-term (.-data event)]
-  ;;   (js/console.log :search-term search-term)
-  ;;   (js/postData (filter-items search-term))))
-  (js/console.log "Worker received:" #js {:term event.data})
-  (js/postMessage #js {:a 1}))
+  (let [search-term event.data]
+    (js/console.log "Worker received:" #js {:term search-term})
+    (let [result (filter-items search-term)]
+      (js/postMessage (clj->js result)))))
 
 (set! js/self.onmessage handle-message)
