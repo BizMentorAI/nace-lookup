@@ -1,3 +1,5 @@
+@import "/theme.css";
+
 :host {
   padding: 20px 0 0 0;
   text-align: center;
@@ -5,13 +7,13 @@
 
 :host h1 {
   margin: 7px 0;
-  color: rgb(90, 196, 189);
+  color: var(--brand-main);
 }
 
 h1, ul {
   margin: 5px 0;
   text-transform: uppercase;
-  color: grey;
+  color: var(--neutral-middle);
 }
 
 ul {

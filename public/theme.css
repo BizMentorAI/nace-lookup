@@ -1,0 +1,10 @@
+:host {
+  --brand-main: rgb(90, 196, 189);
+  --brand-dark: rgb(98, 128, 127);
+  --brand-light: rgb(209, 239, 237);
+  --neutral-light: lightgrey;
+  --neutral-medium: grey;
+  --neutral-dark: darkgrey;
+  --highlight: yellow;
+  --text: black;
+}
