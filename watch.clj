@@ -13,8 +13,10 @@
 (def write-events #{:create :write :write|chmod})
 
 (defn compile [{:keys [type path] :as event}]
-  (when (and (write-events type) (re-find #"/[a-z-]+\.cljs$" path))
-    (shell (str "npx cherry compile " path))))
+  (try
+    (when (and (write-events type) (re-find #"/[a-z-]+\.cljs$" path))
+      (shell (str "npx cherry compile " path)))
+    (catch Exception e (println e))))
 
 (defn move [{:keys [type path] :as event}]
   (when (and (write-events type) (re-find #"\.mjs$" path))

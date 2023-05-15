@@ -12,9 +12,15 @@
         "imports": {
           "components": "/components",
           "workers": "/workers",
-          "framework": "/js/framework/main.js"
+          "framework": "/framework.js"
         }
       }
+    </script>
+
+    <!-- Developer convenience. -->
+    <script type="module">
+      import { tag } from "framework"
+      window.tag = tag
     </script>
 
     <script type="module" src="components/layout/layout.js"></script>
