@@ -34,7 +34,7 @@ class Layout extends HTMLElement {
   }
 
   get header() {
-    return this._header ||= document.createElement("header", {is: "bm-header"})
+    return this._header ||= tag("header", {is: "bm-header"})
   }
 
   get main() {
@@ -42,7 +42,7 @@ class Layout extends HTMLElement {
   }
 
   get footer() {
-    return this._footer ||= document.createElement("footer", {is: "bm-footer"})
+    return this._footer ||= tag("footer", {is: "bm-footer"})
   }
 
   isMobileSafari() {

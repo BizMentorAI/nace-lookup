@@ -14,7 +14,7 @@ function setContent (element, content) {
 }
 
 function _tag (tag, opts = {}, content = null) {
-  const element = document.createElement(tag)
+  const element = opts.is ? document.createElement(tag, {is: opts.is}) : document.createElement(tag)
   Object.entries(opts).forEach(([ key, value ]) => element[key] = value)
 
   if (content) { setContent(element, content) }
