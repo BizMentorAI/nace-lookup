@@ -1,4 +1,4 @@
-import { BMElement, tag, createStyleLink, createWorker } from "framework"
+import { BMElement, tag, tap, createStyleLink, createWorker } from "framework"
 
 class Autocomplete extends BMElement {
   constructor() {
@@ -21,25 +21,24 @@ class Autocomplete extends BMElement {
   }
 
   get autocomplete() {
-    if (this._autocomplete) return this._autocomplete
-
-    const placeholder = "🔎  Type in a product or service keyword."
-    // Autocorrect is Safari-only.
-    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search
-    const input = tag("input", {placeholder, type: "search", autocorrect: "off"})
-    input.addEventListener("input", (e) => this.handleInput())
-    return this._autocomplete = input
+    return this._autocomplete ||= tap(tag("input"), (input) => {
+      input.placeholder = "🔎  Type in a product or service keyword."
+      // Autocorrect is Safari-only.
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search
+      input.autocorrect = "off"
+      input.addEventListener("input", (_) => this.handleInput())
+    })
   }
 
   get results() {
-    return this._results ||= tag("div", {id: "results"})
+    return this._results ||= tag("search-results")
   }
 
   get worker() {
     return this._worker ||= (
       createWorker("/workers/autocomplete/autocomplete.js",
-                   (e) => this.handleMessage(e),
-                   (e) => this.handleWorkerError(e)))
+                   (event) => this.results.showResults(event.data, this.value),
+                   (event) => this.results.showError(event)))
   }
 
   get value() {
@@ -53,41 +52,8 @@ class Autocomplete extends BMElement {
       this.results.replaceChildren()
     }
   }
-
-  handleWorkerError(event) {
-    this.results.replaceChildren(
-      tag("div", {id: "error"}, [
-        tag("h3", "Error"),
-        tag("p", "An unexpected error occurred. We'd be very thankful if you could write us to EMAIL and let us know. Thank you!")
-      ])
-    )
-  }
-
-  handleMessage(event) {
-    this.buildMenu(event.data)
-  }
-
-  highlight(label) {
-    return label.replace(
-      new RegExp(`\\b${this.value}`, "i"),
-        `<span class="highlight">${this.value}</span>`)
-  }
-
-  buildMenu(items) {
-    this.results.replaceChildren(...
-      items.reduce((elements, { label, items }) => {
-        elements.push(tag("div", {className: "l4-item"} , label))
-        items.forEach(({ code, label }) => {
-          elements.push(tag("div", {className: "l6-item"}, [
-            tag("span", {className: "code"}, code),
-            tag("span", {className: "label"}, this.highlight(label))
-          ]))
-        })
-
-        return elements
-      }, [])
-    )
-  }
 }
 
 customElements.define("bm-autocomplete", Autocomplete)
+
+import("../search-results/search-results.js")
