@@ -1,6 +1,3 @@
-// Would this be better written in Cherry?
-// The multiple arities we have in CLJ would solve all that nonsense
-// matching shit.
 function setContent (element, content) {
   if (typeof content === "string") {
     element.innerHTML = content

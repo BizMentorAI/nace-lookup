@@ -49,3 +49,5 @@ class SearchResults extends HTMLElement {
 }
 
 customElements.define("search-results", SearchResults)
+
+import("../modal/modal.js")
