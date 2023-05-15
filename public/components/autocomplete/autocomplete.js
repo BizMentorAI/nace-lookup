@@ -1,8 +1,9 @@
-import { BMElement, tag, tap, createStyleLink, createWorker } from "framework"
+import { tag, tap, createStyleLink, createWorker } from "framework"
 
-class Autocomplete extends BMElement {
+class Autocomplete extends HTMLElement {
   constructor() {
     super()
+    this.attachShadow({mode: "open"})
     this.shadowRoot.appendChild(this.style)
     this.shadowRoot.appendChild(this.autocomplete)
     this.shadowRoot.appendChild(this.results)

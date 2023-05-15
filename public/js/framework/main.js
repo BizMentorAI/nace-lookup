@@ -53,10 +53,3 @@ export function tap (value, fn) {
   fn(value)
   return value
 }
-
-export class BMElement extends HTMLElement {
-  constructor() {
-    super()
-    const shadowRoot = this.attachShadow({mode: "open"})
-  }
-}

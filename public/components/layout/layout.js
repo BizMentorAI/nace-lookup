@@ -1,8 +1,9 @@
-import { BMElement, tag, createStyleLink } from "framework"
+import { tag, createStyleLink } from "framework"
 
-class Layout extends BMElement {
+class Layout extends HTMLElement {
   constructor() {
     super()
+    this.attachShadow({mode: "open"})
 
     this.shadowRoot.appendChild(this.style)
     this.shadowRoot.appendChild(this.screen)
@@ -33,7 +34,7 @@ class Layout extends BMElement {
   }
 
   get header() {
-    return this._header ||= tag("bm-header")
+    return this._header ||= document.createElement("header", {is: "bm-header"})
   }
 
   get main() {
@@ -41,7 +42,7 @@ class Layout extends BMElement {
   }
 
   get footer() {
-    return this._footer ||= tag("bm-footer")
+    return this._footer ||= document.createElement("footer", {is: "bm-footer"})
   }
 
   isMobileSafari() {

@@ -1,8 +1,9 @@
-import { BMElement, tag, createStyleLink } from "framework"
+import { tag, createStyleLink } from "framework"
 
-class NaceLookup extends BMElement {
+class NaceLookup extends HTMLElement {
   constructor() {
     super()
+    this.attachShadow({mode: "open"})
     this.shadowRoot.appendChild(this.style)
     this.shadowRoot.appendChild(this.heading)
     this.shadowRoot.appendChild(this.autocomplete)

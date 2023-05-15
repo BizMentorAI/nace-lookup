@@ -1,8 +1,9 @@
-import { BMElement, tag, createStyleLink } from "framework"
+import { tag, createStyleLink } from "framework"
 
-class Footer extends BMElement {
+class Footer extends HTMLElement {
   constructor() {
     super()
+    this.attachShadow({mode: "open"})
     this.shadowRoot.appendChild(this.style)
     this.shadowRoot.appendChild(this.footer)
   }
@@ -16,4 +17,4 @@ class Footer extends BMElement {
   }
 }
 
-customElements.define("bm-footer", Footer)
+customElements.define("bm-footer", Footer, {extends: "footer"})

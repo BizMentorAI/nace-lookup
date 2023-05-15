@@ -1,8 +1,9 @@
-import { BMElement, tag, createStyleLink } from "framework"
+import { tag, createStyleLink } from "framework"
 
-class SearchResults extends BMElement {
+class SearchResults extends HTMLElement {
   constructor() {
     super()
+    this.attachShadow({mode: "open"})
     this.shadowRoot.appendChild(this.style)
     this.shadowRoot.appendChild(this.results)
   }
