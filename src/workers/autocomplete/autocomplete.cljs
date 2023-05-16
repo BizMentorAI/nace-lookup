@@ -24,14 +24,16 @@
       {:code code :label label :items matched-items})))
 
 (defn- filter-items [data search-term]
+  ; TODO: Rework for L1 -> L4 -> L6 structure.
   (reduce (fn [acc l4-item]
             (let [match-result (item-matches l4-item search-term)]
               (if match-result (conj acc match-result) acc))) [] data))
 
 (defn handle-message [event]
   (let [search-term event.data]
-    ;(js/console.log "Worker received:" #js {:term search-term})
+    (js/console.log "Worker received:" #js {:term search-term})
     (let [result (filter-items data search-term)]
       (js/postMessage (clj->js result)))))
 
-(set! js/self.onmessage handle-message)
+;(set! js/self.onmessage handle-message)
+(set! onmessage handle-message)

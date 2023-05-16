@@ -1,4 +1,5 @@
 import { tag, createStyleLink } from "framework"
+import { errorEmail } from "config"
 
 class SearchResults extends HTMLElement {
   constructor() {
@@ -36,7 +37,7 @@ class SearchResults extends HTMLElement {
     this.results.replaceChildren(
       tag("div", {id: "error"}, [
         tag("h3", "Error"),
-        tag("p", "An unexpected error occurred. We'd be very thankful if you could write us to EMAIL and let us know. Thank you!")
+        tag("p", `An unexpected error occurred. We'd be very thankful if you could write us to ${errorEmail} and let us know. Thank you!`)
       ])
     )
   }

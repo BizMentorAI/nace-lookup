@@ -15,10 +15,6 @@
 
 (def input-file-path (first *command-line-args*))
 
-; (str/join "." (take 2 (str/split (nth row 3) #"\.")))
-
-; We can't use parent, because L2 is 14 and L1 C. There's no link, we cannot map that.
-; We have to do it sequentially then.
 (defn process-category [row]
   (case (second row)
     1 {:level 1 :label (nth row 4)}
