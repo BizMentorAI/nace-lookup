@@ -12,22 +12,19 @@ class Autocomplete extends HTMLElement {
   connectedCallback() {
     this.results; this.worker
 
-    // This should happen once both results and worker is loaded,
-    // but I can't see to be able to use "load" event listener.
+    // Timeout is a terrible solution for this, but I cannot get
+    // either of these to work:
+    // - this.results load listener
+    // - document's DOMContentLoaded
     setTimeout(() => {
-      console.log("Setting up listeners")
-      console.log(this.worker)
-      console.log(this.results)
       this.worker.addEventListener("error", (event) => {
-        console.log("X:ERR")
         this.results.showError(event)
       })
 
       this.worker.addEventListener("message", (event) => {
-        console.log("X:MSG")
         this.results.showResults(event.data, this.value)
       })
-    }, 500)
+    }, 250)
   }
 
   disconnectedCallback() {

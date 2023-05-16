@@ -37,6 +37,4 @@
              (xf acc l6-item))))
        acc)
 
-      ([result]
-  (js/console.log "res" result) ;;;;;;;
-       result))))
+      ([result] result))))

@@ -1,4 +1,3 @@
-(js/console.log "Worker loaded")
 (ns workers.autocomplete.autocomplete
   ;(:require-macros [macros :refer (inline-readme)])
   ; NOTE: This doesn't work with workers.autocomplete.transducer like we're used to in CLJ.

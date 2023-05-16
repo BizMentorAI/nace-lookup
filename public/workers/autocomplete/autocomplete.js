@@ -1,6 +1,5 @@
 import * as cherry_core from '/js/cljs_core.js';
 import { transducer } from '/workers/autocomplete/transducer.js';
-console.log("Worker loaded");
 var fetch_data = async function () {
 let response1 = (await fetch("/workers/autocomplete/data.json"));
 let body2 = (await response1.json());

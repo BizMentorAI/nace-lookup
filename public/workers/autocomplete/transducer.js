@@ -92,7 +92,6 @@ continue;
 return acc;
 };
 f3["cljs$core$IFn$_invoke$arity$1"] = function (result) {
-console.log("res", result);
 return result;
 };
 f3["cljs$lang$maxFixedArity"] = 2;
