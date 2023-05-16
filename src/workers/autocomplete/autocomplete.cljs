@@ -4,7 +4,9 @@
     body))
 
 (def data (js/await (fetch-data)))
+(js/console.log data)
 
+; TODO: consider using transducers instead.
 (defn- match-l6-item [fields search-term]
   (first (filter
           (fn [field]
