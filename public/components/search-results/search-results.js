@@ -18,21 +18,12 @@ class SearchResults extends HTMLElement {
   }
 
   showResults(items, term) {
-    console.log(`showResults: ${term}`, items)
-    // TODO: change this to flat.
-    this.results.replaceChildren(...
-      items.reduce((elements, { label, items }) => {
-        elements.push(tag("div", {className: "l4-item"} , label))
-        items.forEach(({ code, label }) => {
-          elements.push(tag("div", {className: "l6-item"}, [
-            tag("span", {className: "code"}, code),
-            tag("span", {className: "label"}, this.#highlight(label, term))
-          ]))
-        })
-
-        return elements
-      }, [])
-    )
+    this.results.replaceChildren
+    (...items.map((item) => (
+      tag("div",
+          {class:`l${item.level === 1 ? 1 : 6}-item`},
+          this.#highlight(item.label))
+    )))
   }
 
   // TODO: Global link styling, no highlight, nicer colour.

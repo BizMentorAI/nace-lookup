@@ -1,7 +1,7 @@
 (defn- set-content [element content]
   (cond
     (string? content)
-    (set! (.-innerHTML element) content)
+    (set! (.-innerText element) content)
 
     (. content -nodeName)
     (.appendChild element content)
@@ -26,7 +26,10 @@
          element (create-element tname opts)]
 
      (doseq [[key value] (dissoc opts :is)]
-       (.setAttribute element (name key) value))
+       (case key
+         "html" (set! (. element -innerHTML) value)
+         "class" (set! (. element -className) value)
+         (.setAttribute element (name key) value)))
 
      (when content (set-content element (js->clj content)))
 
@@ -39,9 +42,13 @@
 (defn createWorker [path msg-handler err-handler]
   ; const name = path.replace(/.*\/([^/]+)\.js$/, '$1')
   (let [worker (new js/Worker path #js {:type "module"})]
-    (worker.addEventListener "message" msg-handler)
-    (worker.addEventListener "error" #(js/console.error "Worker error" %))
-    (worker.addEventListener "error" err-handler)
+    ;(.addEventListener worker "message" #(js/console.log "Message" %))
+    (.addEventListener worker "message" msg-handler)
+
+    (.addEventListener worker "messageerror" #(js/console.log "Message can't be decoded" %))
+
+    (.addEventListener worker "error" #(js/console.error "Worker error" %))
+    (.addEventListener worker "error" err-handler)
     worker))
 
 (defn tap [value fun]

@@ -1,7 +1,7 @@
 import * as cherry_core from '/js/cljs_core.js';
 var set_content = function (element, content) {
 if (cherry_core.truth_(cherry_core.string_QMARK_.call(null, content))) {
-return element["innerHTML"] = content;
+return element["innerText"] = content;
 ;} else {
 if (cherry_core.truth_(content["nodeName"])) {
 return element.appendChild(content);} else {
@@ -99,46 +99,66 @@ if (cherry_core.truth_((i__3741 < count__3640))) {
 let vec__4245 = cherry_core._nth.call(null, chunk__3539, i__3741);
 let key46 = cherry_core.nth.call(null, vec__4245, 0, null);
 let value47 = cherry_core.nth.call(null, vec__4245, 1, null);
-element33.setAttribute(cherry_core.name.call(null, key46), value47);
+let G__4849 = key46;
+switch (G__4849) {case "html":
+element33["innerHTML"] = value47;
+
+break;
+case "class":
+element33["className"] = value47;
+
+break;
+default:
+element33.setAttribute(cherry_core.name.call(null, key46), value47)};
 null;
-let G__48 = seq__3438;
-let G__49 = chunk__3539;
-let G__50 = count__3640;
-let G__51 = cherry_core.unchecked_inc.call(null, i__3741);
-seq__3438 = G__48;
-chunk__3539 = G__49;
-count__3640 = G__50;
-i__3741 = G__51;
+let G__51 = seq__3438;
+let G__52 = chunk__3539;
+let G__53 = count__3640;
+let G__54 = cherry_core.unchecked_inc.call(null, i__3741);
+seq__3438 = G__51;
+chunk__3539 = G__52;
+count__3640 = G__53;
+i__3741 = G__54;
 continue;
 } else {
-let temp__22496__auto__52 = cherry_core.seq.call(null, seq__3438);
-if (cherry_core.truth_(temp__22496__auto__52)) {
-let seq__3453 = temp__22496__auto__52;
-if (cherry_core.truth_(cherry_core.chunked_seq_QMARK_.call(null, seq__3453))) {
-let c__22611__auto__54 = cherry_core.chunk_first.call(null, seq__3453);
-let G__55 = cherry_core.chunk_rest.call(null, seq__3453);
-let G__56 = c__22611__auto__54;
-let G__57 = cherry_core.count.call(null, c__22611__auto__54);
-let G__58 = 0;
-seq__3438 = G__55;
-chunk__3539 = G__56;
-count__3640 = G__57;
-i__3741 = G__58;
+let temp__22496__auto__55 = cherry_core.seq.call(null, seq__3438);
+if (cherry_core.truth_(temp__22496__auto__55)) {
+let seq__3456 = temp__22496__auto__55;
+if (cherry_core.truth_(cherry_core.chunked_seq_QMARK_.call(null, seq__3456))) {
+let c__22611__auto__57 = cherry_core.chunk_first.call(null, seq__3456);
+let G__58 = cherry_core.chunk_rest.call(null, seq__3456);
+let G__59 = c__22611__auto__57;
+let G__60 = cherry_core.count.call(null, c__22611__auto__57);
+let G__61 = 0;
+seq__3438 = G__58;
+chunk__3539 = G__59;
+count__3640 = G__60;
+i__3741 = G__61;
 continue;
 } else {
-let vec__5962 = cherry_core.first.call(null, seq__3453);
-let key63 = cherry_core.nth.call(null, vec__5962, 0, null);
-let value64 = cherry_core.nth.call(null, vec__5962, 1, null);
-element33.setAttribute(cherry_core.name.call(null, key63), value64);
+let vec__6265 = cherry_core.first.call(null, seq__3456);
+let key66 = cherry_core.nth.call(null, vec__6265, 0, null);
+let value67 = cherry_core.nth.call(null, vec__6265, 1, null);
+let G__6869 = key66;
+switch (G__6869) {case "html":
+element33["innerHTML"] = value67;
+
+break;
+case "class":
+element33["className"] = value67;
+
+break;
+default:
+element33.setAttribute(cherry_core.name.call(null, key66), value67)};
 null;
-let G__65 = cherry_core.next.call(null, seq__3453);
-let G__66 = null;
-let G__67 = 0;
-let G__68 = 0;
-seq__3438 = G__65;
-chunk__3539 = G__66;
-count__3640 = G__67;
-i__3741 = G__68;
+let G__71 = cherry_core.next.call(null, seq__3456);
+let G__72 = null;
+let G__73 = 0;
+let G__74 = 0;
+seq__3438 = G__71;
+chunk__3539 = G__72;
+count__3640 = G__73;
+i__3741 = G__74;
 continue;
 }}};break;
 }
@@ -156,13 +176,16 @@ return tag.call(null, "link", ({ "rel": "stylesheet", "href": path }));
 }
 ;
 var createWorker = function (path, msg_handler, err_handler) {
-let worker69 = new Worker(path, ({ "type": "module" }));
-worker69.addEventListener.call(null, "message", msg_handler);
-worker69.addEventListener.call(null, "error", function (_PERCENT_1) {
+let worker75 = new Worker(path, ({ "type": "module" }));
+worker75.addEventListener("message", msg_handler);
+worker75.addEventListener("messageerror", function (_PERCENT_1) {
+return console.log("Message can't be decoded", _PERCENT_1);
+});
+worker75.addEventListener("error", function (_PERCENT_1) {
 return console.error("Worker error", _PERCENT_1);
 });
-worker69.addEventListener.call(null, "error", err_handler);
-return worker69;
+worker75.addEventListener("error", err_handler);
+return worker75;
 }
 ;
 var tap = function (value, fun) {
