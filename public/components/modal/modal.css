@@ -11,16 +11,27 @@ dd {
   padding: 0 0 0.5em 0;
 }
 
-button {
-  float: right;
-}
-
 .includes {
   font-style: italic;
 }
 
+form {
+  display: flex;
+}
+
+button {
+  flex-grow: 1;
+  font-size: 12pt;
+  width: 75px;
+  height: 35px;
+}
+
 h3 {
   text-align: center;
+}
+
+dialog {
+  border-radius: 7px;
 }
 
 dialog::backdrop {

@@ -48,9 +48,10 @@ class SearchResults extends HTMLElement {
   }
 
   #highlight(label, term) {
+    // Using group capture we make sure to pass back correct case (rice vs Rice).
     return label.replaceAll(
-      new RegExp(`\\b${term}`, "ig"),
-        `<span class="highlight">${term}</span>`)
+      new RegExp(`\\b(${term})`, "ig"),
+        `<span class="highlight">$1</span>`)
   }
 }
 

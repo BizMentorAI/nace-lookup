@@ -31,7 +31,6 @@ class Modal extends HTMLElement {
   }
 
   displayItem(item) {
-    console.log(item)
     this.details.replaceChildren(
       tap(tag("dl"), (dl) => {
         dl.appendChild(tag("dt", "L4 label"))
