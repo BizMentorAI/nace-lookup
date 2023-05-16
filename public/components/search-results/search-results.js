@@ -1,4 +1,4 @@
-import { tag, createStyleLink } from "framework"
+import { tag, tap, createStyleLink } from "framework"
 import { errorEmail } from "config"
 
 class SearchResults extends HTMLElement {
@@ -20,10 +20,15 @@ class SearchResults extends HTMLElement {
   showResults(items, term) {
     this.results.replaceChildren
     (...items.map((item) => (
-      tag("div",
-          {class:`l${item.level === 1 ? 1 : 6}-item`},
-          this.#highlight(item.label))
-    )))
+      tap(tag("div",
+          {class: `l${item.level === 1 ? 1 : 6}-item`,
+           html: this.#highlight(item.label, term)}),
+          (div) => {
+            div.addEventListener("click", (event) => {
+              console.log(event)
+              console.log(item)
+            })
+          }))))
   }
 
   // TODO: Global link styling, no highlight, nicer colour.
@@ -37,8 +42,8 @@ class SearchResults extends HTMLElement {
   }
 
   #highlight(label, term) {
-    return label.replace(
-      new RegExp(`\\b${term}`, "i"),
+    return label.replaceAll(
+      new RegExp(`\\b${term}`, "ig"),
         `<span class="highlight">${term}</span>`)
   }
 }

@@ -9,3 +9,37 @@
 // const dialog = tag("dialog", ["<h3>Test</h3>", button])
 // this.shadowRoot.appendChild(dialog)
 // dialog.open()
+
+              // TODO: Observed attributes.
+
+import { tag, tap, createStyleLink } from "framework"
+import { errorEmail } from "config"
+
+class Modal extends HTMLElement {
+  static get observedAttributes() {
+    return ["item"]
+  }
+
+  constructor() {
+    super()
+    this.attachShadow({mode: "open"})
+    this.shadowRoot.appendChild(this.style)
+    this.shadowRoot.appendChild(this.modal)
+  }
+
+  get style() {
+    return this._style ||= createStyleLink("components/modal/modal.css")
+  }
+
+  get modal() {
+    return this._modal ||= tap(tag("modal"), (modal) => {
+      modal.appendChild(tag("button", {formmethod: "dialog"}, "OK"))
+    })
+  }
+
+  attributeChangedCallback(attr, oldValue, newValue) {
+    console.log(`Changing ${attr}`, {oldValue, newValue})
+  }
+}
+
+customElements.define("bm-modal", Modal)
