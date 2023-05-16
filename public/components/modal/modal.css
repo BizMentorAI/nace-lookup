@@ -9,10 +9,12 @@ dt {
 dd {
   margin: 0 0 0 80px;
   padding: 0 0 0.5em 0;
+  max-width: 250px;
 }
 
 .includes {
   font-style: italic;
+  max-width: 250px;
 }
 
 form {

@@ -1,3 +1,7 @@
+; This should have tests!
+; The transducer should be in a CLJC file and we should include (inline!)
+; it here.
+
 (defn ^:async fetch-data []
   (let [response (js/await (js/fetch "/workers/autocomplete/data.json"))
         body (js/await (.json response))] body))
