@@ -1,12 +1,14 @@
+(ns workers.autocomplete.autocomplete
+  (:require-macros [macros :refer [inline-resource]]))
+
 (defn ^:async fetch-data []
   ; TODO: The JSON path should come from a variable (tangling).
   (let [response (js/await (js/fetch "/workers/autocomplete/data.json"))
         body (js/await (.json response))] body))
 
-;; (defmacro inline-resource [path]
-;;   (slurp path))
-
-;; (def r (inline-resource "/Users/jakub/Documents/Projects/bizmentor/nace-finder-modern/README.org"))
+; Does inlining work?
+(def r (inline-resource "/Users/jakub/Documents/Projects/bizmentor/nace-finder-modern/README.org"))
+(js/console.log r)
 
 (def data (js->clj (js/await (fetch-data)) {:keywordize-keys true}))
 

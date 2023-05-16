@@ -1,6 +1,9 @@
 ; Usage:
 ; (persistent! (into [] (partial data-transducer search-term) data))
 
+;; (ns workers.autocomplete.transducer
+;;   "...")
+
 (defn- match-l6-item [item regexp]
   (let [fields [(:label item) (:extra item)]]
     (first (filter #(.match % regexp) fields))))

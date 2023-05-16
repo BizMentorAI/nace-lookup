@@ -5,6 +5,7 @@
 // <form> elements can close a <dialog> if they have the attribute method="dialog" or if the button used to submit the form has formmethod="dialog" set. In this case, the state of the form controls are saved, not submitted, the <dialog> closes, and the returnValue property gets set to the value of the button that was used to save the form's state.
 
 import { tag, tap, createStyleLink } from "framework"
+import { dev } from "config"
 
 class Modal extends HTMLElement {
   constructor() {
@@ -45,7 +46,7 @@ class Modal extends HTMLElement {
         dl.appendChild(tag("dt", "L6 code"))
         dl.appendChild(tag("dd", {class: "code"}, item.code))
 
-        if (item.extra) {
+        if (dev && item.extra) {
           dl.appendChild(tag("p", {class: "includes"}, item.extra))
         }
       }))
