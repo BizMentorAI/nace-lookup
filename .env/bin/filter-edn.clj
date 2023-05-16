@@ -13,11 +13,15 @@
 
 (def input-file-path (first *command-line-args*))
 
+; (str/join "." (take 2 (str/split (nth row 3) #"\.")))
+
+; We can't use parent, because L2 is 14 and L1 C. There's no link, we cannot map that.
+; We have to do it sequentially then.
 (defn process-category [row]
   (case (second row)
-    "1" {:level 1 :parent :top-level  :label (nth row 4)}
-    "4" {:level 2 :parent (nth row 3) :code (nth row 2) :label (nth row 4)}
-    "6" {:level 3 :parent (nth row 3) :code (nth row 2) :label (nth row 4)
+    1 {:level 1 :parent :top-level  :label (nth row 4)}
+    4 {:level 2 :parent (nth row 3) :code (nth row 2) :label (nth row 4)}
+    6 {:level 3 :parent (nth row 3) :code (nth row 2) :label (nth row 4)
          :extra (str/trim (str (nth row 5) " " (nth row 6)))}))
 
   ;; (let [base {:level (Integer/parseInt (second row))
@@ -44,25 +48,24 @@
   ;;         (filter identity (map process-row data)))
   )
 
-
-
-
 (defn sequence-to-nested [data]
-  (get-sequence data)
-  ;; (binding [*out* *err*]
-  ;;   (let [my-sequence (get-sequence data)
-  ;;         leaf-nodes (filter #(= (:level %) 3) my-sequence)
-  ;;         grouped-leaf-nodes (group-by :parent leaf-nodes)
+  (binding [*out* *err*]
+    (let [my-sequence (get-sequence data)
+          leaf-nodes (filter #(= (:level %) 3) my-sequence)
+          grouped-leaf-nodes (group-by :parent leaf-nodes)
 
-  ;;         l4-items (map (fn [[parent-code items]]
-  ;;                         (let [parent (first (filter #(= (:code %) parent-code) my-sequence))]
-  ;;                           (when-not parent (throw (ex-info "No parent" {:parent-code parent-code})))
-  ;;                           (assoc parent :items items)))
-  ;;                       grouped-leaf-nodes)
-  ;;         ]
-  ;;     l4-items
-  ;;                                       ;(pprint (group-by :parent my-sequence))
-  ;;     ,))
+          l4-items (map (fn [[parent-code items]]
+                          (let [parent (first (filter #(= (:code %) parent-code) my-sequence))]
+                            ; It cannot find parent, because it's L5 item.
+                            ; Convert to L4 by cutting off the last (third) part -> %d.%d.
+                            (when-not parent
+                              (throw (ex-info "No parent" {:parent-code parent-code :parent parent})))
+                            (assoc parent :items items)))
+                        grouped-leaf-nodes)
+          ]
+      l4-items
+                                        ;(pprint (group-by :parent my-sequence))
+      ,))
   )
 
 (let [input (edn/read-string (slurp input-file-path))]
