@@ -1,5 +1,7 @@
 #!/usr/bin/env bb
 
+; filter-edn.clj src/data/cpa.edn > public/workers/autocomplete/data.json
+
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.edn :as edn])
 
@@ -19,9 +21,9 @@
 ; We have to do it sequentially then.
 (defn process-category [row]
   (case (second row)
-    1 {:level 1 :parent :top-level  :label (nth row 4)}
-    4 {:level 2 :parent (nth row 3) :code (nth row 2) :label (nth row 4)}
-    6 {:level 3 :parent (nth row 3) :code (nth row 2) :label (nth row 4)
+    1 {:level 1 :label (nth row 4)}
+    4 {:level 2 :code (nth row 2) :label (nth row 4)}
+    6 {:level 3 :code (nth row 2) :label (nth row 4)
          :extra (str/trim (str (nth row 5) " " (nth row 6)))}))
 
   ;; (let [base {:level (Integer/parseInt (second row))
@@ -50,25 +52,23 @@
 
 (defn sequence-to-nested [data]
   (binding [*out* *err*]
-    (let [my-sequence (get-sequence data)
-          leaf-nodes (filter #(= (:level %) 3) my-sequence)
-          grouped-leaf-nodes (group-by :parent leaf-nodes)
+    (let [sequence (get-sequence data)]
+      (reduce (fn [acc {:keys [level] :as item}]
+                (case level
+                  1 (conj acc (assoc item :items [])) ; TODO: dissoc :level
 
-          l4-items (map (fn [[parent-code items]]
-                          (let [parent (first (filter #(= (:code %) parent-code) my-sequence))]
-                            ; It cannot find parent, because it's L5 item.
-                            ; Convert to L4 by cutting off the last (third) part -> %d.%d.
-                            (when-not parent
-                              (throw (ex-info "No parent" {:parent-code parent-code :parent parent})))
-                            (assoc parent :items items)))
-                        grouped-leaf-nodes)
-          ]
-      l4-items
-                                        ;(pprint (group-by :parent my-sequence))
-      ,))
-  )
+                  ; acc[-1].items
+                  2 (do
+                      (update-in acc [(dec (count acc)) :items]
+                                 #(conj % (assoc item :items []))))
+
+                  ; acc[-1].items[acc[-1].items.last.items]
+                  3 (update-in acc [(dec (count acc)) :items (dec (count (:items (last acc)))) :items]
+                               #(conj % item))))
+              [] sequence))))
 
 (let [input (edn/read-string (slurp input-file-path))]
   (println (json/generate-string
             (sequence-to-nested input)
-            {:pretty true})))
+            {:pretty true}
+            ,)))
