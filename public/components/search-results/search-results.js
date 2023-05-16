@@ -53,6 +53,10 @@ class SearchResults extends HTMLElement {
     )
   }
 
+  clear() {
+    this.results.replaceChildren()
+  }
+
   #highlight(label, term) {
     // Using group capture we make sure to pass back correct case (rice vs Rice).
     return label.replaceAll(

@@ -12,11 +12,7 @@ class Autocomplete extends HTMLElement {
   connectedCallback() {
     this.results; this.worker
 
-    // Timeout is a terrible solution for this, but I cannot get
-    // either of these to work:
-    // - this.results load listener
-    // - document's DOMContentLoaded
-    setTimeout(() => {
+    customElements.whenDefined("search-results").then(() => {
       this.worker.addEventListener("error", (event) => {
         this.results.showError(event)
       })
@@ -24,7 +20,7 @@ class Autocomplete extends HTMLElement {
       this.worker.addEventListener("message", (event) => {
         this.results.showResults(event.data, this.value)
       })
-    }, 250)
+    })
   }
 
   disconnectedCallback() {
@@ -62,7 +58,7 @@ class Autocomplete extends HTMLElement {
     if (this.value.length > 2) {
       this.worker.postMessage(this.value)
     } else {
-      this.results.replaceChildren()
+      this.results.clear()
     }
   }
 }
