@@ -1,4 +1,5 @@
-(ns macros)
+(ns macros
+  (:require ["fs" :as fs]))
 
 (defmacro inline-resource [path]
-  (slurp path))
+  (fs/readFileSync path))
