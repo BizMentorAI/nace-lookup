@@ -1,4 +1,5 @@
 import { tag, createStyleLink } from "framework"
+import { dev } from "config"
 
 class Layout extends HTMLElement {
   constructor() {
@@ -57,7 +58,9 @@ class Layout extends HTMLElement {
   }
 
   updateScreenDebugInfo() {
-    this.screen.innerHTML = this.screenDebugInfo().join(" ")
+    if (dev) {
+      this.screen.innerHTML = this.screenDebugInfo().join(" ")
+    }
   }
 
   screenSize() {
