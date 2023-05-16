@@ -38,58 +38,61 @@ let filtered_l6_items11 = cherry_core.reduce.call(null, function (acc, l4_item) 
 let filtered_l6_items12 = cherry_core.filter.call(null, function (l6_item) {
 return match_l6_item.call(null, l6_item, regexp4);
 }, cherry_core.keyword("items").call(null, l4_item));
-if (cherry_core.truth_(cherry_core.not.call(null, cherry_core.empty_QMARK_.call(null, filtered_l6_items12)))) {
-return cherry_core.apply.call(null, cherry_core.conj, acc, filtered_l6_items12);} else {
+let extended_l6_items13 = cherry_core.map.call(null, function (l6_item) {
+return cherry_core.assoc.call(null, l6_item, cherry_core.keyword("l4Item"), cherry_core.array_map(cherry_core.keyword("code"), cherry_core.keyword("code").call(null, l4_item), cherry_core.keyword("label"), cherry_core.keyword("label").call(null, l4_item)));
+}, filtered_l6_items12);
+if (cherry_core.truth_(cherry_core.not.call(null, cherry_core.empty_QMARK_.call(null, extended_l6_items13)))) {
+return cherry_core.apply.call(null, cherry_core.conj, acc, extended_l6_items13);} else {
 return acc;}
 }, cherry_core.vector(), cherry_core.keyword("items").call(null, l1_item));
 if (cherry_core.truth_(cherry_core.empty_QMARK_.call(null, filtered_l6_items11))) {
 null} else {
 xf.call(null, acc, cherry_core.dissoc.call(null, l1_item, cherry_core.keyword("items")));
-let seq__1317 = cherry_core.seq.call(null, filtered_l6_items11);
-let chunk__1418 = null;
-let count__1519 = 0;
-let i__1620 = 0;
+let seq__1418 = cherry_core.seq.call(null, filtered_l6_items11);
+let chunk__1519 = null;
+let count__1620 = 0;
+let i__1721 = 0;
 while(true){
-if (cherry_core.truth_((i__1620 < count__1519))) {
-let l6_item21 = cherry_core._nth.call(null, chunk__1418, i__1620);
-xf.call(null, acc, cherry_core.assoc.call(null, l6_item21, cherry_core.keyword("l4"), l1_item.call(null, cherry_core.keyword("label"))));
+if (cherry_core.truth_((i__1721 < count__1620))) {
+let l6_item22 = cherry_core._nth.call(null, chunk__1519, i__1721);
+xf.call(null, acc, l6_item22);
 null;
-let G__22 = seq__1317;
-let G__23 = chunk__1418;
-let G__24 = count__1519;
-let G__25 = cherry_core.unchecked_inc.call(null, i__1620);
-seq__1317 = G__22;
-chunk__1418 = G__23;
-count__1519 = G__24;
-i__1620 = G__25;
+let G__23 = seq__1418;
+let G__24 = chunk__1519;
+let G__25 = count__1620;
+let G__26 = cherry_core.unchecked_inc.call(null, i__1721);
+seq__1418 = G__23;
+chunk__1519 = G__24;
+count__1620 = G__25;
+i__1721 = G__26;
 continue;
 } else {
-let temp__22496__auto__26 = cherry_core.seq.call(null, seq__1317);
-if (cherry_core.truth_(temp__22496__auto__26)) {
-let seq__1327 = temp__22496__auto__26;
-if (cherry_core.truth_(cherry_core.chunked_seq_QMARK_.call(null, seq__1327))) {
-let c__22611__auto__28 = cherry_core.chunk_first.call(null, seq__1327);
-let G__29 = cherry_core.chunk_rest.call(null, seq__1327);
-let G__30 = c__22611__auto__28;
-let G__31 = cherry_core.count.call(null, c__22611__auto__28);
-let G__32 = 0;
-seq__1317 = G__29;
-chunk__1418 = G__30;
-count__1519 = G__31;
-i__1620 = G__32;
+let temp__22496__auto__27 = cherry_core.seq.call(null, seq__1418);
+if (cherry_core.truth_(temp__22496__auto__27)) {
+let seq__1428 = temp__22496__auto__27;
+if (cherry_core.truth_(cherry_core.chunked_seq_QMARK_.call(null, seq__1428))) {
+let c__22611__auto__29 = cherry_core.chunk_first.call(null, seq__1428);
+let G__30 = cherry_core.chunk_rest.call(null, seq__1428);
+let G__31 = c__22611__auto__29;
+let G__32 = cherry_core.count.call(null, c__22611__auto__29);
+let G__33 = 0;
+seq__1418 = G__30;
+chunk__1519 = G__31;
+count__1620 = G__32;
+i__1721 = G__33;
 continue;
 } else {
-let l6_item33 = cherry_core.first.call(null, seq__1327);
-xf.call(null, acc, cherry_core.assoc.call(null, l6_item33, cherry_core.keyword("l4"), l1_item.call(null, cherry_core.keyword("label"))));
+let l6_item34 = cherry_core.first.call(null, seq__1428);
+xf.call(null, acc, l6_item34);
 null;
-let G__34 = cherry_core.next.call(null, seq__1327);
-let G__35 = null;
-let G__36 = 0;
+let G__35 = cherry_core.next.call(null, seq__1428);
+let G__36 = null;
 let G__37 = 0;
-seq__1317 = G__34;
-chunk__1418 = G__35;
-count__1519 = G__36;
-i__1620 = G__37;
+let G__38 = 0;
+seq__1418 = G__35;
+chunk__1519 = G__36;
+count__1620 = G__37;
+i__1721 = G__38;
 continue;
 }}};break;
 }
@@ -108,11 +111,11 @@ return cherry_core.persistent_BANG_.call(null, cherry_core.into.call(null, cherr
 }
 ;
 var handle_message = function (event) {
-let search_term38 = event.data;
-console.log("Worker received:", ({ "term": search_term38 }));
-let result39 = filter_items.call(null, data, search_term38);
-console.log("Worker returned:", cherry_core.clj__GT_js.call(null, result39));
-return postMessage(cherry_core.clj__GT_js.call(null, result39));
+let search_term39 = event.data;
+console.log("Worker received:", ({ "term": search_term39 }));
+let result40 = filter_items.call(null, data, search_term39);
+console.log("Worker returned:", cherry_core.clj__GT_js.call(null, result40));
+return postMessage(cherry_core.clj__GT_js.call(null, result40));
 }
 ;
 onmessage = handle_message;

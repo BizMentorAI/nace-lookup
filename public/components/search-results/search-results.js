@@ -6,6 +6,7 @@ class SearchResults extends HTMLElement {
     super()
     this.attachShadow({mode: "open"})
     this.shadowRoot.appendChild(this.style)
+    this.shadowRoot.appendChild(this.modal)
     this.shadowRoot.appendChild(this.results)
   }
 
@@ -17,6 +18,10 @@ class SearchResults extends HTMLElement {
     return this._results ||= tag("div", {id: "results"})
   }
 
+  get modal() {
+    return this._modal ||= tag("bm-modal")
+  }
+
   showResults(items, term) {
     this.results.replaceChildren
     (...items.map((item) => (
@@ -25,8 +30,9 @@ class SearchResults extends HTMLElement {
            html: this.#highlight(item.label, term)}),
           (div) => {
             div.addEventListener("click", (event) => {
-              console.log(event)
-              console.log(item)
+              // TODO: Could we somehow get event.currentTarget
+              // so we could highlight it (the last visited item)?
+              this.modal.displayItem(item)
             })
           }))))
   }

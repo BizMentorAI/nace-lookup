@@ -4,22 +4,9 @@
 // <form method="dialog"><button>OK</button></form>
 // <form> elements can close a <dialog> if they have the attribute method="dialog" or if the button used to submit the form has formmethod="dialog" set. In this case, the state of the form controls are saved, not submitted, the <dialog> closes, and the returnValue property gets set to the value of the button that was used to save the form's state.
 
-// const button = tag("button", "OK")
-// button.addEventListener("click", (_) => dialog.close())
-// const dialog = tag("dialog", ["<h3>Test</h3>", button])
-// this.shadowRoot.appendChild(dialog)
-// dialog.open()
-
-              // TODO: Observed attributes.
-
 import { tag, tap, createStyleLink } from "framework"
-import { errorEmail } from "config"
 
 class Modal extends HTMLElement {
-  static get observedAttributes() {
-    return ["item"]
-  }
-
   constructor() {
     super()
     this.attachShadow({mode: "open"})
@@ -31,14 +18,40 @@ class Modal extends HTMLElement {
     return this._style ||= createStyleLink("components/modal/modal.css")
   }
 
+  get details() {
+    return this._details ||= tag("div", {id: "details"})
+  }
+
   get modal() {
-    return this._modal ||= tap(tag("modal"), (modal) => {
-      modal.appendChild(tag("button", {formmethod: "dialog"}, "OK"))
+    return this._modal ||= tap(tag("dialog"), (modal) => {
+      modal.appendChild(tag("h3", "Details"))
+      modal.appendChild(this.details)
+      modal.appendChild(tag("form", tag("button", {type: "submit", formmethod: "dialog"}, "OK")))
     })
   }
 
-  attributeChangedCallback(attr, oldValue, newValue) {
-    console.log(`Changing ${attr}`, {oldValue, newValue})
+  displayItem(item) {
+    console.log(item)
+    this.details.replaceChildren(
+      tap(tag("dl"), (dl) => {
+        dl.appendChild(tag("dt", "L4 label"))
+        dl.appendChild(tag("dd", item.l4Item.label))
+
+        dl.appendChild(tag("dt", "L4 code"))
+        dl.appendChild(tag("dd", {class: "code"}, item.l4Item.code))
+
+        dl.appendChild(tag("dt", "L6 label"))
+        dl.appendChild(tag("dd", item.label))
+
+        dl.appendChild(tag("dt", "L6 code"))
+        dl.appendChild(tag("dd", {class: "code"}, item.code))
+
+        if (item.extra) {
+          dl.appendChild(tag("p", {class: "includes"}, item.extra))
+        }
+      }))
+
+    this.modal.showModal()
   }
 }
 

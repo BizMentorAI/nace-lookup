@@ -1,0 +1,29 @@
+@import "/theme.css";
+
+dt {
+  float: left;
+  clear: left;
+  font-weight: bold;
+}
+
+dd {
+  margin: 0 0 0 80px;
+  padding: 0 0 0.5em 0;
+}
+
+button {
+  float: right;
+}
+
+.includes {
+  font-style: italic;
+}
+
+h3 {
+  text-align: center;
+}
+
+dialog::backdrop {
+  /* background: var(--backdrop); */
+  background: rgba(54, 78, 79, 0.45);
+}
