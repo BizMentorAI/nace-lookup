@@ -4,36 +4,37 @@
     body))
 
 (def data (js/await (fetch-data)))
-(js/console.log data)
+;(js/console.log data)
 
-; TODO: consider using transducers instead.
-(defn- match-l6-item [fields search-term]
-  (first (filter
-          (fn [field]
-            (.match field (new js/RegExp (str "\\b" search-term) "i")))
-          fields)))
+(defn- match-l6-item [fields regexp]
+  (first (filter #(.match % regexp) fields)))
 
-(defn- match-l6-items [items search-term]
-  (filter (fn [^:js {:keys [code label extra]}]
-            (when (match-l6-item [label extra] search-term)
-              {:code code :label label})) items))
+(defn data-transducer [search-term xf]
+  (let [regexp (new js/RegExp (str "\\b" search-term) "i")]
+    (fn
+      ([] (xf))
 
-(defn- item-matches [^:js {:keys [code label items]} search-term]
-  (let [matched-items (match-l6-items items search-term)]
-    (when-not (empty? matched-items)
-      {:code code :label label :items matched-items})))
+      ([acc input]
+       (doseq [l4-item (:items input)]
+         (xf acc l4-item)
+         (doseq [l6-item (:items l4-item)]
+           (when (match-l6-item [(:label l6-item) (:extra l6-item)] regexp)
+             (xf acc l6-item))))
+       acc)
+
+      ([result] result))))
 
 (defn- filter-items [data search-term]
-  ; TODO: Rework for L1 -> L4 -> L6 structure.
-  (reduce (fn [acc l4-item]
-            (let [match-result (item-matches l4-item search-term)]
-              (if match-result (conj acc match-result) acc))) [] data))
+  (into []
+        (partial data-transducer search-term)
+        (js->clj data {:keywordize-keys true})))
 
 (defn handle-message [event]
   (let [search-term event.data]
     (js/console.log "Worker received:" #js {:term search-term})
     (let [result (filter-items data search-term)]
-      (js/postMessage (clj->js result)))))
+      (js/console.log "CLJ" result)
+      (js/console.log "JS" (clj->js result))
+      (js/postMessage result))))
 
-;(set! js/self.onmessage handle-message)
 (set! onmessage handle-message)

@@ -18,6 +18,8 @@ class SearchResults extends HTMLElement {
   }
 
   showResults(items, term) {
+    console.log(`showResults: ${term}`, items)
+    // TODO: change this to flat.
     this.results.replaceChildren(...
       items.reduce((elements, { label, items }) => {
         elements.push(tag("div", {className: "l4-item"} , label))
@@ -33,11 +35,12 @@ class SearchResults extends HTMLElement {
     )
   }
 
+  // TODO: Global link styling, no highlight, nicer colour.
   showError() {
     this.results.replaceChildren(
       tag("div", {id: "error"}, [
         tag("h3", "Error"),
-        tag("p", `An unexpected error occurred. We'd be very thankful if you could write us to ${errorEmail} and let us know. Thank you!`)
+        tag("p", `An unexpected error occurred. We'd be very thankful if you could write us to <a href="mailto:${errorEmail}">${errorEmail}</a> and let us know. Thank you!`)
       ])
     )
   }
