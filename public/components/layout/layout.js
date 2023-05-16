@@ -7,10 +7,13 @@ class Layout extends HTMLElement {
     this.attachShadow({mode: "open"})
 
     this.shadowRoot.appendChild(this.style)
-    this.shadowRoot.appendChild(this.screen)
     this.shadowRoot.appendChild(this.header)
-    this.shadowRoot.appendChild(this.main)
-    this.shadowRoot.appendChild(this.footer)
+
+    this.style.addEventListener("load", (_) => {
+      this.shadowRoot.appendChild(this.screen)
+      this.shadowRoot.appendChild(this.main)
+      this.shadowRoot.appendChild(this.footer)
+    })
 
     // Fix page height for mobile Safari.
     // Doing this in CSS doesn't work as Chrome matches it also.

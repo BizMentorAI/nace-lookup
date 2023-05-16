@@ -5,7 +5,9 @@ class Footer extends HTMLElement {
     super()
     this.attachShadow({mode: "open"})
     this.shadowRoot.appendChild(this.style)
-    this.shadowRoot.appendChild(this.footer)
+    this.style.addEventListener("load", (e) => {
+      this.shadowRoot.appendChild(this.footer)
+    })
   }
 
   get style() {

@@ -36,7 +36,7 @@ class Autocomplete extends HTMLElement {
       input.placeholder = "🔎  Type in a product or service keyword."
       // Autocorrect is Safari-only.
       // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search
-      input.autocorrect = "off" // can I use false here? Alternative way with setAttribute.
+      input.autocorrect = "off"
       input.autofocus = true
       input.addEventListener("input", (_) => this.handleInput())
     })
