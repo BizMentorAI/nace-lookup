@@ -1,23 +1,23 @@
+(js/console.log "Worker loaded")
 (ns workers.autocomplete.autocomplete
-  (:require-macros [macros :refer [inline-resource]]))
+  ;(:require-macros [macros :refer (inline-readme)])
+  ; NOTE: This doesn't work with workers.autocomplete.transducer like we're used to in CLJ.
+  (:require ["/workers/autocomplete/transducer.js" :refer (transducer)]))
 
 ; Does inlining work?
-(def r (inline-resource "/Users/jakub/Documents/Projects/bizmentor/nace-finder-modern/README.org"))
-(js/console.log r)
-
-
+;(def r (inline-resource "/Users/jakub/Documents/Projects/bizmentor/nace-finder-modern/README.org"))
+;; (def r (inline-readme))
+;; (js/console.log r)
 
 (defn ^:async fetch-data []
-                                        ; TODO: The JSON path should come from a variable (tangling).
+  ; TODO: The JSON path should come from a variable (tangling).
   (let [response (js/await (js/fetch "/workers/autocomplete/data.json"))
         body (js/await (.json response))] body))
 
 (def data (js->clj (js/await (fetch-data)) {:keywordize-keys true}))
 
 (defn- filter-items [data search-term]
-  ;(persistent! (into [] (partial data-transducer search-term) data))
-  []
-  )
+  (persistent! (into [] (partial transducer search-term) data)))
 
 (defn handle-message [event]
   (let [search-term event.data]

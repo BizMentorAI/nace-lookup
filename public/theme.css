@@ -14,3 +14,12 @@
   --error-bg: indianred;
   --error-fg: white;
 }
+
+a {
+  color: mediumblue;
+  text-decoration: none;
+}
+
+a:visited {
+  color: mediumblue;
+}

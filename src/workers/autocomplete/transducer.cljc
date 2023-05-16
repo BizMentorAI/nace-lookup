@@ -1,15 +1,12 @@
-; Usage:
-; (persistent! (into [] (partial data-transducer search-term) data))
-
-;; (ns workers.autocomplete.transducer
-;;   "...")
+(ns workers.autocomplete.transducer
+  "Usage: (persistent! (into [] (partial transducer search-term) data))")
 
 (defn- match-l6-item [item regexp]
   (let [fields [(:label item) (:extra item)]]
-    (first (filter #(.match % regexp) fields))))
+    (first (filter #(.match % regexp) fields)))) ; <-- CLJC
 
-(defn data-transducer [search-term xf]
-  (let [regexp (new js/RegExp (str "\\b" search-term) "i")]
+(defn transducer [search-term xf]
+  (let [regexp (new js/RegExp (str "\\b" search-term) "i")] ; <-- CLJC
     (fn
       ([] (xf))
 
@@ -40,4 +37,6 @@
              (xf acc l6-item))))
        acc)
 
-      ([result] result))))
+      ([result]
+  (js/console.log "res" result) ;;;;;;;
+       result))))

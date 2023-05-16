@@ -14,7 +14,7 @@
 
 (defn compile [{:keys [type path] :as event}]
   (try
-    (when (and (write-events type) (re-find #"/[a-z-]+\.cljs$" path))
+    (when (and (write-events type) (re-find #"/[a-z-]+\.clj[sc]$" path))
       (shell (str "npx cherry compile " path)))
     (catch Exception e (println e))))
 

@@ -10,7 +10,24 @@ class Autocomplete extends HTMLElement {
   }
 
   connectedCallback() {
-    this.worker
+    this.results; this.worker
+
+    // This should happen once both results and worker is loaded,
+    // but I can't see to be able to use "load" event listener.
+    setTimeout(() => {
+      console.log("Setting up listeners")
+      console.log(this.worker)
+      console.log(this.results)
+      this.worker.addEventListener("error", (event) => {
+        console.log("X:ERR")
+        this.results.showError(event)
+      })
+
+      this.worker.addEventListener("message", (event) => {
+        console.log("X:MSG")
+        this.results.showResults(event.data, this.value)
+      })
+    }, 500)
   }
 
   disconnectedCallback() {
@@ -27,6 +44,7 @@ class Autocomplete extends HTMLElement {
       // Autocorrect is Safari-only.
       // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/search
       input.autocorrect = "off"
+      input.autofocus = true
       input.addEventListener("input", (_) => this.handleInput())
     })
   }
@@ -36,10 +54,7 @@ class Autocomplete extends HTMLElement {
   }
 
   get worker() {
-    return this._worker ||= (
-      createWorker("/workers/autocomplete/autocomplete.js",
-                   (event) => this.results.showResults(event.data, this.value),
-                   (event) => this.results.showError(event)))
+    return this._worker ||= createWorker("/workers/autocomplete/autocomplete.js")
   }
 
   get value() {
