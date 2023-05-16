@@ -27,8 +27,8 @@
 
      (doseq [[key value] (dissoc opts :is)]
        (case key
-         "html" (set! (. element -innerHTML) value)
-         "class" (set! (. element -className) value)
+         :html  (set! (. element -innerHTML) value)
+         :class (set! (. element -className) value)
          (.setAttribute element (name key) value)))
 
      (when content (set-content element (js->clj content)))

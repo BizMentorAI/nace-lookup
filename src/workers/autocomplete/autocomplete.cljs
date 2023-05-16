@@ -5,8 +5,9 @@
 (def data (js->clj (js/await (fetch-data)) {:keywordize-keys true}))
 ;(js/console.log (clj->js data))
 
-(defn- match-l6-item [fields regexp]
-  (first (filter #(.match % regexp) fields)))
+(defn- match-l6-item [item regexp]
+  (let [fields [(:label item) (:extra item)]]
+    (first (filter #(.match % regexp) fields))))
 
 (defn data-transducer [search-term xf]
   (let [regexp (new js/RegExp (str "\\b" search-term) "i")]
@@ -14,16 +15,23 @@
       ([] (xf))
 
       ([acc l1-item]
-       (doseq [l4-item (:items l1-item)]
-         (let [filtered-l6-items
-               (filter (fn [l6-item]
-                         (when (match-l6-item [(:label l6-item) (:extra l6-item)] regexp)
-                           (xf acc l6-item)))
+       (let [filtered-l6-items
+             (reduce
+              (fn [acc l4-item]
+                (let [filtered-l6-items
+                      (filter
+                       (fn [l6-item] (match-l6-item l6-item regexp))
                        (:items l4-item))]
-           (when-not (empty? filtered-l6-items)
-             (xf acc (dissoc l1-item :items)) ; This needs raising to L1 level
-             (doseq [l6-item filtered-l6-items]
-               (xf acc (assoc l6-item :l4 (l4-item :label)))))))
+                  (if-not (empty? filtered-l6-items)
+                    (apply conj acc filtered-l6-items)
+                    acc)))
+              []
+              (:items l1-item))]
+
+         (when-not (empty? filtered-l6-items)
+           (xf acc (dissoc l1-item :items))
+           (doseq [l6-item filtered-l6-items]
+             (xf acc (assoc l6-item :l4 (l1-item :label))))))
        acc)
 
       ([result] result))))

@@ -13,7 +13,7 @@ class Footer extends HTMLElement {
   }
 
   get footer() {
-    return this._footer ||= tag("footer", "&copy; 2023")
+    return this._footer ||= tag("footer", {html: "&copy; 2023"})
   }
 }
 

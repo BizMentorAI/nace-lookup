@@ -10,12 +10,12 @@
   margin-top: 7px;
 }
 
-#search-results {
+#results {
   margin-top: 10px;
   border: 1px solid var(--neutral-dark);
 }
 
-#search-results:empty {
+#results:empty {
   display: none;
 }
 

@@ -31,7 +31,7 @@ class SearchResults extends HTMLElement {
     this.results.replaceChildren(
       tag("div", {id: "error"}, [
         tag("h3", "Error"),
-        tag("p", `An unexpected error occurred. We'd be very thankful if you could write us to <a href="mailto:${errorEmail}">${errorEmail}</a> and let us know. Thank you!`)
+        tag("p", {html: `An unexpected error occurred. We'd be very thankful if you could write us to <a href="mailto:${errorEmail}">${errorEmail}</a> and let us know. Thank you!`})
       ])
     )
   }
