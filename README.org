@@ -8,6 +8,7 @@ NACE code finder.
 ** Motivation
 - Web components is the only front-end tech I know of that allows real decoupling. You can use a custom element even before it gets actually loaded. That allows a great flexibility and speed as we're loading everything asynchronously.
 - Web components seems powerful enough to replace React and in doing so, we could get rid of the hell of NPM dependencies as well as constant debugging of WebPack and similar time wasting activities.
+- Use the best tool for the job: DOM-heavy manipulations are easier done in JavaScript, whereas calculations are better served by Clojure.
 - Cherry fits into that asynchronous paradigm, allowing to easily compile single files rather than the whole bundle as other tools tend to do (such as WebPack, ShadowCLJS and the likes).
 - Cherry offers modern JS features like modules, ~await~/~async~ etc.
 
@@ -16,6 +17,7 @@ NACE code finder.
 - Stay completely out of the NPM land and avoid dependency hell.
 - No huge bundles, no more pain with WebPack and the likes.
 - Load asynchronously, first layout so we render fast, then whatever's needed.
+- Test logic-heavy code (and don't bother with ther rest).
 
 ** Custom tangling
 - Stay as close to the browser as possible.
