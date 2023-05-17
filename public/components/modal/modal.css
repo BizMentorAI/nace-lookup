@@ -17,6 +17,7 @@ form {
 }
 
 button {
+  margin-top: 24px;
   flex-grow: 1;
   font-size: 12pt;
   width: 75px;
