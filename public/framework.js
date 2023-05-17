@@ -179,14 +179,16 @@ return tag.call(null, "link", ({ "rel": "stylesheet", "href": path }));
 ;
 var createWorker = function (path, msg_handler, err_handler) {
 let worker77 = new Worker(path, ({ "type": "module" }));
-worker77.addEventListener("message", msg_handler);
+if (cherry_core.truth_(msg_handler)) {
+worker77.addEventListener("message", msg_handler)};
 worker77.addEventListener("messageerror", function (_PERCENT_1) {
 return console.log("Message can't be decoded", _PERCENT_1);
 });
 worker77.addEventListener("error", function (_PERCENT_1) {
 return console.error("Worker error", _PERCENT_1);
 });
-worker77.addEventListener("error", err_handler);
+if (cherry_core.truth_(err_handler)) {
+worker77.addEventListener("error", err_handler)};
 return worker77;
 }
 ;

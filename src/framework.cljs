@@ -43,12 +43,14 @@
   ; const name = path.replace(/.*\/([^/]+)\.js$/, '$1')
   (let [worker (new js/Worker path #js {:type "module"})]
     ;(.addEventListener worker "message" #(js/console.log "Message" %))
-    (.addEventListener worker "message" msg-handler)
+    (when msg-handler
+      (.addEventListener worker "message" msg-handler))
 
     (.addEventListener worker "messageerror" #(js/console.log "Message can't be decoded" %))
 
     (.addEventListener worker "error" #(js/console.error "Worker error" %))
-    (.addEventListener worker "error" err-handler)
+    (when err-handler
+      (.addEventListener worker "error" err-handler))
     worker))
 
 (defn tap [value fun]
