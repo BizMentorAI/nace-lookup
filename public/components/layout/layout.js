@@ -20,7 +20,8 @@ class Layout extends HTMLElement {
     // Doing this in CSS doesn't work as Chrome matches it also.
     // https://allthingssmitty.com/2020/05/11/css-fix-for-100vh-in-mobile-webkit
     if (this.isMobileSafari()) {
-      this.shadowRoot.appendChild(tag("style", ":host { min-height: -webkit-fill-available; }"))
+      //this.shadowRoot.appendChild(tag("style", ":host { min-height: -webkit-fill-available; }"))
+      this.style.minHeight = "-webkit-fill-available"
     }
 
     this.updateScreenDebugInfo()
