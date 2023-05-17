@@ -10,13 +10,13 @@ class Footer extends HTMLElement {
   constructor() {
     super()
     this.attachShadow({mode: "open"})
-    this.shadowRoot.appendChild(this.style)
-    this.style.addEventListener("load", (e) => {
+    this.shadowRoot.appendChild(this.styleLink)
+    this.styleLink.addEventListener("load", (e) => {
       this.shadowRoot.appendChild(this.footer)
     })
   }
 
-  get style() {
+  get styleLink() {
     return this._style ||= createStyleLink("components/footer/footer.css")
   }
 

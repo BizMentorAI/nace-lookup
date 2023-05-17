@@ -1,4 +1,4 @@
-import { tag, createStyleLink, showBlock } from "framework"
+import { tag, createStyleLink, unhide } from "framework"
 import { dev } from "config"
 
 class Layout extends HTMLElement {
@@ -6,14 +6,14 @@ class Layout extends HTMLElement {
     super()
     this.attachShadow({mode: "open"})
 
-    this.shadowRoot.appendChild(this.style)
+    this.shadowRoot.appendChild(this.styleLink)
     this.shadowRoot.appendChild(this.header)
     this.shadowRoot.appendChild(this.screen)
     this.shadowRoot.appendChild(this.main)
     this.shadowRoot.appendChild(this.footer)
 
-    this.style.addEventListener("load", (_) => {
-      showBlock(...[dev && this.screen, this.main, this.footer])
+    this.styleLink.addEventListener("load", (_) => {
+      unhide(...[dev && this.screen, this.main, this.footer])
     })
 
     // Fix page height for mobile Safari.
@@ -30,7 +30,7 @@ class Layout extends HTMLElement {
     window.addEventListener("resize", e => this.updateScreenDebugInfo())
   }
 
-  get style() {
+  get styleLink() {
     return this._style ||= createStyleLink("components/layout/layout.css")
   }
 

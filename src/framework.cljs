@@ -3,9 +3,11 @@
         object[property] = value
       }")
 
-(defn showBlock [& args]
+(defn unhide [& args]
   (doseq [element (remove #(not (. % -nodeName)) args)]
-    (set-property element.style "display" "block")))
+    ; Turns out that it's impossible to delete a property from the style object.
+    ;(js-delete element.style "display")
+    (set-property element.style "display" "")))
 
 (defn- set-content [element content]
   (cond

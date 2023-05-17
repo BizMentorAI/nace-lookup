@@ -2,7 +2,7 @@ import * as cherry_core from '/js/cljs_core.js';
 function set_property(object, property, value) {
         object[property] = value
       };
-var showBlock = (function () {
+var unhide = (function () {
  let f1 = function (var_args) {
 let args25 = cherry_core.array.call(null);
 let len__22109__auto__6 = cherry_core.alength.call(null, arguments);
@@ -29,7 +29,7 @@ let i__1317 = 0;
 while(true){
 if (cherry_core.truth_((i__1317 < count__1216))) {
 let element18 = cherry_core._nth.call(null, chunk__1115, i__1317);
-set_property.call(null, element18.style, "display", "block");
+set_property.call(null, element18.style, "display", "");
 null;
 let G__19 = seq__1014;
 let G__20 = chunk__1115;
@@ -57,7 +57,7 @@ i__1317 = G__29;
 continue;
 } else {
 let element30 = cherry_core.first.call(null, seq__1024);
-set_property.call(null, element30.style, "display", "block");
+set_property.call(null, element30.style, "display", "");
 null;
 let G__31 = cherry_core.next.call(null, seq__1024);
 let G__32 = null;
@@ -341,4 +341,4 @@ return value;
 }
 ;
 
-export { showBlock, set_content, set_style, create_element, tag, createStyleLink, createWorker, tap }
+export { unhide, set_content, set_style, create_element, tag, createStyleLink, createWorker, tap }
