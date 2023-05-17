@@ -39,13 +39,16 @@ dialog {
     display: flex;
     max-width: 600px; /* FIXME: This shouldn't be here, rather in above ones. */
   }
+
+  .code {
+    margin-right: 30px;
+  }
 }
 
 .code {
   font-size: 24pt;
   color: var(--neutral-medium);
   text-align: right;
-  margin-right: 30px;
   width: 120px;
 }
 
