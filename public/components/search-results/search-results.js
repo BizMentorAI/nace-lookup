@@ -1,5 +1,5 @@
 import { tag, tap, createStyleLink } from "framework"
-import { dev, errorEmail } from "config"
+import { inspectMode, errorEmail } from "config"
 
 class SearchResults extends HTMLElement {
   constructor() {
@@ -50,29 +50,23 @@ class SearchResults extends HTMLElement {
                   tag("h3", "Business NACE code is"),
                   tag("div", {class: "row"}, [
                     tag("div", {class: "code"}, item.l4Item.code),
-                    tag("div", {class: "label"}, item.l4Item.label)
-                  ]),
+                    tag("div", {class: "label"}, item.l4Item.label)]),
 
                   tag("h3", "Product or service CPA code is"),
                   tag("div", {class: "row"}, [
                     tag("div", {class: "code"}, item.code),
-                    tag("div", {class: "label"}, item.label)
-                  ]),
+                    tag("div", {class: "label"}, item.label)]),
 
-                  tag("p",
-                      {style: {
-                        maxWidth: "500px",
-                        textStyle: "italic",
-                        display: dev ? "block" : "none"}
-                      }, item.extra)
-                ])
-              })
-            }))))
+                  tag("p", {style: {
+                            maxWidth: "500px",
+                            textStyle: "italic",
+                            display: inspectMode ? "block" : "none"}},
+                      item.extra)])})}))))
     } else {
-      this.results.replaceChildren(tag("div", {class: "no-results"}, [
-        tag("h3", {class: "heading"}, "Nothing found"),
-        tag("p", "Try a shorter keyword.")
-      ]))
+      this.results.replaceChildren(
+        tag("div", {class: "no-results"}, [
+         tag("h3", {class: "heading"}, "Nothing found"),
+         tag("p", "Try a shorter keyword.")]))
     }
   }
 
@@ -81,9 +75,7 @@ class SearchResults extends HTMLElement {
     this.results.replaceChildren(
       tag("div", {id: "error"}, [
         tag("h3", "Error"),
-        tag("p", {html: `An unexpected error occurred. We'd be very thankful if you could write us to <a href="mailto:${errorEmail}">${errorEmail}</a> and let us know. Thank you!`})
-      ])
-    )
+        tag("p", {html: `An unexpected error occurred. We'd be very thankful if you could write us to <a href="mailto:${errorEmail}">${errorEmail}</a> and let us know. Thank you!`})]))
   }
 
   clear() {

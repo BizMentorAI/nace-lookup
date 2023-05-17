@@ -1,5 +1,5 @@
 import { tag, hide, unhideAll, createStyleLink, unhide } from "framework"
-import { dev } from "config"
+import { inspectMode } from "config"
 
 class Layout extends HTMLElement {
   #resizeHandler
@@ -14,7 +14,7 @@ class Layout extends HTMLElement {
     this.shadowRoot.appendChild(this.footer)
 
     this.styleLink.addEventListener("load", (_) => {
-      unhideAll(...[dev && this.screen, this.main, this.footer])
+      unhideAll(...[inspectMode && this.screen, this.main, this.footer])
     })
 
     this.#updateScreenDebugInfo()
@@ -23,7 +23,7 @@ class Layout extends HTMLElement {
   }
 
   connectedCallback() {
-    if (dev) {
+    if (inspectMode) {
       window.addEventListener("resize", this.#resizeHandler)
     }
   }
@@ -64,7 +64,7 @@ class Layout extends HTMLElement {
   }
 
   #updateScreenDebugInfo() {
-    if (dev) {
+    if (inspectMode) {
       this.screen.innerHTML = this.#screenDebugInfo().join(" ")
     }
   }
