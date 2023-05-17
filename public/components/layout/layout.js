@@ -81,5 +81,5 @@ customElements.define("bm-layout", Layout)
 
 // Import map doesn't work with import().
 // Doesn't it? It most definitely should based on the docs.
-import("../header/header.js")
-import("../footer/footer.js")
+import("./header/header.js")
+import("./footer/footer.js")

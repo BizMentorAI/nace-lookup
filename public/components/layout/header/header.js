@@ -12,7 +12,7 @@ class Header extends HTMLElement {
   }
 
   get styleLink() {
-    return this._style ||= createStyleLink("components/header/header.css")
+    return this._style ||= createStyleLink("components/layout/header/header.css")
   }
 
   get logo() {

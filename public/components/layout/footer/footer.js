@@ -17,7 +17,7 @@ class Footer extends HTMLElement {
   }
 
   get styleLink() {
-    return this._style ||= createStyleLink("components/footer/footer.css")
+    return this._style ||= createStyleLink("components/layout/footer/footer.css")
   }
 
   get footer() {
