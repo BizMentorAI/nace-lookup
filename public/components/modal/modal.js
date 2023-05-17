@@ -31,29 +31,8 @@ class Modal extends HTMLElement {
     })
   }
 
-  displayItem(item) {
-    this.details.replaceChildren(
-      ...[
-        tag("h3", "Business NACE code is"),
-        tag("div", {class: "row"}, [
-          tag("div", {class: "code"}, item.l4Item.code),
-          tag("div", {class: "label"}, item.l4Item.label)
-        ]),
-
-        tag("h3", "Product or service CPA code is"),
-        tag("div", {class: "row"}, [
-          tag("div", {class: "code"}, item.code),
-          tag("div", {class: "label"}, item.label)
-        ]),
-
-        tag("p",
-            {style: {
-              maxWidth: "500px",
-              textStyle: "italic",
-              display: dev ? "block" : "none"}
-            }, item.extra)
-      ])
-
+  renderBody(children) {
+    this.details.replaceChildren(...children)
     this.modal.showModal()
   }
 }

@@ -1,0 +1,21 @@
+.code {
+  font-size: 24pt;
+  color: var(--neutral-medium);
+}
+
+.label {
+  padding: 7px;
+}
+
+@media (min-width: 600px) {
+  .row {
+    display: flex;
+    max-width: 600px; /* FIXME: This shouldn't be here, rather in above ones. */
+  }
+
+  .code {
+    margin-right: 30px;
+    text-align: right;
+    width: 120px;
+  }
+}

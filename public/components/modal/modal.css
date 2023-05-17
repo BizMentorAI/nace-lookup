@@ -4,17 +4,6 @@
  * https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
  */
-dt {
-  float: left;
-  clear: left;
-  font-weight: bold;
-}
-
-dd {
-  margin: 0 0 0 80px;
-  padding: 0 0 0.5em 0;
-  max-width: 250px;
-}
 
 form {
   display: flex;
@@ -36,28 +25,6 @@ h2 {
 dialog {
   border-radius: 7px;
   border: 1px solid var(--neutral-dark);
-}
-
-.code {
-  font-size: 24pt;
-  color: var(--neutral-medium);
-}
-
-.label {
-  padding: 7px;
-}
-
-@media (min-width: 600px) {
-  .row {
-    display: flex;
-    max-width: 600px; /* FIXME: This shouldn't be here, rather in above ones. */
-  }
-
-  .code {
-    margin-right: 30px;
-    text-align: right;
-    width: 120px;
-  }
 }
 
 dialog::backdrop {

@@ -1,5 +1,5 @@
 import { tag, tap, createStyleLink } from "framework"
-import { errorEmail } from "config"
+import { dev, errorEmail } from "config"
 
 class SearchResults extends HTMLElement {
   constructor() {
@@ -43,7 +43,29 @@ class SearchResults extends HTMLElement {
               div.addEventListener("click", (event) => {
                 // TODO: Could we somehow get event.currentTarget
                 // so we could highlight it (the last visited item)?
-                this.modal.displayItem(item)
+                this.modal.renderBody([
+                  // TODO: Should be somewhere in setup.
+                  createStyleLink("components/search-results/modal.css"),
+
+                  tag("h3", "Business NACE code is"),
+                  tag("div", {class: "row"}, [
+                    tag("div", {class: "code"}, item.l4Item.code),
+                    tag("div", {class: "label"}, item.l4Item.label)
+                  ]),
+
+                  tag("h3", "Product or service CPA code is"),
+                  tag("div", {class: "row"}, [
+                    tag("div", {class: "code"}, item.code),
+                    tag("div", {class: "label"}, item.label)
+                  ]),
+
+                  tag("p",
+                      {style: {
+                        maxWidth: "500px",
+                        textStyle: "italic",
+                        display: dev ? "block" : "none"}
+                      }, item.extra)
+                ])
               })
             }))))
     } else {
