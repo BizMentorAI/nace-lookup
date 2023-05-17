@@ -6,5 +6,6 @@
     (testing "returns next month (Nov -> Dec)"
       (is (= "" "")))))
 
+; bb src/workers/autocomplete/transducer_test.cljc
 ; clj -M src/workers/autocomplete/transducer_test.clj
 (run-tests 'workers.autocomplete.transducer-test)

@@ -26,4 +26,4 @@ class Header extends HTMLElement {
   }
 }
 
-customElements.define("bm-header", Header, {extends: "header"})
+customElements.define("bm-header", Header)

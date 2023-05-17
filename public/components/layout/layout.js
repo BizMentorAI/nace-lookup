@@ -39,7 +39,7 @@ class Layout extends HTMLElement {
   }
 
   get header() {
-    return this._header ||= tag("header", {is: "bm-header"})
+    return this._header ||= tag("bm-header")
   }
 
   #main
@@ -49,7 +49,7 @@ class Layout extends HTMLElement {
 
   #footer
   get footer() {
-    return this.#footer ||= tag("footer", {is: "bm-footer", style: {display: "none"}})
+    return this.#footer ||= tag("bm-footer", {style: {display: "none"}})
   }
 
   isMobileSafari() {
