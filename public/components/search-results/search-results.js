@@ -5,37 +5,53 @@ class SearchResults extends HTMLElement {
   constructor() {
     super()
     this.attachShadow({mode: "open"})
-    this.shadowRoot.appendChild(this.style)
+    this.shadowRoot.appendChild(this.styleLink)
     this.shadowRoot.appendChild(this.modal)
     this.shadowRoot.appendChild(this.results)
+
+    if (this.dataset.items) {
+      const items = JSON.parse(this.dataset.items)
+      const term  = this.dataset.term || ""
+      this.showResults(term, items)
+    }
   }
 
-  get style() {
-    return this._style ||= createStyleLink("components/search-results/search-results.css")
+  #styleLink
+  get styleLink() {
+    return this.#styleLink ||= createStyleLink("components/search-results/search-results.css")
   }
 
+  #results
   get results() {
-    return this._results ||= tag("div", {id: "results"})
+    return this.#results ||= tag("div", {id: "results"})
   }
 
+  #modal
   get modal() {
-    return this._modal ||= tag("bm-modal")
+    return this.#modal ||= tag("bm-modal")
   }
 
   // connectedCallback -> emit event
-  showResults(items, term) {
-    this.results.replaceChildren
-    (...items.map((item) => (
-      tap(tag("div",
-              {class: `l${item.level === 1 ? 1 : 6}-item`,
-               html: item.level === 1 ? item.label : this.#highlight(item.label, term)}),
-          (div) => {
-            div.addEventListener("click", (event) => {
-              // TODO: Could we somehow get event.currentTarget
-              // so we could highlight it (the last visited item)?
-              this.modal.displayItem(item)
-            })
-          }))))
+  showResults(term, items) {
+    if (items.length) {
+      this.results.replaceChildren
+      (...items.map((item) => (
+        tap(tag("div",
+                {class: `l${item.heading ? 1 : 6}-item`,
+                html: item.heading ? item.label : this.#highlight(item.label, term)}),
+            (div) => {
+              div.addEventListener("click", (event) => {
+                // TODO: Could we somehow get event.currentTarget
+                // so we could highlight it (the last visited item)?
+                this.modal.displayItem(item)
+              })
+            }))))
+    } else {
+      this.results.replaceChildren(tag("div", {class: "no-results"}, [
+        tag("h3", {class: "heading"}, "Nothing found"),
+        tag("p", "Try a shorter keyword.")
+      ]))
+    }
   }
 
   // TODO: Global link styling, no highlight, nicer colour.

@@ -18,7 +18,7 @@ class Autocomplete extends HTMLElement {
       })
 
       this.worker.addEventListener("message", (event) => {
-        this.results.showResults(event.data, this.value)
+        this.results.showResults(this.value, event.data)
       })
     })
   }

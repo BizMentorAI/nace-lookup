@@ -37,3 +37,16 @@
 .highlight {
   background: var(--highlight);
 }
+
+.no-results {
+  text-align: center;
+}
+
+.no-results .heading {
+  color: slategrey;
+}
+
+.no-results p {
+  font-style: italic;
+  color: var(--neutral-medium);
+}

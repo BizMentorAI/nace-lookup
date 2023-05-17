@@ -58,6 +58,7 @@ Current size (as of 16/5/2023):
 - [[https://app.netlify.com/sites/rococo-panda-597db4/overview][Netlify app dashboard]].
 
 * Roadmap
+** TODO Watch: compile everything on start
 ** TODO Run tests on CI
 ** TODO Move into Org files in bm-core
 Then compile to here.

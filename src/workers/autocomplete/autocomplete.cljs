@@ -18,10 +18,16 @@
 (defn- filter-items [data search-term]
   (persistent! (into [] (partial transducer search-term) data)))
 
+(defn- convert-format [items]
+  (map (fn [item]
+         (if (= (:level item) 1)
+           (assoc (dissoc item :level) :heading true)
+           (dissoc item :level))) items))
+
 (defn handle-message [event]
   (let [search-term event.data]
     (js/console.log "Worker received:" #js {:term search-term})
-    (let [result (filter-items data search-term)]
+    (let [result (convert-format (filter-items data search-term))]
       (js/console.log "Worker returned:" (clj->js result))
       (js/postMessage (clj->js result)))))
 

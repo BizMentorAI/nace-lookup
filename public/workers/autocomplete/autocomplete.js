@@ -12,14 +12,22 @@ var filter_items = function (data, search_term) {
 return cherry_core.persistent_BANG_.call(null, cherry_core.into.call(null, cherry_core.vector(), cherry_core.partial.call(null, transducer, search_term), data));
 }
 ;
+var convert_format = function (items) {
+return cherry_core.map.call(null, function (item) {
+if (cherry_core.truth_(cherry_core._EQ_.call(null, cherry_core.keyword("level").call(null, item), 1))) {
+return cherry_core.assoc.call(null, cherry_core.dissoc.call(null, item, cherry_core.keyword("level")), cherry_core.keyword("heading"), true);} else {
+return cherry_core.dissoc.call(null, item, cherry_core.keyword("level"));}
+}, items);
+}
+;
 var handle_message = function (event) {
 let search_term3 = event.data;
 console.log("Worker received:", ({ "term": search_term3 }));
-let result4 = filter_items.call(null, data, search_term3);
+let result4 = convert_format.call(null, filter_items.call(null, data, search_term3));
 console.log("Worker returned:", cherry_core.clj__GT_js.call(null, result4));
 return postMessage(cherry_core.clj__GT_js.call(null, result4));
 }
 ;
 onmessage = handle_message;
 
-export { fetch_data, data, filter_items, handle_message }
+export { fetch_data, data, filter_items, convert_format, handle_message }

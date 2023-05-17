@@ -1,5 +1,9 @@
 @import "/theme.css";
 
+/*
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
+ */
 dt {
   float: left;
   clear: left;
