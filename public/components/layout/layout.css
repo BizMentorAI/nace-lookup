@@ -21,13 +21,21 @@ bm-header {
 }
 
 main {
-  /* background: yellow; */
   flex: 1;
+  padding: 0 35px;
 }
 
 @media (min-width: 600px) {
   main {
-    margin: 25px auto;
+    width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  main {
+    width: 600px;
+    margin: 0 auto;
   }
 }
 

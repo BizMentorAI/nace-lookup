@@ -29,11 +29,13 @@ button {
 }
 
 h3 {
+  margin-top: 0;
   text-align: center;
 }
 
 dialog {
   border-radius: 7px;
+  border: 1px solid var(--neutral-dark);
 }
 
 dialog::backdrop {

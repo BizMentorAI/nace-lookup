@@ -3,7 +3,7 @@
 :host {
   padding: 20px 0 30px 0;
   text-align: center;
-  color: var(--neutral-medium);
+  color: var(--neutral-light);
 }
 
 @media (max-width: 600px) {

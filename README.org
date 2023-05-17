@@ -1,96 +1,54 @@
-TODO: ADD CLJS devtools
-
-src: cherry
-public/js: write JS modules directly there
-  normally it'd be in an org file, but it'll do for now.
-
-npx cherry compile src/workers/autocomplete.cljs && cat src/workers/autocomplete.mjs | sed 's/cherry-cljs\/lib/\/js/' > public/workers/autocomplete/autocomplete.js && bat public/workers/autocomplete/autocomplete.js
-
 * About
 
 NACE code finder.
 
-* Usage
-** Development
-#+name: start
-#+begin_src sh :task yes :doc "Start a development server"
-  # et README.org start
-  npx shadow-cljs watch app
-#+end_src
-
-** Production build
-#+name: release
-#+begin_src sh :task yes :doc "Build the production JS"
-  # et README.org release
-  npx shadow-cljs release app
-#+end_src
-
-* Deployment
-- Build the production code: ~et README.org release~.
-- Back-up the ~public~ directory so it won't be overwritten by Git: ~cp -R public p~.
-- Switch to the ~build~ branch: ~git co build~.
-- Update the ~public~ directory: ~rm -rf public && mv p public~.
-- Commit the fecker: ~git add public && git commit -m "New release"~.
-
-#+name: deploy
-#+begin_src sh :task yes :doc "Build & deploy"
-  # et README.org deploy
-  npx shadow-cljs release app && cp -R public p && git co build && rm -rf public && mv p public && gca WIP && git co -
-#+end_src
-
-** Hosting
-https://app.netlify.com/sites/rococo-panda-597db4/overview
-https://rococo-panda-597db4.netlify.app/
-- [[https://precious-creponne-1ffef4.netlify.app/][Deployed app]].
-- [[https://app.netlify.com/sites/precious-creponne-1ffef4/overview][Netlify app dashboard]].
-
-
-
-(defclass BMElement
-  (extends js/HTMLElement)
-
-  (constructor [this]
-               (super)
-               (attach-shadow this))
-
-  Object
-  (connectedCallback [this] (js/console.log :connected this))
-  (disconnectedCallback [this] (js/console.log :disconnected this))
-  (adoptedCallback [this] (js/console.log :adopted this))
-  (attributeChangedCallback [this attr old-val new-val]
-                            (js/console.log :attr-changed this
-                                            {:attr attr :old-val old-val :new-val new-val})))
-
-
-
-CLJS vs pure EcmaScript for Web Components
-
-Ecosystem
+* Objectives
 - Stay completely out of the NPM land. Components should be nothing but pure Web Components.
 - Use any Cherry/Squint-compatible package.
     - That means no cljs.spec.alpha.
     - Can we compile bm-data with Cherry? (No multimethods unfortunately.)
         - If not, include as-is (compiled bundle), that's OK too, although being able to just copy the code rather than the bundle would be preferable.
 
-Async
+** Async
 - First load layout, so it shows fast, then nace-finder/current-page (load both via defer).
 - Styles via <link>, so we don't block on styling and keep the JS bundles small. Load the UI first.
 
-Custom tangling
+** Custom tangling
 - Stay as close to the browser as possible.
 - Allow for minify/uglify (with --production).
 - Allow transpile with Cherry/Squint (or anything else for the matter).
 
-var worker = new Worker("PrimeWorker.js");
-worker.postMessage(myData);
-The worker then receives an onMessage event that provides a copy of the data.
-When the worker calls postMessage(), it fires the onMessage event, which triggers this function in the web page:
-receivedWorkerMessage
-There are work-arounds so it doesn't have to be a separate file. It wants code as string though, so probably not worth it.
+* Usage
+** Development
+- Run ~watch.clj~ ([[./.env/bin/watch.clj]]) in order to compile changed ~.clj[sc]~ files.
+- And any web server, for instance: ~(cd public; python3 -m http.server 8000)~.
 
-connectedCallback: create a worker
-disconnectedCallback: GC the worker
+** Inspect mode
+- Add ~?dev~ to your URL in order to see the app in the inspect mode.
 
-If it's CLJS, it's a worker.
+*** Features
+- Screen info in top right corner.
+- Shows extra data (if available) in the modal.
 
-Alternatively we can use import(), but I don't think we should do that at all, workers are preferred.
+** Production build
+As the only dependency is Cherry itself (which comes minified), there's no need for any production build.
+
+Current size (as of 16/5/2023):
+
+- Custom code (~public/**/*.{js,css,html}~) only ~84 kb~.
+- Cherry (~public/js/cljs_core.js~) ~332 kb~ (minified).
+- Data (~public/workers/autocomplete/data.json~) ~812 kb~ (async).
+
+** Hosting
+- [[https://rococo-panda-597db4.netlify.app/][Deployed app]].
+- [[https://app.netlify.com/sites/rococo-panda-597db4/overview][Netlify app dashboard]].
+
+* Roadmap
+** TODO Move into Org files in bm-core
+Then compile to here.
+
+Is it userful for this purpose?
+
+It definitely adds complexity (CI: compile -> commit & push to /this/ repo from the master one).
+
+It'd make it easier to share the codebase though with something like ~:tangle copy~.
