@@ -25,9 +25,11 @@
 
     <!-- Things that shouldn't be defered. -->
     <script type="text/javascript">
+      const $ = document.querySelector.bind(document)
+      const $$ = document.querySelectorAll.bind(document)
+
       function ready(selector, fn) {
-        const element = document.querySelector(selector)
-        window.addEventListener("DOMContentLoaded", (e) => fn(element))
+        window.addEventListener("DOMContentLoaded", (e) => fn($(selector)))
       }
     </script>
 
@@ -99,21 +101,21 @@
 
     <div class="card">
       <search-results id="results"></search-results>
-    </div>
 
-    <script>
-      ready("search-results#results", (element) => {
-        element.showResults("web", [
-          {heading: true, label: "Modern web tech stack"},
-          {label: "Web components"},
-          {label: "ClojureScript & Cherry"},
-          {label: "Babashka for REPL & testing"},
-          {heading: true, label: "Spiritual endeavours"},
-          {label: "Energy healing"},
-          {label: "Mediumship"},
-        ])
-      })
-    </script>
+      <script>
+        ready("search-results#results", (element) => {
+          element.showResults("web", [
+            {heading: true, label: "Modern web tech stack"},
+            {label: "Web components"},
+            {label: "ClojureScript & Cherry"},
+            {label: "Babashka for REPL & testing"},
+            {heading: true, label: "Spiritual endeavours"},
+            {label: "Energy healing"},
+            {label: "Mediumship"},
+          ])
+        })
+      </script>
+    </div>
 
     <h3>Nothing found</h3>
     <div class="card">
@@ -123,14 +125,26 @@
     <h3>Error</h3>
     <div class="card">
       <search-results id="error"></search-results>
+
+      <script>
+        ready("search-results#error", (element) => {
+          element.showError()
+        })
+      </script>
     </div>
 
-    <script>
-      ready("search-results#error", (element) => {
-        element.showError()
-      })
-    </script>
-
     <h2>Modal</h2>
+    <div class="card" style="text-align: center">
+      <button id="show-modal">Show modal</button>
+      <bm-modal></bm-modal>
+
+      <script>
+        ready("bm-modal", (element) => {
+          $("#show-modal").addEventListener("click", (e) => {
+            element.renderBody([tag("p", "Hello world!")])
+          })
+        })
+      </script>
+    </div>
   </body>
 </html>
