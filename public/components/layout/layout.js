@@ -1,4 +1,4 @@
-import { tag, createStyleLink } from "framework"
+import { tag, createStyleLink, showBlock } from "framework"
 import { dev } from "config"
 
 class Layout extends HTMLElement {
@@ -8,11 +8,15 @@ class Layout extends HTMLElement {
 
     this.shadowRoot.appendChild(this.style)
     this.shadowRoot.appendChild(this.header)
+    this.shadowRoot.appendChild(this.screen)
+    this.shadowRoot.appendChild(this.main)
+    this.shadowRoot.appendChild(this.footer)
 
     this.style.addEventListener("load", (_) => {
-      this.shadowRoot.appendChild(this.screen)
-      this.shadowRoot.appendChild(this.main)
-      this.shadowRoot.appendChild(this.footer)
+      if (dev) showBlock(this.screen)
+      showBlock(this.main, this.footer)
+
+      showBlock(...[dev && this.screen, this.main, this.footer])
     })
 
     // Fix page height for mobile Safari.
@@ -35,19 +39,21 @@ class Layout extends HTMLElement {
   }
 
   get screen() {
-    return this._screen ||= tag("div", {id: "screen"})
+    return this._screen ||= tag("div", {id: "screen", style: {display: "none"}})
   }
 
   get header() {
     return this._header ||= tag("header", {is: "bm-header"})
   }
 
+  #main
   get main() {
-    return this._main ||= tag("main", tag("slot"))
+    return this.#main ||= tag("main", {style: {display: "none"}}, tag("slot"))
   }
 
+  #footer
   get footer() {
-    return this._footer ||= tag("footer", {is: "bm-footer"})
+    return this.#footer ||= tag("footer", {is: "bm-footer", style: {display: "none"}})
   }
 
   isMobileSafari() {
@@ -55,7 +61,7 @@ class Layout extends HTMLElement {
     return ua.match(/iPhone|iPad/i) && ua.match(/WebKit/i) && !ua.match(/CriOS/i)
   }
 
-  screenDebugInfo() {
+  #screenDebugInfo() {
     return [`${this.isMobileSafari() ? "(i)" : ""}${this.screenSize()[0]}`,
             `${window.innerWidth}x${window.innerHeight}`,
             `(${window.devicePixelRatio})`]
@@ -63,7 +69,7 @@ class Layout extends HTMLElement {
 
   updateScreenDebugInfo() {
     if (dev) {
-      this.screen.innerHTML = this.screenDebugInfo().join(" ")
+      this.screen.innerHTML = this.#screenDebugInfo().join(" ")
     }
   }
 

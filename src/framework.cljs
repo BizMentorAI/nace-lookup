@@ -2,6 +2,10 @@
         object[property] = value
       }")
 
+(defn showBlock [& args]
+  (doseq [element (remove #(not (. % -nodeName)) args)]
+    (set-property element.style "display" "block")))
+
 (defn- set-content [element content]
   (cond
     (string? content)
