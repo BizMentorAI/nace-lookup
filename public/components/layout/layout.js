@@ -18,10 +18,9 @@ class Layout extends HTMLElement {
     // Fix page height for mobile Safari.
     // Doing this in CSS doesn't work as Chrome matches it also.
     // https://allthingssmitty.com/2020/05/11/css-fix-for-100vh-in-mobile-webkit
-    console.log(this.shadowRoot)
     if (this.isMobileSafari()) {
       //this.shadowRoot.style.minHeight = "-webkit-fill-available"
-      this.shadowRoot.appendChild(tag("style", ":host { min-height: -webkit-fill-available; }"))
+      //this.shadowRoot.appendChild(tag("style", ":host { min-height: -webkit-fill-available; }"))
     }
 
     this.updateScreenDebugInfo()
