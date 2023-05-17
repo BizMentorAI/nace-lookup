@@ -19,6 +19,9 @@ NACE code finder.
 - Load asynchronously, first layout so we render fast, then whatever's needed.
 - Test logic-heavy code (and don't bother with ther rest).
 
+** CSS
+- Inline CSS meant for critical render — preload the rest.
+
 ** Custom tangling
 - Stay as close to the browser as possible.
 - Allow transpile with Cherry/Squint (or anything else for the matter).

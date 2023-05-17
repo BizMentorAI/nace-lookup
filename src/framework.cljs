@@ -1,3 +1,7 @@
+(js* "function set_property(object, property, value) {
+        object[property] = value
+      }")
+
 (defn- set-content [element content]
   (cond
     (string? content)
@@ -8,6 +12,10 @@
 
     (vector? content)
     (doseq [i content] (set-content element i))))
+
+(defn- set-style [element style]
+  (doseq [[property value] style]
+    (set-property element.style (name property) value)))
 
 (defn- create-element [name opts]
   (if (:is opts)
@@ -29,6 +37,7 @@
        (case key
          :html  (set! (. element -innerHTML) value)
          :class (set! (. element -className) value)
+         :style (set-style element value)
          (.setAttribute element (name key) value)))
 
      (when content (set-content element (js->clj content)))

@@ -12,11 +12,6 @@ dd {
   max-width: 250px;
 }
 
-.includes {
-  font-style: italic;
-  max-width: 250px;
-}
-
 form {
   display: flex;
 }
@@ -28,7 +23,7 @@ button {
   height: 35px;
 }
 
-h3 {
+h2 {
   margin-top: 0;
   text-align: center;
 }
@@ -36,6 +31,23 @@ h3 {
 dialog {
   border-radius: 7px;
   border: 1px solid var(--neutral-dark);
+}
+
+.row {
+  display: flex;
+  max-width: 600px; /* FIXME: This shouldn't be here, rather in above ones. */
+}
+
+.code {
+  font-size: 24pt;
+  color: var(--neutral-medium);
+  text-align: right;
+  margin-right: 30px;
+  width: 120px;
+}
+
+.label {
+  padding: 7px;
 }
 
 dialog::backdrop {

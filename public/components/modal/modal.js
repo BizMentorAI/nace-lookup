@@ -25,7 +25,7 @@ class Modal extends HTMLElement {
 
   get modal() {
     return this._modal ||= tap(tag("dialog"), (modal) => {
-      modal.appendChild(tag("h3", "Details"))
+      modal.appendChild(tag("h2", "Details"))
       modal.appendChild(this.details)
       modal.appendChild(tag("form", tag("button", {type: "submit", formmethod: "dialog"}, "OK")))
     })
@@ -33,23 +33,26 @@ class Modal extends HTMLElement {
 
   displayItem(item) {
     this.details.replaceChildren(
-      tap(tag("dl"), (dl) => {
-        dl.appendChild(tag("dt", "L4 label"))
-        dl.appendChild(tag("dd", item.l4Item.label))
+      ...[
+        tag("h3", "Business NACE code is"),
+        tag("div", {class: "row"}, [
+          tag("div", {class: "code"}, item.l4Item.code),
+          tag("div", {class: "label"}, item.l4Item.label)
+        ]),
 
-        dl.appendChild(tag("dt", "L4 code"))
-        dl.appendChild(tag("dd", {class: "code"}, item.l4Item.code))
+        tag("h3", "Product or service CPA code is"),
+        tag("div", {class: "row"}, [
+          tag("div", {class: "code"}, item.code),
+          tag("div", {class: "label"}, item.label)
+        ]),
 
-        dl.appendChild(tag("dt", "L6 label"))
-        dl.appendChild(tag("dd", item.label))
-
-        dl.appendChild(tag("dt", "L6 code"))
-        dl.appendChild(tag("dd", {class: "code"}, item.code))
-
-        if (dev && item.extra) {
-          dl.appendChild(tag("p", {class: "includes"}, item.extra))
-        }
-      }))
+        tag("p",
+            {style: {
+              maxWidth: "500px",
+              textStyle: "italic",
+              display: dev ? "block" : "none"}
+            }, item.extra)
+      ])
 
     this.modal.showModal()
   }
