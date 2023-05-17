@@ -3,18 +3,28 @@
         object[property] = value
       }")
 
-(defn unhide [& args]
-  (doseq [element (remove #(not (. % -nodeName)) args)]
-    ; Turns out that it's impossible to delete a property from the style object.
-    ;(js-delete element.style "display")
-    (set-property element.style "display" "")))
+(defn element? [thing]
+  (boolean (. thing -nodeName)))
+
+(defn hide [element]
+  (set-property element.style "display" "none")
+  element)
+
+; Turns out that it's impossible to delete a property from the style object.
+;(js-delete element.style "display")
+(defn unhide [element]
+  (set-property element.style "display" "")
+  element)
+
+(defn unhideAll [& args]
+  (clj->js (map unhide (filter element? args))))
 
 (defn- set-content [element content]
   (cond
     (string? content)
     (set! (.-innerText element) content)
 
-    (. content -nodeName)
+    (element? content)
     (.appendChild element content)
 
     (vector? content)

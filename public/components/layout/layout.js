@@ -1,4 +1,4 @@
-import { tag, createStyleLink, unhide } from "framework"
+import { tag, hide, unhideAll, createStyleLink, unhide } from "framework"
 import { dev } from "config"
 
 class Layout extends HTMLElement {
@@ -14,7 +14,7 @@ class Layout extends HTMLElement {
     this.shadowRoot.appendChild(this.footer)
 
     this.styleLink.addEventListener("load", (_) => {
-      unhide(...[dev && this.screen, this.main, this.footer])
+      unhideAll(...[dev && this.screen, this.main, this.footer])
     })
 
     this.#updateScreenDebugInfo()
@@ -39,7 +39,7 @@ class Layout extends HTMLElement {
 
   #screen
   get screen() {
-    return this.#screen ||= tag("div", {id: "screen", style: {display: "none"}})
+    return this.#screen ||= hide(tag("div", {id: "screen"}))
   }
 
   #header
