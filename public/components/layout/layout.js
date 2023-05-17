@@ -13,9 +13,6 @@ class Layout extends HTMLElement {
     this.shadowRoot.appendChild(this.footer)
 
     this.style.addEventListener("load", (_) => {
-      if (dev) showBlock(this.screen)
-      showBlock(this.main, this.footer)
-
       showBlock(...[dev && this.screen, this.main, this.footer])
     })
 
@@ -23,8 +20,7 @@ class Layout extends HTMLElement {
     // Doing this in CSS doesn't work as Chrome matches it also.
     // https://allthingssmitty.com/2020/05/11/css-fix-for-100vh-in-mobile-webkit
     if (this.isMobileSafari()) {
-      this.shadowRoot.style.minHeight = "-webkit-fill-available"
-      //this.shadowRoot.appendChild(tag("style", ":host { min-height: -webkit-fill-available; }"))
+      this.shadowRoot.appendChild(tag("style", ":host { min-height: -webkit-fill-available; }"))
     }
 
     this.updateScreenDebugInfo()

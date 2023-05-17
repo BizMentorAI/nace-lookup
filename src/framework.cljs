@@ -1,3 +1,4 @@
+; TODO: Does Cherry has other way of doing this?
 (js* "function set_property(object, property, value) {
         object[property] = value
       }")
