@@ -74,7 +74,12 @@
 
     (.addEventListener worker "messageerror" #(js/console.log "Message can't be decoded" %))
 
-    (.addEventListener worker "error" #(js/console.error "Worker error" %))
+    (.addEventListener worker "error"
+                       (fn [event]
+                         (js/console.error
+                          (str "Worker error: " event.message
+                               " in " event.filename ":" event.lineno))
+                         (js/console.error event)))
     (when err-handler
       (.addEventListener worker "error" err-handler))
     worker))

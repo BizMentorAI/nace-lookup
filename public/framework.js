@@ -291,8 +291,9 @@ worker122.addEventListener("message", msg_handler)};
 worker122.addEventListener("messageerror", function (_PERCENT_1) {
 return console.log("Message can't be decoded", _PERCENT_1);
 });
-worker122.addEventListener("error", function (_PERCENT_1) {
-return console.error("Worker error", _PERCENT_1);
+worker122.addEventListener("error", function (event) {
+console.error(cherry_core.str.call(null, "Worker error: ", event.message, " in ", event.filename, ":", event.lineno));
+return console.error(event);
 });
 if (cherry_core.truth_(err_handler)) {
 worker122.addEventListener("error", err_handler)};

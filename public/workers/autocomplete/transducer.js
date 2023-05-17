@@ -2,12 +2,12 @@ import * as cherry_core from '/js/cljs_core.js';
 var match_l6_item = function (item, regexp) {
 let fields1 = cherry_core.vector(cherry_core.keyword("label").call(null, item), cherry_core.keyword("extra").call(null, item));
 return cherry_core.first.call(null, cherry_core.filter.call(null, function (_PERCENT_1) {
-return _PERCENT_1.match(regexp);
+return cherry_core.re_find.call(null, regexp, _PERCENT_1);
 }, fields1));
 }
 ;
 var transducer = function (search_term, xf) {
-let regexp2 = new RegExp(cherry_core.str.call(null, "\\b", search_term), "i");
+let regexp2 = cherry_core.re_pattern.call(null, cherry_core.str.call(null, "(?i)\\b", search_term));
 let f3 = function (var_args) {
 let G__67 = cherry_core.alength.call(null, arguments);
 switch (G__67) {case 0:

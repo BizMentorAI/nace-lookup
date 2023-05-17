@@ -3,10 +3,10 @@
 
 (defn- match-l6-item [item regexp]
   (let [fields [(:label item) (:extra item)]]
-    (first (filter #(.match % regexp) fields)))) ; <-- CLJC
+    (first (filter #(re-find regexp %) fields))))
 
 (defn transducer [search-term xf]
-  (let [regexp (new js/RegExp (str "\\b" search-term) "i")] ; <-- CLJC
+  (let [regexp (re-pattern (str "(?i)\\b" search-term))]
     (fn
       ([] (xf))
 
@@ -37,4 +37,5 @@
              (xf acc l6-item))))
        acc)
 
+      ; TODO: Put persistent here? Will it work in bb/JVM?
       ([result] result))))
