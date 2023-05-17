@@ -34,9 +34,11 @@ dialog {
   border: 1px solid var(--neutral-dark);
 }
 
-.row {
-  display: flex;
-  max-width: 600px; /* FIXME: This shouldn't be here, rather in above ones. */
+@media (min-width: 600px) {
+  .row {
+    display: flex;
+    max-width: 600px; /* FIXME: This shouldn't be here, rather in above ones. */
+  }
 }
 
 .code {

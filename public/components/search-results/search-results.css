@@ -34,13 +34,6 @@
   font-size: 13px;
 }
 
-.code {
-  display: inline-block;
-  width: 70px;
-}
-
-.label {}
-
 .highlight {
   background: var(--highlight);
 }

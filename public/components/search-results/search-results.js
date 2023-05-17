@@ -27,13 +27,8 @@ class SearchResults extends HTMLElement {
     this.results.replaceChildren
     (...items.map((item) => (
       tap(tag("div",
-              {class: `l${item.level === 1 ? 1 : 6}-item`},
-              item.level === 1
-              ?
-                item.label
-              :
-                [tag("span", {class: "code"}, item.code),
-                 tag("span", {class: "label", html: this.#highlight(item.label, term)})]),
+              {class: `l${item.level === 1 ? 1 : 6}-item`,
+               html: item.level === 1 ? item.label : this.#highlight(item.label, term)}),
           (div) => {
             div.addEventListener("click", (event) => {
               // TODO: Could we somehow get event.currentTarget
