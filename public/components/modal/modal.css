@@ -34,6 +34,15 @@ dialog {
   border: 1px solid var(--neutral-dark);
 }
 
+.code {
+  font-size: 24pt;
+  color: var(--neutral-medium);
+}
+
+.label {
+  padding: 7px;
+}
+
 @media (min-width: 600px) {
   .row {
     display: flex;
@@ -42,18 +51,9 @@ dialog {
 
   .code {
     margin-right: 30px;
+    text-align: right;
+    width: 120px;
   }
-}
-
-.code {
-  font-size: 24pt;
-  color: var(--neutral-medium);
-  text-align: right;
-  width: 120px;
-}
-
-.label {
-  padding: 7px;
 }
 
 dialog::backdrop {
