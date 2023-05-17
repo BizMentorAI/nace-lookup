@@ -2,21 +2,30 @@
 
 NACE code finder.
 
-* Objectives
-- Stay completely out of the NPM land. Components should be nothing but pure Web Components.
-- Use any Cherry/Squint-compatible package.
-    - That means no cljs.spec.alpha.
-    - Can we compile bm-data with Cherry? (No multimethods unfortunately.)
-        - If not, include as-is (compiled bundle), that's OK too, although being able to just copy the code rather than the bundle would be preferable.
+* Proof-of-concept: Web components & Cherry
+/This is a small project to make sure web component are viable as a React replacement and that [[https://github.com/squint-cljs/cherry][Cherry]] is reasonably ready for production./
 
-** Async
-- First load layout, so it shows fast, then nace-finder/current-page (load both via defer).
-- Styles via <link>, so we don't block on styling and keep the JS bundles small. Load the UI first.
+** Motivation
+- Web components is the only front-end tech I know of that allows real decoupling. You can use a custom element even before it gets actually loaded. That allows a great flexibility and speed as we're loading everything asynchronously.
+- Web components seems powerful enough to replace React and in doing so, we could get rid of the hell of NPM dependencies as well as constant debugging of WebPack and similar time wasting activities.
+- Cherry fits into that asynchronous paradigm, allowing to easily compile single files rather than the whole bundle as other tools tend to do (such as WebPack, ShadowCLJS and the likes).
+- Cherry offers modern JS features like modules, ~await~/~async~ etc.
+
+** Objectives
+- Use native browser features.
+- Stay completely out of the NPM land and avoid dependency hell.
+- No huge bundles, no more pain with WebPack and the likes.
+- Load asynchronously, first layout so we render fast, then whatever's needed.
 
 ** Custom tangling
 - Stay as close to the browser as possible.
-- Allow for minify/uglify (with --production).
 - Allow transpile with Cherry/Squint (or anything else for the matter).
+
+** Limitations
+- Cherry doesn't support packages as of May 2023.
+  - That means no ~cljs.spec.alpha~.
+  - Can we compile ~bm-data~ with Cherry? (Multimethods?)
+    - If not, include as-is (compiled bundle), that's OK too, although being able to just copy the code rather than the bundle would be preferable.
 
 * Usage
 ** Development
