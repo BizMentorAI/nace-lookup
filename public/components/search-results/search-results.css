@@ -32,6 +32,11 @@
   color: var(--neutral-medium);
   padding: 7px;
   font-size: 13px;
+  cursor: pointer;
+}
+
+.l6-item:hover {
+  background: lightcyan;
 }
 
 .highlight {
