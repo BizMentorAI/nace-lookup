@@ -41,6 +41,10 @@
   color: snow;
 }
 
+.l6-item:hover .highlight {
+  background: orange;
+}
+
 .highlight {
   background: var(--highlight);
 }
