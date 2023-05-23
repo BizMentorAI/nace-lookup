@@ -36,7 +36,9 @@
 }
 
 .l6-item:hover {
-  background: lightcyan;
+  background: teal;
+  font-weight: 700;
+  color: snow;
 }
 
 .highlight {
