@@ -6,7 +6,7 @@ return cherry_core.re_find.call(null, regexp, _PERCENT_1);
 }, fields1));
 }
 ;
-var transducer = function (search_term, xf) {
+var transducer = function (search_term, rf) {
 let regexp2 = cherry_core.re_pattern.call(null, cherry_core.str.call(null, "(?i)\\b", search_term));
 let f3 = function (var_args) {
 let G__67 = cherry_core.alength.call(null, arguments);
@@ -23,7 +23,7 @@ default:
 throw new Error(cherry_core.str.call(null, "Invalid arity: ", cherry_core.alength.call(null, arguments)))}
 };
 f3["cljs$core$IFn$_invoke$arity$0"] = function () {
-return xf.call(null);
+return rf.call(null);
 };
 f3["cljs$core$IFn$_invoke$arity$2"] = function (acc, l1_item) {
 let filtered_l6_items9 = cherry_core.reduce.call(null, function (acc, l4_item) {
@@ -39,7 +39,7 @@ return acc;}
 }, cherry_core.vector(), cherry_core.keyword("items").call(null, l1_item));
 if (cherry_core.truth_(cherry_core.empty_QMARK_.call(null, filtered_l6_items9))) {
 null} else {
-xf.call(null, acc, cherry_core.dissoc.call(null, l1_item, cherry_core.keyword("items")));
+rf.call(null, acc, cherry_core.dissoc.call(null, l1_item, cherry_core.keyword("items")));
 let seq__1216 = cherry_core.seq.call(null, filtered_l6_items9);
 let chunk__1317 = null;
 let count__1418 = 0;
@@ -47,7 +47,7 @@ let i__1519 = 0;
 while(true){
 if (cherry_core.truth_((i__1519 < count__1418))) {
 let l6_item20 = cherry_core._nth.call(null, chunk__1317, i__1519);
-xf.call(null, acc, l6_item20);
+rf.call(null, acc, l6_item20);
 null;
 let G__21 = seq__1216;
 let G__22 = chunk__1317;
@@ -75,7 +75,7 @@ i__1519 = G__31;
 continue;
 } else {
 let l6_item32 = cherry_core.first.call(null, seq__1226);
-xf.call(null, acc, l6_item32);
+rf.call(null, acc, l6_item32);
 null;
 let G__33 = cherry_core.next.call(null, seq__1226);
 let G__34 = null;
