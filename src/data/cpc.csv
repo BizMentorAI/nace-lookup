@@ -1,4 +1,4 @@
-"ID","CPC21code","CPC21title","CPC21ExplanatoryNote"
+"ID","code","title","note"
 "1","0","Agriculture, forestry and fishery products",""
 "2","01","Products of agriculture, horticulture and market gardening",""
 "3","011","Cereals","This group includes cereals, i.e. annual plants, generally of the gramineous family, yielding grains or seeds used as such, or processed, for food, feed, seed and industrial purposes, e.g., ethanol. The denomination ""cereals"" should be limited to crops harvested for their dry grains only.
@@ -11,7 +11,7 @@ The subclasses labeled for seeds contain cereals grown specifically as seeds, wh
 This subclass does not include:
 - wheat not grown specifically for seed purposes, cf. 01112"
 "6","01112","Wheat, other","This subclass includes:
-- wheat, species of <i>Triticum</i>, mainly <i>aestivum</i> and <i>durum</i>, including common wheat of the following kinds: 
+- wheat, species of <i>Triticum</i>, mainly <i>aestivum</i> and <i>durum</i>, including common wheat of the following kinds:
 * spring wheat
 * winter wheat
 * hard wheat
@@ -125,7 +125,7 @@ Vegetables are grouped here according to botanic characteristics as follows: lea
 "41","01214","Lettuce and chicory",""
 "42","01215","Spinach",""
 "43","01216","Artichokes","This subclass includes:
-- artichokes, <i>Cynara scolymus</i> 
+- artichokes, <i>Cynara scolymus</i>
 
 This subclass does not include:
 - Jerusalem artichokes, cf. 01599"
@@ -135,10 +135,10 @@ This subclass does not include:
 - parsley, <i>Petroselinum crispum</i>
 - common purslain, <i>Portulaca oleracea</i>
 - sea kale, <i>Crambe maritima</i>
-- patience 
+- patience
 - rhubarb, <i>Rheum rhaponticum</i>
 - sorrel, <i>Rumex acetosa</i>
-- salad vegetables, other than lettuce (<i>Lactuca sativa</i>) and chicory 
+- salad vegetables, other than lettuce (<i>Lactuca sativa</i>) and chicory
 - summer and winter savory
 - tarragon
 - watercress, <i>Nasturtium officinale</i>, <i>Nasturtium microphyllum</i>
@@ -255,7 +255,7 @@ This subclass does not include:
 * litchis, lychees, <i>Litchi chinensis</i>
 * longan, mata kucing
 * pulasan, <i>Nephelium mutabile</i>
-* rambutan fruit, <i>Nephelium Lappaceum</i> 
+* rambutan fruit, <i>Nephelium Lappaceum</i>
 - giant granadillas, granadillas, purple granadillas
 - jackfruit
 - langsat, langsat fruit, <i>Lansium domesticum</i>
@@ -385,13 +385,13 @@ This subclass does not include:
 - Locust beans (carobs), <i>Ceratonia siliqua</i>"
 "117","01359","Other fruits, n.e.c.","This subclass includes:
 - persimmon
-- prickly pear, cactus fig 
+- prickly pear, cactus fig
 - bel fruit, Bengal quince, <i>Aegle marmelos</i>
 - Chinese lantern, <i>Physalis alkekengi</i>
 - Various species of <i>Diospyros</i>
 - <i>Flacourtia cataphracta</i>
 - sea-buckthorn, <i>Hippophae rhamnoides</i>
-- pomegranates 
+- pomegranates
 - tamarind
 - pitaya
 
@@ -401,7 +401,7 @@ This subclass does not include:
 "118","014","Oilseeds and oleaginous fruits","This group includes oil-bearing crops, i.e. annual and perennial plants whose seeds (oilseeds), fruits or mesocarp, nuts and kernels (oil palm) are used primarily for extraction of culinary and industrial oils and fats, excluding essential oils."
 "119","0141","Soya beans",""
 "120","01411","Soya beans, seed for planting","This subclass includes:
-- soya beans, <i>Glycine soja</i>, grown specifically for seed purposes 
+- soya beans, <i>Glycine soja</i>, grown specifically for seed purposes
 
 This subclass does not include:
 - soya beans not grown specifically for seed purposes, cf. 01412"
@@ -412,12 +412,12 @@ This subclass does not include:
 - soya beans grown specifically for seed purposes, cf. 01411"
 "122","0142","Groundnuts, excluding shelled",""
 "123","01421","Groundnuts, seed for planting","This subclass includes:
-- groundnuts (peanuts), <i>Arachis hypogaea</i>, grown specifically for seed purposes 
+- groundnuts (peanuts), <i>Arachis hypogaea</i>, grown specifically for seed purposes
 
 This subclass does not include:
 - groundnuts (peanuts) not grown specifically for seed purposes, cf. 01422"
 "124","01422","Groundnuts, in shell","This subclass includes:
-- groundnuts (peanuts), <i>Arachis hypogaea</i> 
+- groundnuts (peanuts), <i>Arachis hypogaea</i>
 
 This subclass does not include:
 - groundnuts (peanuts), <i>Arachis hypogaea</i>, grown specifically for seed purposes, cf. 01421"
@@ -466,7 +466,7 @@ This subclass does not include:
 - perilla, <i>Camellia japonica</i>
 - neem seed tree, <i>Azadirachta indica</i>
 - mohwa seeds, <i>Bassia latifolia</i>
-- oiticica tree, <i>Licania rigida</i> 
+- oiticica tree, <i>Licania rigida</i>
 - karanja
 - pungam seeds"
 "143","015","Edible roots and tubers with high starch or inulin content","This group includes roots and tubers, i.e. plants grown generally as annual crops, yielding roots, tubers, rhizomes, corms and stems that are mainly used for human consumption. Excluded from this group are roots and tubers used mainly for feed, for processing into sugar, and those classified as vegetables."
@@ -563,12 +563,12 @@ This subclass does not include:
 This subclass does not include:
 - processed cloves, cf. 23926"
 "167","01657","Ginger, raw","This subclass includes:
-- ginger, <i>Zingiber officinalie</i> 
+- ginger, <i>Zingiber officinalie</i>
 
 This subclass does not include:
 - processed ginger, including scraped ginger and ginger in brine, cf. 23927"
 "168","01658","Vanilla, raw","This subclass includes:
-- vanilla, <i>Vanilla planifolia and V. fragrans</i>, raw 
+- vanilla, <i>Vanilla planifolia and V. fragrans</i>, raw
 
 This subclass does not include:
 - processed vanilla, cf. 23928"
@@ -789,7 +789,7 @@ This subclass does not include:
 - dogs, foxes, wolves and other canids, <i>Canidae</i>
 - seals, walruses, sea lions and other pinnipeds, <i>Pinnipedia</i>
 - cats, lions, leopards and other felines, <i>Felidae</i>
-- elephants, members of <i>Elephantidae</i> 
+- elephants, members of <i>Elephantidae</i>
 - minks, otters, weasels, badgers and other <i>Mustelidae</i>
 - bears, polar bears, pandas, <i>Ursidae</i>
 - other mammals n.e.c."
@@ -813,7 +813,7 @@ This subclass does not include:
 - live animals not covered elsewhere in class 0219, including:
 * amphibians, such as:
 ** frogs
-** toads 
+** toads
 ** salamanders
 * spiders
 * insects, such as:
@@ -822,7 +822,7 @@ This subclass does not include:
 ** moths
 ** silk-worms
 * scorpions
-* worms 
+* worms
 * leeches
 
 This subclass does not include:
@@ -1393,7 +1393,7 @@ This subclass does not include:
 - farmed aquatic plants, seaweeds and algae for ornamental purpose, cf. 04913
 - farmed seaweeds and other algae, fresh, frozen or dried, whether or not ground, unfit for human consumption, cf. 04934"
 "422","04933","Wild seaweeds and other algae, fresh, frozen or dried, whether or not ground, unfit for human consumption","This subclass includes:
-- seaweeds and other algae directly harvested from the wild through fishing (ISIC 0311 and 0312), fresh, chilled, frozen or dried, whether or not ground, unfit for human consumption and used primarily for industrial, medical, or other non-food purposes 
+- seaweeds and other algae directly harvested from the wild through fishing (ISIC 0311 and 0312), fresh, chilled, frozen or dried, whether or not ground, unfit for human consumption and used primarily for industrial, medical, or other non-food purposes
 
 This subclass does not include:
 - wild aquatic plants, seaweeds and algae for ornamental purpose, cf. 04912"
@@ -1754,7 +1754,7 @@ This subclass does not include:
 * sausages
 ** of beef, pork, sheep, poultry or other meat
 ** of liver or other offal
-** of blood 
+** of blood
 * pudding
 - the following foods, when presented in sausage shape or put up in sausage casing:
 * galantines
@@ -1800,7 +1800,7 @@ This subclass does not include:
 - homogenized preparations of meat, meat offal or blood, cf. 23991
 - meat and edible offal, salted, dried, smoked or in brine:
 * of pig, cf. 21181
-* of bovines, cf. 22182 
+* of bovines, cf. 22182
 * other, cf. 22183
 - sausages and similar products of meat, offal or blood, cf. 21184
 - pâtés, rillettes, meat paste and galantines, when presented in sausage shape or put up in sausage casings, cf. 21184"
@@ -1949,7 +1949,7 @@ This subclass does not include:
 - lobsters, live, fresh or chilled, cf. 04331, 04332
 - lobsters, cooked, smoked or otherwise processed, cf. 21270"
 "610","21254","Norway lobsters, frozen, dried, salted or in brine","This subclass includes:
-- Norway lobsters (<i>Nephrops norvegicus</i>), whether in shell or not, frozen, dried, salted or in brine 
+- Norway lobsters (<i>Nephrops norvegicus</i>), whether in shell or not, frozen, dried, salted or in brine
 
 This subclass does not include:
 - Norway lobsters, live, fresh or chilled, cf. 04341, 04342
@@ -1968,7 +1968,7 @@ This subclass does not include:
 - other shrimps and prawns, cooked, smoked or otherwise processed, cf. 21270"
 "613","21259","Other crustaceans, frozen, dried, salted or in brine","This subclass includes:
 - other crustaceans, whether in shell or not, frozen, dried, salted or in brine
-- flours, meals and pellets of crustaceans, fit for human consumption 
+- flours, meals and pellets of crustaceans, fit for human consumption
 
 This subclass does not include:
 - other crustaceans, live, fresh or chilled, cf. 04391, 04392
@@ -1987,7 +1987,7 @@ This subclass does not include:
 - flours, meals and pellets of abalone, inedible, cf. 21291
 - products n.e.c. of abalone, dead abalone, abalone unfit for human consumption, cf. 21299"
 "617","21262","Oysters, frozen, smoked, dried, salted or in brine","This subclass is defined through the following headings/subheadings of the HS 2012: 0307.19 and includes:
-- oysters, whether in shell or not, frozen, dried, salted or in brine 
+- oysters, whether in shell or not, frozen, dried, salted or in brine
 - smoked oysters, whether in shell or not, whether or not cooked before or during the smoking process
 - flours, meals and pellets of oysters, fit for human consumption
 
@@ -2017,7 +2017,7 @@ This subclass does not include:
 - flours, meals and pellets of scallops, inedible, cf. 21291
 - products n.e.c. of scallops, dead scallops, scallops unfit for human consumption, cf. 21299"
 "620","21265","Clams, cockles and ark shells, frozen, smoked, dried, salted or in brine","This subclass is defined through the following headings/subheadings of the HS 2012: 0307.79 and includes:
-- clams, cockles and ark shells, whether in shell or not, frozen, dried, salted or in brine; 
+- clams, cockles and ark shells, whether in shell or not, frozen, dried, salted or in brine;
 - smoked clams, cockles and ark shells, whether in shell or not, whether or not cooked before or during the smoking process
 - flours, meals and pellets of clams, cockles and ark shells, fit for human consumption
 
@@ -2037,7 +2037,7 @@ This subclass does not include:
 - flours, meals and pellets of cuttle fish and squid, inedible, cf. 21291
 - products n.e.c. of cuttle fish and squid; dead cuttle fish and squid; cuttle fish and squid unfit for human consumption, cf. 21299"
 "622","21267","Octopus, frozen, smoked, dried, salted or in brine","This subclass is defined through the following headings/subheadings of the HS 2012: 0307.59 and includes:
-- octopus (<i>Octopus spp.</i>), whether in shell or not, frozen, dried, salted or in brine; 
+- octopus (<i>Octopus spp.</i>), whether in shell or not, frozen, dried, salted or in brine;
 - smoked octopus, whether in shell or not, whether or not cooked before or during the smoking process
 - flours, meals and pellets of octopus, fit for human consumption
 
@@ -2217,7 +2217,7 @@ This subclass does not include:
 * garlic
 * lentils
 * olives
-* onions 
+* onions
 * peppers
 * spinach
 * sweet corn
@@ -2455,7 +2455,7 @@ This subclass does not include:
 * crab fat, rendered
 * mollusc fat, rendered
 * rabbit fat, rendered
-* turtle fat, rendered 
+* turtle fat, rendered
 - lanolin, whether or not emulsified, hydrated or anhydrous
 - wool alcohols
 - wool grease olein
@@ -2526,7 +2526,7 @@ This subclass does not include:
 "771","221","Processed liquid milk, cream and whey",""
 "772","2211","Processed liquid milk",""
 "773","22110","Processed liquid milk","This subclass includes:
-- milk, partially or completely skimmed 
+- milk, partially or completely skimmed
 - milk, enriched in vitamins, mineral salts or additional natural milk constituents
 - milk, pasteurized
 - milk, homogenized
@@ -2997,8 +2997,8 @@ This subclass does not include:
 "898","23995","Sauces; mixed condiments; mustard flour and meal; prepared mustard",""
 "899","23996","Yeasts (active or inactive); other single-cell micro-organisms, dead; prepared baking powders",""
 "900","23997","Other prepared dishes and meals","This subclass includes:
-- prepared dishes and meals (i.e. dishes containing at least two distinct main ingredients; prepared, seasoned and cooked; presented in vacuum-packaged, canned or frozen form), such as: 
-* frozen pizza, quiche 
+- prepared dishes and meals (i.e. dishes containing at least two distinct main ingredients; prepared, seasoned and cooked; presented in vacuum-packaged, canned or frozen form), such as:
+* frozen pizza, quiche
 * prepared dishes and meals based on eggs, cheese, tofu, meat substitutes etc.
 * other dishes and meals n.e.c.
 
@@ -3099,7 +3099,7 @@ This subclass does not include:
 * scutched
 * rovings and slivers
 * combed
-* cordage 
+* cordage
 * cottonized, bleached or dyed
 - tow and waste of flax or true hemp
 - garneted stock obtained from rags or rope of true hemp
@@ -3582,7 +3582,7 @@ This subclass does not include:
 "1359","3337","Fuel oils n.e.c.",""
 "1360","33370","Fuel oils n.e.c.","This subclass includes:
 - fuel oil,
-- residual fuel oils, i.e. oils having a distillation range of 350ºC to 650ºC and a kinematic viscosity in the range 6 to 55 cSt at 100ºC 
+- residual fuel oils, i.e. oils having a distillation range of 350ºC to 650ºC and a kinematic viscosity in the range 6 to 55 cSt at 100ºC
 - heavy fuel oil, i.e. a blended product based on the residues from various refinery processes
 - heavy gas oil, i.e. a mixture of predominantly gas oil and fuel oil which distils in the range of approximately 380ºC to 540ºC"
 "1361","3338","Lubricants",""
@@ -3801,7 +3801,7 @@ This subclass does not include:
 - liquid biofuels derived from biomass and used in diesel engines
 
 These biofuels can be produced by:
-* chemical modification: producing a linear alkyl ester through transesterification of vegetable oils or animal fats with methanol 
+* chemical modification: producing a linear alkyl ester through transesterification of vegetable oils or animal fats with methanol
 * thermal processes, such as:
 ** gasification followed by Fischer-Tropsch synthesis
 ** pyrolysis followed by hydrogenation
@@ -4320,7 +4320,7 @@ This subclass does not include:
 "1955","41224","Flat-rolled products of alloy steel (except of silicon-electrical or high-speed steel), not further worked than cold-rolled, of a width of less than 600 mm",""
 "1956","4123","Flat-rolled products of steel, further worked than hot-rolled or cold-rolled; flat-rolled products of silicon-electrical and high-speed steel, whether or not further worked","This class does not include:
 - flat-rolled products of high-speed steel, with a width of 600 mm or more:
-* hot-rolled, cf. 41213 
+* hot-rolled, cf. 41213
 * cold-rolled, cf. 41223
 * other (i.e. further worked), cf. 41239"
 "1957","41231","Flat-rolled products of non-alloy steel, clad, plated, coated or otherwise further worked",""
@@ -4956,7 +4956,7 @@ This subclass does not include:
 - hard disk drives and other storage units where the storage media is physically inseparable from its reading or writing device, cf. 45271"
 "2407","4528","Other units of automatic data processing machines n.e.c.",""
 "2408","45281","Sound, video, network and similar cards for automatic data processing machines","This subclass includes:
-- expansion cards for automatic data processing machines, such as network, sound or video cards 
+- expansion cards for automatic data processing machines, such as network, sound or video cards
 
 This subclass does not include:
 - network communications equipment (e.g., hubs, routers, gateways) for LANS and WANS, cf. 47223"
@@ -5101,7 +5101,7 @@ This subclass does not include:
 * modems
 * radiotelegraphic transmission apparatus
 * telephone switchboards
-- telemetric signal receivers, radio-telephonic or radio-telegraphic 
+- telemetric signal receivers, radio-telephonic or radio-telegraphic
 
 This subclass does not include:
 - network cards for automatic data processing machines, cf. 45281
@@ -5468,7 +5468,7 @@ This subclass does not include:
 - bridges and viaducts of metal, concrete or other materials, for all types of land transport and for pedestrians
 - elevated highways for motor vehicle traffic"
 "2741","53222","Tunnels","This subclass includes:
-- highway, road and railway tunnels 
+- highway, road and railway tunnels
 - tunnels and related underground constructions for underground railway traffic
 
 This subclass does not include:
@@ -5535,7 +5535,7 @@ This subclass does not include:
 "2756","53262","Power plants","This subclass includes:
 - heavy electrical generating plants and equipment, including plants and equipment for nuclear-powered generating stations"
 "2757","53269","Other constructions for manufacturing","This subclass includes:
-- manufacturing facilities of basic chemicals, compounds, pharmaceuticals and other chemicals 
+- manufacturing facilities of basic chemicals, compounds, pharmaceuticals and other chemicals
 - chemical and related manufacturing facilities such as blast furnaces and coke ovens
 - iron foundries
 - specialized facilities for manufacturing, not elsewhere classified
@@ -5733,7 +5733,7 @@ This subclass does not include:
 - construction, repair and alteration services for heavy electrical generating plants and equipment, including plants and equipment for nuclear-powered generating stations"
 "2794","54269","General construction services of other industrial plants","This subclass includes:
 - construction, repair and alteration services for:
-* manufacturing facilities of basic chemicals, compounds, pharmaceuticals and other chemicals 
+* manufacturing facilities of basic chemicals, compounds, pharmaceuticals and other chemicals
 * chemical and related manufacturing facilities such as blast furnaces and coke ovens
 * iron foundries
 * specialized facilities for manufacturing, not elsewhere classified
@@ -5946,7 +5946,7 @@ This subclass does not include:
 This subclass does not include:
 - installation services of space heating apparatus, including associated pipe work, cf. 54631"
 "2840","54622","Drain laying services","This subclass includes:
-- construction services of connection to main sewers in streets or alleys 
+- construction services of connection to main sewers in streets or alleys
 - placing of materials, construction and alteration of drains, beginning outside of a building, to its connection with the main sewer in the street, alley or other disposal terminal
 
 This subclass does not include:
@@ -8647,7 +8647,7 @@ This subclass does not include:
 - air taxi services, cf. 64242
 - ambulance services, cf. 93194"
 "3369","64116","Rental services of passenger cars with operator","This subclass includes:
-- chauffeur-driven car-hire services, wherever delivered, except taxi services 
+- chauffeur-driven car-hire services, wherever delivered, except taxi services
 
 Note: These services are generally supplied on a time basis to a limited number of passengers and frequently involve transportation to more than one destination."
 "3370","64117","Road transport services of passengers by man- or animal-drawn vehicles","This subclass includes:
@@ -8843,7 +8843,7 @@ This subclass does not include:
 "3429","65219","Other coastal and transoceanic water transport services of other freight","This subclass includes:
 - coastal and transoceanic water transportation of letters and parcels on behalf of postal and courier services
 - coastal and transoceanic water transportation of dry bulk goods such as cereals, flours, cement, sand, coal, etc.
-- towing and pushing services on the high seas and on coastal waters 
+- towing and pushing services on the high seas and on coastal waters
 - towing services for oil rigs, floating cranes, dredging vessels and buoys, as well as ships' hulls and incomplete vessels, on coastal waters or the open sea
 - coastal and transoceanic water transportation of freight not elsewhere classified"
 "3430","6522","Inland water transport services of freight",""
@@ -9205,8 +9205,8 @@ This subclass does not include:
 "3536","711","Financial services, except investment banking, insurance services and pension services",""
 "3537","7111","Central banking services",""
 "3538","71110","Central banking services","This subclass includes:
-- services which support the country's systems for clearing and settling payments and other financial transactions 
-- services of maintaining deposit accounts for major financial institutions and for the central government 
+- services which support the country's systems for clearing and settling payments and other financial transactions
+- services of maintaining deposit accounts for major financial institutions and for the central government
 - services of implementing monetary policy
 - services of managing the government's foreign exchange reserves
 - services of influencing the value of currency
@@ -9248,7 +9248,7 @@ Note: These services may be provided by a number of different types of lenders, 
 This subclass does not include:
 - real estate appraisal services, cf. 72240"
 "3544","71132","Non-residential mortgage loan services","This subclass includes:
-- granting of loans for the purpose of acquiring non-residential land or buildings and for which the land or buildings are used as security 
+- granting of loans for the purpose of acquiring non-residential land or buildings and for which the land or buildings are used as security
 
 This subclass does not include:
 - real estate appraisal services, cf. 72240"
@@ -9259,7 +9259,7 @@ This subclass does not include:
 "3546","71134","Credit card loan services","This subclass includes:
 - granting credit when the holder of a credit card uses it to buy a good or a service, regardless of whether the balance is paid in full at the end of the grace period"
 "3547","71135","Non-mortgage loan services for business purposes","This subclass includes:
-- granting loans to investment dealers and brokers, regulated financial institutions, federal, regional and local governments or non-profit institutions, foreign governments, and other businesses 
+- granting loans to investment dealers and brokers, regulated financial institutions, federal, regional and local governments or non-profit institutions, foreign governments, and other businesses
 - granting loans to individuals for business purposes
 - standby, commitment and other loan services including overdraft services
 - providing letters of credit
@@ -9269,7 +9269,7 @@ This subclass does not include:
 - other credit-granting services n.e.c."
 "3549","7114","Financial leasing services",""
 "3550","71140","Financial leasing services","This subclass includes:
-- services of making equipment and other assets available to a customer without capital investment on the customer's part, whereby the lessor pays for and takes title to the equipment or facilities and leases it to the lessee while retaining few of the normal responsibilities of ownership 
+- services of making equipment and other assets available to a customer without capital investment on the customer's part, whereby the lessor pays for and takes title to the equipment or facilities and leases it to the lessee while retaining few of the normal responsibilities of ownership
 
 This subclass does not include:
 - operating leasing services, cf. 73"
@@ -10075,8 +10075,8 @@ This subclass does not include:
 * improvements to office and service operations, such as:
 ** office layout
 ** workflow planning
-** work standards 
-* office automation, such as the selection and installation of automated systems 
+** work standards
+* office automation, such as the selection and installation of automated systems
 * product development, quality assurance and quality management
 * plant safety, security and protection
 - services provided by agronomists and agricultural economists
@@ -10115,16 +10115,16 @@ This subclass does not include:
 "3808","83131","IT consulting services","This subclass includes:
 - providing advice or expert opinion on technical matters related to the use of information technology, such as:
 * advice on matters such as hardware and software requirements and procurement
-* systems integration 
+* systems integration
 * systems security
-* provision of expert testimony on IT related issues 
+* provision of expert testimony on IT related issues
 
 This subclass does not include:
 - providing advice, guidance and operational assistance concerning the use of information technology by businesses, such as the development of an e-commerce strategy, cf. 83111
 - service contracts where advice is bundled with the design and development of an IT solution (website, database, specific application, network, etc.), cf. the appropriate information technology (IT) design and development service under 8314"
 "3809","83132","IT support services","This subclass includes:
 - provision of technical expertise to solve problems for the client in using software, hardware, or an entire computer system, such as:
-* provision of customer support in using or troubleshooting the software 
+* provision of customer support in using or troubleshooting the software
 * upgrade services and the provision of patches and updates
 * provision of customer support in using or troubleshooting the computer hardware, including testing and cleaning on a routine basis and repair of IT equipment
 * technical assistance in moving a client's computer system to a new location
@@ -10225,8 +10225,8 @@ This subclass does not include:
 "3829","8322","Urban and land planning services",""
 "3830","83221","Urban planning services","This subclass includes:
 - development of plans concerning land use, site selection, control and utilization, road systems and servicing of land with a view to creating and maintaining systematic, coordinated urban development, such as:
-* comprehensive urban plans 
-* community urban plans 
+* comprehensive urban plans
+* community urban plans
 * element urban plans for specific amenities or objectives such as transportation, utilities, etc.
 - feasibility studies
 - studies of environmental impact and economic assessments of urban development plans
@@ -10237,8 +10237,8 @@ This subclass does not include:
 - comprehensive plans covering a large geographical area, for a lengthy time period"
 "3832","83223","Project site master planning services","This subclass includes:
 - providing plans for a construction site, showing the proposed location of buildings, roads, parking lots and other features, for:
-* residential building projects 
-* non-residential building projects 
+* residential building projects
+* non-residential building projects
 * recreational and open-space projects"
 "3833","8323","Landscape architectural services and advisory services","This class includes:
 - architectural services concerned with the design of the landscape. Landscape architectural services include the provision of designs and construction documents, plans, studies and other services related to specific landscape projects"
@@ -10257,7 +10257,7 @@ This subclass does not include:
 * corporate building projects
 * hotels, convention centres, stadiums and arenas
 * educational building projects
-* health care, penal institutions 
+* health care, penal institutions
 * other non-residential building projects
 - landscape architecture services for recreational and open-space projects:
 * city centres and public squares
@@ -10372,9 +10372,9 @@ This subclass includes:
 * landfill sites
 - engineering services related to programmes for the collection, treatment, recycling, and disposal of industrial air, water and solid wastes, generally to a level such that the remaining waste stream can be safely released to the natural environment or ordinary municipal systems
 - engineering services related to programmes for hazardous waste remediation, such as:
-* management of nuclear waste 
-* chemical agent destruction 
-* brownfield redevelopment 
+* management of nuclear waste
+* chemical agent destruction
+* brownfield redevelopment
 * groundwater modeling
 * contaminated site remediation
 
@@ -10552,7 +10552,7 @@ This subclass does not include:
 * passport or identification photographs
 * infant and child portraits
 * family or military portraits
-* studio fashion photos 
+* studio fashion photos
 * corporate pictures"
 "3891","83812","Advertising and related photography services","This subclass includes:
 - services consisting of photographing:
@@ -10760,7 +10760,7 @@ This subclass does not include:
 "3946","84312","On-line newspapers and periodicals","This subclass includes:
 - publications issued on the Internet where the main content is updated at fixed intervals, usually on a daily, weekly or monthly basis; whether on subscription or single copy sales
 - portions of newspapers such as headlines e-mailed daily or more frequently
-- periodic newsletters 
+- periodic newsletters
 
 This subclass does not include:
 - digital archives, cf. 84520"
@@ -10789,7 +10789,7 @@ This subclass does not include:
 "3958","84391","On-line games","This subclass includes:
 - games that are intended to be played on the Internet such as:
 * role-playing games (RPGs)
-* strategy games 
+* strategy games
 * action games
 * card games
 * children's games
@@ -10806,9 +10806,9 @@ This subclass does not include:
 - on-line games, cf. 84391
 - on-line gambling services, cf. 96921"
 "3960","84393","On-line adult content","This subclass includes:
-- mature theme, sexually explicit content published or broadcast over the Internet including graphics, live feeds, interactive performances and virtual activities 
+- mature theme, sexually explicit content published or broadcast over the Internet including graphics, live feeds, interactive performances and virtual activities
 
-Note: Payment may be by methods such as subscription, membership fee or pay-per-view. 
+Note: Payment may be by methods such as subscription, membership fee or pay-per-view.
 
 This subclass does not include:
 - adult content in on-line newspapers, periodicals, books, directories, cf. 8431"
@@ -10878,7 +10878,7 @@ Note: This programming service can be provided in bundles determined by the cabl
 - provision of intermediation services between prospective employees and employers"
 "3988","85111","Executive/retained search services","This subclass includes:
 - specialized search and recruitment service limited to filling highly paid executive, senior manager, and professional positions, according to client specifications, including:
-* conducting detailed interviews with the client organization's management team 
+* conducting detailed interviews with the client organization's management team
 * developing job profiles, conducting original research and advertising to locate potential job candidates
 * screening possible candidates, preparing, presenting, and discussing a confidential list of highly qualified applicants with the client
 * making interview arrangements, negotiating compensation, and providing post-hire follow-up
@@ -11115,7 +11115,7 @@ This subclass does not include:
 - secretarial support services
 - transcription of documents, and other secretarial services
 - letter or resume writing
-- provision of mailbox rental 
+- provision of mailbox rental
 
 This subclass does not include:
 - specialized stenotype services such as court reporting, cf. 85999
@@ -11763,7 +11763,7 @@ Note: The resulting intermediate metal products are typically not identifiable i
 * mechanical crushing of metal waste such as used cars, washing machines, bikes, etc., with subsequent sorting and separation
 * mechanical reduction of large iron pieces such as railway wagons
 * stripping of used goods such as cars in order to obtain reusable parts
-* stripping of used goods such as cars or refrigerators to strip them of harmful waste (oil, cooling liquid, fuel, etc.) 
+* stripping of used goods such as cars or refrigerators to strip them of harmful waste (oil, cooling liquid, fuel, etc.)
 
 This subclass does not include:
 - wholesale trade services in waste and scrap including collecting, sorting, packing, dealing, etc. without a transformation process, cf. 61295
@@ -12042,10 +12042,10 @@ This subclass does not include:
 "4391","921","Pre-primary education services",""
 "4392","9210","Pre-primary education services",""
 "4393","92100","Pre-primary education services","This subclass includes:
-- education services usually provided by nursery schools, kindergartens, pre-schools, centres for early childhood education, centres for infant education or special sections attached to primary schools. Pre-primary education (ISCED Level 0) is defined as the initial stage of organized instruction designed primarily to introduce very young children to a school-type environment, that is, to provide a bridge between the home and a school-based atmosphere. 
+- education services usually provided by nursery schools, kindergartens, pre-schools, centres for early childhood education, centres for infant education or special sections attached to primary schools. Pre-primary education (ISCED Level 0) is defined as the initial stage of organized instruction designed primarily to introduce very young children to a school-type environment, that is, to provide a bridge between the home and a school-based atmosphere.
 
 This subclass also includes:
-- services related to the provision of special education programmes at this educational level 
+- services related to the provision of special education programmes at this educational level
 
 This subclass does not include:
 - recreational and vacation camps for children, cf. 63130
@@ -12056,7 +12056,7 @@ This subclass does not include:
 - educational services provided at ISCED Level 1, which includes programmes designed to provide students with an initial basic education in reading, writing and mathematics along with an elementary understanding of other subjects such as history, geography, natural science, social science, art and music
 
 This subclass also includes:
-- services related to the provision of special education programmes at this educational level 
+- services related to the provision of special education programmes at this educational level
 - services related to the provision of literacy programmes for adults at this educational level"
 "4397","923","Secondary education services","This group includes:
 - educational services for secondary programmes that become increasingly specialized as a student moves from one level to the next. These programmes can be general or technical/vocational according to the following definitions:
@@ -12067,7 +12067,7 @@ This subclass also includes:
 - educational services at ISCED Level 2 generally aiming to complete the provision of basic skills and knowledge of the primary level, although teaching is typically more subject-focused, often employing more specialized teachers who conduct classes in their field of specialization. These services cover education which is not designed explicitly to prepare participants for a specific class of occupations or trades or for entry into further vocational or technical education programmes.
 
 This subclass also includes:
-- services related to the provision of special education programmes at this educational level 
+- services related to the provision of special education programmes at this educational level
 - services related to the provision of literacy programmes for adults at this educational level"
 "4400","9232","Lower secondary education services, technical and vocational",""
 "4401","92320","Lower secondary education services, technical and vocational","This subclass includes:
@@ -12168,13 +12168,13 @@ This subclass does not include:
 
 This subclass does not include:
 - services delivered by hospital outpatient clinics, cf. 93121, 93122
-- dental services, cf. 93123 
+- dental services, cf. 93123
 - physiotherapeutic services provided by qualified practitioners other than medical doctors, cf. 93193
 - ambulance services, cf. 93194"
 "4430","9312","Medical and dental services",""
 "4431","93121","General medical services","This subclass includes:
-- general medical services consisting of the prevention, diagnosis and treatment by doctors of medicine of physical and/or mental diseases, such as: 
-* consultations 
+- general medical services consisting of the prevention, diagnosis and treatment by doctors of medicine of physical and/or mental diseases, such as:
+* consultations
 * physical check-ups, etc.
 
 Note: These services are not limited to specified or particular conditions, diseases or anatomical regions. They can be provided in general practitioners' practices and also delivered by outpatient clinics, at home, in firms, schools etc. or by phone, Internet or other means.
@@ -12182,10 +12182,10 @@ Note: These services are not limited to specified or particular conditions, dise
 This subclass does not include:
 - services provided by hospitals to in-house patients, cf. 9311"
 "4432","93122","Specialized medical services","This subclass includes:
-- consultation services in paediatrics, gynaecology-obstetrics, neurology and psychiatry, and various medical services 
-- surgical consultation services 
-- treatment services in outpatients clinics, such as dialysis, chemotherapy, insulin therapy, respiratory treatment, radiation treatment and the like 
-- analysis and interpretation of medical images (x-ray, electrocardiograms, endoscopies and the like) 
+- consultation services in paediatrics, gynaecology-obstetrics, neurology and psychiatry, and various medical services
+- surgical consultation services
+- treatment services in outpatients clinics, such as dialysis, chemotherapy, insulin therapy, respiratory treatment, radiation treatment and the like
+- analysis and interpretation of medical images (x-ray, electrocardiograms, endoscopies and the like)
 
 Note: These services can be provided in specialized practitioners' practices and also delivered by outpatient clinics, at home, in firms, schools etc. or by phone, Internet or other means.
 
@@ -12194,15 +12194,15 @@ This subclass does not include:
 - childbirth services by qualified practitioners other than medical doctors, cf. 93191
 - services of medical laboratories, cf. 93195"
 "4433","93123","Dental services","This subclass includes:
-- orthodontic services, e.g., treatment of protruding teeth, crossbite, overbite, etc., including dental surgery even when given in hospitals to inpatients 
-- services in the field of oral surgery 
-- other specialized dental services, e.g., in the field of periodontics, paedodontics, endodontics and reconstruction 
-- diagnosis and treatment services of diseases affecting the patient or aberrations in the cavity of the mouth, and services aimed at the prevention of dental diseases 
+- orthodontic services, e.g., treatment of protruding teeth, crossbite, overbite, etc., including dental surgery even when given in hospitals to inpatients
+- services in the field of oral surgery
+- other specialized dental services, e.g., in the field of periodontics, paedodontics, endodontics and reconstruction
+- diagnosis and treatment services of diseases affecting the patient or aberrations in the cavity of the mouth, and services aimed at the prevention of dental diseases
 
 Note: These dental services can be delivered in health clinics, such as those attached to schools, firms, homes for the aged, etc., as well as in own consulting rooms. They cover services in the field of general dentistry, such as routine dental examinations, preventive dental care, treatment of caries, etc."
 "4434","9319","Other human health services",""
 "4435","93191","Childbirth and related services","This subclass includes:
-- services such as supervision during pregnancy and childbirth 
+- services such as supervision during pregnancy and childbirth
 - supervision of the mother after birth
 
 Note: These services are provided by qualified practitioners, other than medical doctors.
@@ -12211,7 +12211,7 @@ This subclass does not include:
 - gynaecological and obstetrical services provided by hospitals to in-house patients, cf. 93112
 - consultation services in gynaecology-obstetrics for outpatients, cf. 93122"
 "4436","93192","Nursing services","This subclass includes:
-- services in the field of nursing care (without admission), advice and prevention for patients at home, the provision of maternity care, children's hygiene, etc. 
+- services in the field of nursing care (without admission), advice and prevention for patients at home, the provision of maternity care, children's hygiene, etc.
 
 Note: These services are provided by qualified practitioners, other than medical doctors."
 "4437","93193","Physiotherapeutic services","This subclass includes:
@@ -12246,14 +12246,14 @@ This subclass does not include:
 - combined accommodation and medical services, under the direction of medical doctors, cf. 9311
 - combined accommodation and medical services, without supervision by a medical doctor, cf. 93210"
 "4448","93222","Residential care services for young disabled persons","This subclass includes:
-- round-the-clock care services by residential institutions for young persons with physical or intellectual disabilities, including those having disabilities in seeing, hearing or speaking 
+- round-the-clock care services by residential institutions for young persons with physical or intellectual disabilities, including those having disabilities in seeing, hearing or speaking
 
 This subclass does not include:
 - education services, cf. 92
 - combined accommodation and medical services, under the direction of medical doctors, cf. 9311
 - combined accommodation and medical services, without supervision by a medical doctor, cf. 93210"
 "4449","93223","Residential care services for disabled adults","This subclass includes:
-- round-the-clock care services by residential institutions for adults with physical or intellectual disabilities, including those having disabilities in seeing, hearing or speaking 
+- round-the-clock care services by residential institutions for adults with physical or intellectual disabilities, including those having disabilities in seeing, hearing or speaking
 
 This subclass does not include:
 - education services, cf. 92
@@ -12273,12 +12273,12 @@ This subclass does not include:
 "4456","934","Social services without accommodation for the elderly and disabled",""
 "4457","9341","Vocational rehabilitation services",""
 "4458","93411","Vocational rehabilitation services for persons with disabilities","This subclass includes:
-- vocational rehabilitation services for persons with disabilities, where the social assistance component is predominant 
+- vocational rehabilitation services for persons with disabilities, where the social assistance component is predominant
 
 This subclass does not include:
 - vocational rehabilitation services where the education component is predominant, cf. 92"
 "4459","93412","Vocational rehabilitation services for unemployed persons","This subclass includes:
-- vocational rehabilitation services for unemployed persons, where the social assistance component is predominant 
+- vocational rehabilitation services for unemployed persons, where the social assistance component is predominant
 
 This subclass does not include:
 - vocational rehabilitation services where the education component is predominant, cf. 92"
@@ -12307,8 +12307,8 @@ This subclass does not include:
 "4469","9353","Welfare services without accommodation",""
 "4470","93530","Welfare services without accommodation","This subclass includes:
 - welfare services that do not include accommodation services, such as:
-* eligibility-determination services in connection with welfare aid, rent supplements and food stamps 
-* household budget counselling services 
+* eligibility-determination services in connection with welfare aid, rent supplements and food stamps
+* household budget counselling services
 
 This subclass does not include:
 - public administration services related to welfare benefit schemes, cf. 913"
@@ -12323,7 +12323,7 @@ This subclass does not include:
 "4475","9411","Sewerage and sewage treatment services",""
 "4476","94110","Sewerage and sewage treatment services","This subclass includes:
 - sewage removal services usually provided using equipment such as waste pipes, sewers or drains
-- sewage treatment services using dilution, screening and filtering, sedimentation, chemical precipitation, etc. 
+- sewage treatment services using dilution, screening and filtering, sedimentation, chemical precipitation, etc.
 
 This subclass does not include:
 - collection or purification of water, cf. 18000
@@ -12338,8 +12338,8 @@ This subclass does not include:
 "4480","9421","Collection services of hazardous waste",""
 "4481","94211","Collection services of hazardous medical and other biohazardous waste","This subclass includes:
 - waste collection specifically designed for the collection of:
-* pathological wastes such as anatomical wastes, non-anatomical wastes, sharp wastes, such as syringes and scalpels 
-* other biological-infectious wastes from hospitals, medical practices, dental practices, medical laboratories 
+* pathological wastes such as anatomical wastes, non-anatomical wastes, sharp wastes, such as syringes and scalpels
+* other biological-infectious wastes from hospitals, medical practices, dental practices, medical laboratories
 * other biohazardous wastes from non-residential locations"
 "4482","94212","Collection services of industrial hazardous waste (except medical and other biohazardous waste)","This subclass includes:
 - waste collection from industrial locations specifically designed for the collection of:
@@ -12372,12 +12372,12 @@ This subclass does not include:
 This subclass does not include:
 - dismantling of wrecks, such as cars etc., to obtain items for sale, cf. corresponding subclass in division 61 or 62"
 "4494","94313","Non-hazardous recyclable materials preparation, consolidation and storage services","This subclass includes:
-- consolidation, temporary storage and preparation of non-hazardous recyclable materials 
-- transfer facility services of non-hazardous recyclable materials 
+- consolidation, temporary storage and preparation of non-hazardous recyclable materials
+- transfer facility services of non-hazardous recyclable materials
 - recovery and preparation of non-hazardous recyclable materials, such as bailing, cleaning, sorting, volume reduction and similar preparation and consolidation of recyclable materials, for transportation to an appropriate facility that processes recyclable materials"
 "4495","94319","Other non-hazardous waste preparation, consolidation and storage services","This subclass includes:
-- consolidation, temporary storage and preparation of non-hazardous waste 
-- transfer facility services for non-hazardous waste 
+- consolidation, temporary storage and preparation of non-hazardous waste
+- transfer facility services for non-hazardous waste
 - consolidation and preparation of non-hazardous waste for transportation to an appropriate facility that processes waste"
 "4496","9432","Hazardous waste treatment and disposal services",""
 "4497","94321","Hazardous waste treatment services","This subclass includes:
@@ -12406,9 +12406,9 @@ Note: Processes include biological, chemical, and/or physical procedures or inci
 - services involved in implementing approved plans for the remediation of soil and groundwater on a contaminated site, that meet requirements specified by legislation or regulation"
 "4509","9442","Containment, control and monitoring services and other site remediation services n.e.c.",""
 "4510","94420","Containment, control and monitoring services and other site remediation services n.e.c.","This subclass includes:
-- services involved in preventing additional or wider contamination on the site 
-- preventing the movement of uncontrolled contaminates from the site 
-- monitoring the site to determine the effectiveness of remediation activities 
+- services involved in preventing additional or wider contamination on the site
+- preventing the movement of uncontrolled contaminates from the site
+- monitoring the site to determine the effectiveness of remediation activities
 - controlling access to the contaminated site
 - other site remediation services, n.e.c."
 "4511","9443","Building remediation services",""
@@ -12416,7 +12416,7 @@ Note: Processes include biological, chemical, and/or physical procedures or inci
 - development and implementation of a remediation plan that removes, destroys, contains or otherwise reduces contaminants in buildings, such as asbestos, lead, radon etc."
 "4513","9449","Other remediation services n.e.c.",""
 "4514","94490","Other remediation services n.e.c.","This subclass includes:
-- environmental emergency response services 
+- environmental emergency response services
 - other remediation services, n.e.c."
 "4515","945","Sanitation and similar services",""
 "4516","9451","Sweeping and snow removal services",""
@@ -12442,12 +12442,12 @@ This subclass does not include:
 "4523","95","Services of membership organizations","This division includes services related to:
 - organizing and promoting religious activities
 - advocating various social and political causes
-- promoting and defending the interests of members of the organization 
+- promoting and defending the interests of members of the organization
 
 This division does not include:
 - accommodation services provided by such organizations, except where mentioned, cf. 631
 - education services provided by such organizations, cf. 92
-- health and social services provided by such organizations, cf. 93 
+- health and social services provided by such organizations, cf. 93
 - cultural, recreational and sports services provided by such organizations, cf. 96"
 "4524","951","Services furnished by business, employers and professional organizations",""
 "4525","9511","Services furnished by business and employers organizations",""
@@ -12548,7 +12548,7 @@ This subclass does not include:
 "4557","9613","Audiovisual post-production services","This class includes:
 - providing computerized and electronic image and sound processing services for audiovisual works (produced on film, video, or digital media, etc.), such as editing, transfer, colour correction, digital restoration, visual effects, animation, format conversion, compression and digital encoding, captioning, titling, subtitling, sound editing and design services"
 "4558","96131","Audiovisual editing services","This subclass includes:
-- organizing and arranging the visual and audio aspects of an audiovisual work (produced on film, video, digital media, etc.) by analyzing, evaluating, and selecting scenes in terms of story continuity and dramatic and entertainment value, using equipment such as viewers, projectors, and digital video editing devices and techniques 
+- organizing and arranging the visual and audio aspects of an audiovisual work (produced on film, video, digital media, etc.) by analyzing, evaluating, and selecting scenes in terms of story continuity and dramatic and entertainment value, using equipment such as viewers, projectors, and digital video editing devices and techniques
 - incorporating stock shots selected from film and video libraries into film or video"
 "4559","96132","Transfers and duplication of masters services","This subclass includes:
 - transfers services, i.e. transferring an audiovisual work (produced on motion picture film, video, digital media, etc.) from one format to another with the purpose of adapting the production to a format selected for its presentation or preservation characteristics (e.g., creating backup masters or copies because the original is deteriorating). Examples include transfer of film to tape, tape to film, digital media to film, digital media to tape, diapose to video, photo to video, etc.
@@ -12580,7 +12580,7 @@ This subclass does not include:
 - distribution of audiovisual works, including granting permission to exhibit, broadcast and rent audiovisual works that are implicitly or explicitly protected by a copyright owned or controlled by the licensor, usually intended for theatres, television, home video market etc., such as:
 * live action or animated films
 * videos
-* digital media, etc. 
+* digital media, etc.
 - management services for motion picture rights
 
 Note: This product is transacted between the distributor and the exhibitor, television network, television station, video rental store etc.
@@ -12728,7 +12728,7 @@ This subclass does not include:
 
 This subclass does not include:
 - renting of space to others to place rides or game machines, cf. 72112
-- providing rides, games and attractions bundled with admission to an amusement arcade or theme park, cf. 96910 
+- providing rides, games and attractions bundled with admission to an amusement arcade or theme park, cf. 96910
 - gambling using electronic and mechanical gambling machines, such as slot machines and video lottery terminals, cf. 96929"
 "4614","9699","Other recreation and amusement services n.e.c.",""
 "4615","96990","Other recreation and amusement services n.e.c.","This subclass includes:
@@ -12956,7 +12956,7 @@ This subclass does not include:
 
 This subclass does not include:
 - provision of private line services, cf. 84140
-- provision of a local loop to other telecommunications service providers, cf. 84110 
+- provision of a local loop to other telecommunications service providers, cf. 84110
 - renting of terminal equipment, cf. 73125"
 "4699","86152","Aquaculture services on inputs owned by others","This subclass includes:
 - operation of an aquaculture unit on a fee or contract basis"

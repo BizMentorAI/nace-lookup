@@ -1,5 +1,7 @@
 #!/usr/bin/env bb
 
+(require '[clojure.pprint :refer [pprint]])
+
 (defn to-int [str]
   (Integer/parseInt str))
 
@@ -19,9 +21,19 @@
   (let [out-path (str/replace path #".csv$" ".edn")]
     (with-open [reader (io/reader path)]
       (println (str "~ Writing " out-path "."))
-      (let [results (csv-data->maps (csv/read-csv reader))]
-        (spit out-path (prn-str (vec results)))))))
+      (let [records (csv-data->maps (csv/read-csv reader))
+            results (map (fn [record] (hook record)) records)
+            clean-results
+            (map (fn [record]
+                   (into {} (filter #(not (= (second %) "")) record)))
+                 results)]
+        (spit out-path (with-out-str (pprint (vec clean-results))))))))
 
-(process "src/data/cpa.csv" #(update-in % [1] to-int))
-(process "src/data/cpc.csv" #(update-in % [0] to-int))
-(process "src/data/cpa2cpc.csv" #(update-in % [1 4] to-int))
+(defn update-all [hash keys fun]
+  (reduce (fn [res key] (update-in res [key] fun))
+          hash
+          keys))
+
+(process "src/data/cpa.csv" #(update-all % [:order :level] to-int))
+(process "src/data/cpc.csv" #(update-all % [:id] to-int))
+(process "src/data/cpa2cpc.csv" #(update-all % [:cpa-21-count :cpc-21-count] to-int))
