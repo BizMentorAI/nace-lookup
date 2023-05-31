@@ -4,6 +4,7 @@ load ~/.zsh/environments/basic.zsh
 
 alias emacs="emacs --load $PWD/.env/emacs.el"
 path-prepend $PWD/.env/bin
+path-prepend $PWD/src/convert
 
 export ET_JAR=~/Documents/Projects/et/target/et.jar
 alias et="java -jar $ET_JAR"
