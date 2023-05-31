@@ -1,9 +1,20 @@
 #!/usr/bin/env bb
 
-; filter-edn.clj src/data/cpa.edn > public/workers/autocomplete/data.json
-
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.edn :as edn])
+
+(def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
+
+(defn get-cpc [{:keys [:code]}]
+  (first (filter #(= (:cpa-21-code %) code) cpc-map-table)))
+
+(defn extend-with-cpc-code [record]
+  (or (if-let [cpc-record (get-cpc record)]
+        (-> record
+            (assoc :cpc (:cpc-21-code cpc-record))
+            (assoc :extra (str/trim (str (:extra record)
+                                         (:cpc-21-title cpc-record))))))
+      record))
 
 (defn process-category [record]
   (case (:level record)
@@ -19,14 +30,14 @@
   ;;   (if (empty? extra) base (assoc base :extra extra)))
 
 (defn process-record [record]
-  (when (#{1 4 6} (:level record)) (process-category record)))
+  (when (#{1 4 6} (:level record))
+    (extend-with-cpc-code (process-category record))))
 
 ; Remove empty (L1) L4 groups.
 ; (not (empty? (:items l4-item)))
 
-; Then onclick modal.show()
-(defn get-sequence [data]
-  (remove nil? (map process-record data))
+(defn get-sequence [records]
+  (remove nil? (map process-record records))
   ;; (reduce (fn [acc item]
   ;;           ;; (binding [*out* *err*] (prn item))
   ;;           (if (= (:level item) level)
@@ -37,25 +48,26 @@
   ;;         (filter identity (map process-row data)))
   )
 
-(defn sequence-to-nested [data]
+(defn nest [records]
   (binding [*out* *err*]
-    (let [sequence (get-sequence data)]
+    (let [sequence (get-sequence records)]
       (reduce (fn [acc {:keys [level] :as item}]
+                ;; (prn [acc level item])
                 (case level
                   1 (conj acc (assoc item :items [])) ; TODO: dissoc :level
 
                   ; acc[-1].items
                   2 (do
-                      (update-in acc [(dec (count acc)) :items]
+                      (update-in acc
+                                 [(dec (count acc)) :items]
                                  #(conj % (assoc item :items []))))
 
                   ; acc[-1].items[acc[-1].items.last.items]
-                  3 (update-in acc [(dec (count acc)) :items (dec (count (:items (last acc)))) :items]
+                  3 (update-in acc
+                               [(dec (count acc)) :items (dec (count (:items (last acc)))) :items]
                                #(conj % item))))
               [] sequence))))
 
 (let [records (edn/read-string (slurp "src/data/cpa.edn"))]
   (spit "public/workers/autocomplete/data.json"
-        (json/generate-string
-         (sequence-to-nested records)
-         {:pretty true})))
+        (json/generate-string (nest records) {:pretty true})))
