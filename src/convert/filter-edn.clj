@@ -5,37 +5,28 @@
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.edn :as edn])
 
-(defn exit-with-error [message]
-  (throw (ex-info
-          (str \u001b "[31m" "Error: " \u001b "[0m" message)
-          {:babashka/exit 1})))
-
-(when-not (= (count *command-line-args*) 1)
-  (exit-with-error "only 1 argument (input file path) expected."))
-
-(def input-file-path (first *command-line-args*))
-
-(defn process-category [row]
-  (case (second row)
-    1 {:level 1 :label (nth row 4)}
-    4 {:level 2 :code (nth row 2) :label (nth row 4)}
-    6 {:level 3 :code (nth row 2) :label (nth row 4)
-         :extra (str/trim (str (nth row 5) " " (nth row 6)))}))
+(defn process-category [record]
+  (case (:level record)
+    1 {:level 1 :label (:desc record)}
+    4 {:level 2 :code (:code record) :label (:desc record)}
+    6 {:level 3 :code (:code record) :label (:desc record)
+       :extra (str/trim (str (:includes record) " "
+                             (:includes-2 record)))}))
 
   ;; (let [base {:level (Integer/parseInt (second row))
   ;;             :code (nth row 3) :label (nth row 4)}
   ;;       extra (str/trim (str (nth row 5) " " (nth row 6)))]
   ;;   (if (empty? extra) base (assoc base :extra extra)))
 
-(defn process-row [row]
-  (when (#{1 4 6} (second row)) (process-category row)))
+(defn process-record [record]
+  (when (#{1 4 6} (:level record)) (process-category record)))
 
 ; Remove empty (L1) L4 groups.
 ; (not (empty? (:items l4-item)))
 
 ; Then onclick modal.show()
 (defn get-sequence [data]
-  (remove nil? (map process-row data))
+  (remove nil? (map process-record data))
   ;; (reduce (fn [acc item]
   ;;           ;; (binding [*out* *err*] (prn item))
   ;;           (if (= (:level item) level)
@@ -63,8 +54,8 @@
                                #(conj % item))))
               [] sequence))))
 
-(let [input (edn/read-string (slurp input-file-path))]
-  (println (json/generate-string
-            (sequence-to-nested input)
-            {:pretty true}
-            ,)))
+(let [records (edn/read-string (slurp "src/data/cpa.edn"))]
+  (spit "public/workers/autocomplete/data.json"
+        (json/generate-string
+         (sequence-to-nested records)
+         {:pretty true})))
