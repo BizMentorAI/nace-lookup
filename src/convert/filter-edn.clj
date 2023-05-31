@@ -4,16 +4,22 @@
 (require '[clojure.edn :as edn])
 
 (def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
+(def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
 
 (defn get-cpc [{:keys [:code]}]
-  (first (filter #(= (:cpa-21-code %) code) cpc-map-table)))
+  (let [map-record
+        (first (filter #(= (:cpa-21-code %) code) cpc-map-table))
+        cpc-record
+        (first (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))]
+    cpc-record))
 
 (defn extend-with-cpc-code [record]
   (or (if-let [cpc-record (get-cpc record)]
         (-> record
-            (assoc :cpc (:cpc-21-code cpc-record))
-            (assoc :extra (str/trim (str (:extra record)
-                                         (:cpc-21-title cpc-record))))))
+            (assoc :cpc (:code cpc-record))
+            (assoc :extra (str/trim (str (:extra record) " "
+                                         (:title cpc-record) " "
+                                         (:note cpc-record))))))
       record))
 
 (defn process-category [record]
