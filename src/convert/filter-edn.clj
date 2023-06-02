@@ -6,6 +6,11 @@
 (def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
 (def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
 
+; The dict contains both hospitalisation and hospitalization, but only sg forms.
+; Includes: (dict "word").
+(def dict (into #{} (str/split-lines (slurp "src/data/nounlist.txt"))))
+
+; CPC
 (defn get-cpc [{:keys [:code]}]
   (let [map-record
         (first (filter #(= (:cpa-21-code %) code) cpc-map-table))
@@ -13,8 +18,22 @@
         (first (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))]
     cpc-record))
 
-(defn extend-with-cpc-code [record]
+(defn extend-with-cpc [record]
   (or (if-let [cpc-record (get-cpc record)]
+        (-> record
+            (assoc :cpc (:code cpc-record))
+            (assoc :extra (str/trim (str (:extra record) " "
+                                         (:title cpc-record) " "
+                                         (:note cpc-record))))))
+      record))
+
+; UNSPSC
+; Match based on 3+ common nouns?
+; Filter out non-nouns from the label.
+(defn match-unspsc [record])
+
+(defn extend-with-unspsc [record]
+  (or (if-let [cpc-record (match-unspsc record)]
         (-> record
             (assoc :cpc (:code cpc-record))
             (assoc :extra (str/trim (str (:extra record) " "
@@ -37,7 +56,9 @@
 
 (defn process-record [record]
   (when (#{1 4 6} (:level record))
-    (extend-with-cpc-code (process-category record))))
+    (-> (process-category record)
+        extend-with-cpc
+        extend-with-unspsc)))
 
 ; Remove empty (L1) L4 groups.
 ; (not (empty? (:items l4-item)))
