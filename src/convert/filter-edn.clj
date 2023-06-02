@@ -30,7 +30,9 @@
 ; UNSPSC
 ; Match based on 3+ common nouns?
 ; Filter out non-nouns from the label.
-(defn match-unspsc [record])
+(defn match-unspsc [record]
+  (when (= (:level record) 3)
+    ,))
 
 (defn extend-with-unspsc [record]
   (or (if-let [cpc-record (match-unspsc record)]
