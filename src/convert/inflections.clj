@@ -1,6 +1,9 @@
 ; https://github.com/r0man/inflections-clj
 
-(ns inflections.core
+; Generate a new dict with both SG & PL forms.
+; BB: how to require_relative?
+; get acronyms and don't delete them
+(ns inflections
   (:refer-clojure :exclude [replace])
   (:require [clojure.string :refer [blank? lower-case upper-case replace split join]]
             [clojure.walk :refer [keywordize-keys]]))
@@ -416,7 +419,7 @@
   supplied, it will use that when count is > 1, otherwise it will use
   the inflector to determine the plural form."
   [count singular & [plural]]
-  (str count " " (if (= 1 count) singular (or plural (inflections.core/plural singular)))))
+  (str count " " (if (= 1 count) singular (or plural (inflections/plural singular)))))
 
 (defn underscore
   "The reverse of camel-case. Makes an underscored, lowercase form from

@@ -8,6 +8,7 @@
 
 ; The dict contains both hospitalisation and hospitalization, but only sg forms.
 ; Includes: (dict "word").
+; Latin names!!!!!
 (def dict (into #{} (str/split-lines (slurp "src/data/nounlist.txt"))))
 
 ; CPC
@@ -27,10 +28,16 @@
                                          (:note cpc-record))))))
       record))
 
-(defn get-nouns [text]
-  ; TODO: Find plural forms as well (waters/ferries/cruises).
-  (let [words (str/split (str/lower-case text) #"\s+")]
-    (into #{} (filter #(dict %) words))))
+(defn get-keywords [text]
+  ; TODO: Find plural forms as well (waters/ferries/cruises/classes).
+  (let [words (str/split text #"\s+")]
+    (into #{} (filter #(or (acronym? %) (noun? %)) words))))
+
+(defn acronym? [word]
+  (re-find #"\b[A-Z0-9-]+\b" word))
+
+(defn noun? [word]
+  (dict (str/lower-case word)))
 
 ; UNSPSC
 ; Match based on 3+ common nouns from:
@@ -38,7 +45,7 @@
 ; Filter out non-nouns from the label.
 (defn match-unspsc [record]
   (when (= (:level record) 3)
-    (prn (:label record) (get-nouns (:label record)))
+    (prn (:label record) (get-keywords (:label record)))
     ,))
 
 (defn extend-with-unspsc [record]
