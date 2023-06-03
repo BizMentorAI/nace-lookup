@@ -1,15 +1,15 @@
-#!/usr/bin/env bb
+#!/usr/bin/env bb -cp src/convert
 
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.edn :as edn])
 
+(require '[inflections :refer (plural singular)])
+
 (def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
 (def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
 
-; The dict contains both hospitalisation and hospitalization, but only sg forms.
-; Includes: (dict "word").
-; Latin names!!!!!
-(def dict (into #{} (str/split-lines (slurp "src/data/nounlist.txt"))))
+; Add unknown things into nounlist.txt and rebuild the dict.
+;; (def dict (edn/read-string (slurp "src/data/dict.edn")))
 
 ; CPC
 (defn get-cpc [{:keys [:code]}]
@@ -28,16 +28,68 @@
                                          (:note cpc-record))))))
       record))
 
-(defn get-keywords [text]
-  ; TODO: Find plural forms as well (waters/ferries/cruises/classes).
-  (let [words (str/split text #"\s+")]
-    (into #{} (filter #(or (acronym? %) (noun? %)) words))))
-
 (defn acronym? [word]
-  (re-find #"\b[A-Z0-9-]+\b" word))
+  (re-find #"^[A-Z0-9-]+$" word))
 
-(defn noun? [word]
-  (dict (str/lower-case word)))
+;; (defn noun? [word]
+;;   (dict (str/lower-case word)))
+
+(def generic-keywords
+  (into #{}
+        (flatten
+         (map #(vec [%, (plural %)])
+              ["and" "or" "at" "in" "on" "about" "of" "as" "for" "the"
+               "a" "an" "≤" "including" "like" "by" "with" "not" "any"
+               "whether" "similar" "genus" "spp." "purpose" "used" "to"
+               "primarily" "from" "kg" "mm" "cm" "km" "m" ">" "<" "v"
+               "W" "kvar" "/" "can" "only" "use" "other" "it" "simply"
+               "further" "but" "their" "organisation"]))))
+
+; Here the lib fucks up.
+(def dont-singularise
+  #{"miscellaneous" "religious" "alliaceous" "tuberous" "citrus" "gas"
+    "precious" "semi-precious" "leguminous" "asparagus" "oleaginous"
+    "apparatus" "coniferous" "non-coniferous" "bituminous" "gaseous"
+    "non-ferrous" "ferrous" "calcareous"})
+
+(def pl-sg-map
+  {"sloes" "sloe", "olives" "olive", "leaves" "leaf", "cloves" "clove",
+   "valves" "valve", "nurseries" "nursery", "roes" "roe"})
+
+(defn sg [word]
+  (or (pl-sg-map word) (singular word)))
+
+(defn singular-fix [word]
+  (if (dont-singularise word) word (sg word)))
+
+; TODO: Get CPC titles too.
+(defn get-keywords [text]
+  (let [words (str/split text #"[\s,;:]+")]
+    (into #{}
+          (map
+           ; Leave acronyms as is, lower-case other words.
+           #(if (acronym? %) % (singular-fix (str/lower-case %)))
+
+           (->> words
+                ; Filter out generic keywords.
+                (filter #(not (generic-keywords (str/lower-case %))))
+
+                ; Only take acronyms or nouns.
+                ;(filter #(or (acronym? %) (noun? %)))
+                )))))
+
+(defn get-label [record]
+  (-> (:label record)
+      (str/replace #"\(excluding .*\)", "")
+      (str/replace #"[()]" "")
+      (str/replace #"\"" "")
+      (str/replace #"n.e.c." "")
+      (str/replace #"[\d,.]+" "")
+      (str/replace #"'s?" "")
+      (str/replace #"etc.?" "")
+      (str/replace #"(?i)dry clean" "dry-clean")
+      (str/replace #"(?i)(cow|chick|pigeon) pea" "$1pea")
+      (str/replace #"\b(except|excluding|without).+$" "")))
 
 ; UNSPSC
 ; Match based on 3+ common nouns from:
@@ -45,7 +97,7 @@
 ; Filter out non-nouns from the label.
 (defn match-unspsc [record]
   (when (= (:level record) 3)
-    (prn (:label record) (get-keywords (:label record)))
+    (prn (:label record) (get-keywords (get-label record)))
     ,))
 
 (defn extend-with-unspsc [record]
