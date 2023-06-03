@@ -66,16 +66,11 @@
   (let [words (tokenise text)]
     (into #{}
           (map
-                                        ; Leave acronyms as is, lower-case other words.
+           ; Leave acronyms as is, lower-case other words.
            #(if (acronym? %) % (singular-fix (str/lower-case %)))
 
-           (->> words
-                                        ; Filter out generic keywords.
-                (filter #(not (generic-keywords (str/lower-case %))))
-
-                                        ; Only take acronyms or nouns.
-                                        ;(filter #(or (acronym? %) (noun? %)))
-                )))))
+           ; Filter out generic words.
+           (filter #(not (generic-keywords (str/lower-case %))) words)))))
 
 (defn normalise [text]
   (-> text
@@ -95,14 +90,15 @@
 (defn match-unspsc-keywords [keywords]
   (reduce (fn [acc unspsc-item]
             (let [a (into #{} (get-keywords (normalise (or (:desc unspsc-item) ""))))
-                  _ (prn a)
                   matched-keywords (clojure.set/intersection a keywords)]
               (if (not (empty? matched-keywords))
                 (conj acc {:record unspsc-item :matched-keywords matched-keywords})
                 acc)))
           []
-          unspsc-L6-records)
-  ,)
+          unspsc-L6-records))
+
+(defn get-best-match [matches]
+  (last (sort-by #(count (:matched-keywords %)) matches)))
 
 (defn match-unspsc [record]
   (when (= (:level record) 3)
@@ -110,17 +106,20 @@
           cpc-title (:title cpc-record)
           keywords (get-keywords (normalise (str (:label record) " " cpc-title)))]
       ;; (prn :cpa (:label record) :cpc cpc-title :keywords keywords)
-      (match-unspsc-keywords keywords))))
+      (let [matches (match-unspsc-keywords keywords)
+            best-match (get-best-match matches)]
+        (prn (count matches))
+        (:record best-match)))))
 
 (defn extend-with-unspsc [record]
-  (or (if-let [cpc-record (match-unspsc record)]
+  (or (if-let [unspsc-record (match-unspsc record)]
         (-> record
-            (assoc :cpc (with-meta
-                          (:code cpc-record)
-                          {:record cpc-record}))
+            ;; (assoc :unspsc (with-meta
+            ;;                  (:code unspsc-record)
+            ;;                  {:record unspsc-record}))
             (assoc :extra (str/trim (str (:extra record) " "
-                                         (:title cpc-record) " "
-                                         (:note cpc-record))))))
+                                         (:title unspsc-record) " "
+                                         (:desc unspsc-record))))))
       record))
 
 (defn process-category [record]
