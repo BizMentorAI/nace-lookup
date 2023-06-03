@@ -8,9 +8,6 @@
 (def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
 (def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
 
-; Add unknown things into nounlist.txt and rebuild the dict.
-;; (def dict (edn/read-string (slurp "src/data/dict.edn")))
-
 ; CPC
 (defn get-cpc [{:keys [:code]}]
   (let [map-record
@@ -22,6 +19,7 @@
 (defn extend-with-cpc [record]
   (or (if-let [cpc-record (get-cpc record)]
         (-> record
+            (with-meta {:record cpc-record})
             (assoc :cpc (:code cpc-record))
             (assoc :extra (str/trim (str (:extra record) " "
                                          (:title cpc-record) " "
@@ -30,9 +28,6 @@
 
 (defn acronym? [word]
   (re-find #"^[A-Z0-9-]+$" word))
-
-;; (defn noun? [word]
-;;   (dict (str/lower-case word)))
 
 (def generic-keywords
   (into #{}
@@ -62,7 +57,6 @@
 (defn singular-fix [word]
   (if (dont-singularise word) word (sg word)))
 
-; TODO: Get CPC titles too.
 (defn get-keywords [text]
   (let [words (str/split text #"[\s,;:]+")]
     (into #{}
@@ -78,8 +72,8 @@
                 ;(filter #(or (acronym? %) (noun? %)))
                 )))))
 
-(defn get-label [record]
-  (-> (:label record)
+(defn normalise [text]
+  (-> text
       (str/replace #"\(excluding .*\)", "")
       (str/replace #"[()]" "")
       (str/replace #"\"" "")
@@ -87,23 +81,29 @@
       (str/replace #"[\d,.]+" "")
       (str/replace #"'s?" "")
       (str/replace #"etc.?" "")
+      (str/replace #"</?\w+>" "")
       (str/replace #"(?i)dry clean" "dry-clean")
       (str/replace #"(?i)(cow|chick|pigeon) pea" "$1pea")
       (str/replace #"\b(except|excluding|without).+$" "")))
 
 ; UNSPSC
-; Match based on 3+ common nouns from:
-; CPA title, CPC title, extra.
-; Filter out non-nouns from the label.
 (defn match-unspsc [record]
   (when (= (:level record) 3)
-    (prn (:label record) (get-keywords (get-label record)))
+    (let [cpc-record (:record (meta record))
+          cpc-title (:title cpc-record)]
+      ;; (prn cpc-record)
+      (prn :cpa (:label record) :cpc cpc-title
+           :keywords
+           (get-keywords (normalise (str (:label record) " " cpc-title))))
+      ,)
     ,))
 
 (defn extend-with-unspsc [record]
   (or (if-let [cpc-record (match-unspsc record)]
         (-> record
-            (assoc :cpc (:code cpc-record))
+            (assoc :cpc (with-meta
+                          (:code cpc-record)
+                          {:record cpc-record}))
             (assoc :extra (str/trim (str (:extra record) " "
                                          (:title cpc-record) " "
                                          (:note cpc-record))))))
