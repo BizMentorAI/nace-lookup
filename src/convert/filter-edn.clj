@@ -59,19 +59,22 @@
 (defn singular-fix [word]
   (if (dont-singularise word) word (sg word)))
 
+(defn tokenise [text]
+  (str/split text #"[\s,;:]+"))
+
 (defn get-keywords [text]
-  (let [words (str/split text #"[\s,;:]+")]
+  (let [words (tokenise text)]
     (into #{}
           (map
-           ; Leave acronyms as is, lower-case other words.
+                                        ; Leave acronyms as is, lower-case other words.
            #(if (acronym? %) % (singular-fix (str/lower-case %)))
 
            (->> words
-                ; Filter out generic keywords.
+                                        ; Filter out generic keywords.
                 (filter #(not (generic-keywords (str/lower-case %))))
 
-                ; Only take acronyms or nouns.
-                ;(filter #(or (acronym? %) (noun? %)))
+                                        ; Only take acronyms or nouns.
+                                        ;(filter #(or (acronym? %) (noun? %)))
                 )))))
 
 (defn normalise [text]
@@ -89,16 +92,25 @@
       (str/replace #"\b(except|excluding|without).+$" "")))
 
 ; UNSPSC
+(defn match-unspsc-keywords [keywords]
+  (reduce (fn [acc unspsc-item]
+            (let [a (into #{} (get-keywords (normalise (or (:desc unspsc-item) ""))))
+                  _ (prn a)
+                  matched-keywords (clojure.set/intersection a keywords)]
+              (if (not (empty? matched-keywords))
+                (conj acc {:record unspsc-item :matched-keywords matched-keywords})
+                acc)))
+          []
+          unspsc-L6-records)
+  ,)
+
 (defn match-unspsc [record]
   (when (= (:level record) 3)
     (let [cpc-record (:record (meta record))
-          cpc-title (:title cpc-record)]
-      ; Loop through unspsc-records and get the most-likely match.
-      (prn :cpa (:label record) :cpc cpc-title
-           :keywords
-           (get-keywords (normalise (str (:label record) " " cpc-title))))
-      ,)
-    ,))
+          cpc-title (:title cpc-record)
+          keywords (get-keywords (normalise (str (:label record) " " cpc-title)))]
+      ;; (prn :cpa (:label record) :cpc cpc-title :keywords keywords)
+      (match-unspsc-keywords keywords))))
 
 (defn extend-with-unspsc [record]
   (or (if-let [cpc-record (match-unspsc record)]
