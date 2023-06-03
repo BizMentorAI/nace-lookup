@@ -7,6 +7,8 @@
 
 (def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
 (def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
+(def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
+                               (edn/read-string (slurp "src/data/unspsc.edn"))))
 
 ; CPC
 (defn get-cpc [{:keys [:code]}]
@@ -91,7 +93,7 @@
   (when (= (:level record) 3)
     (let [cpc-record (:record (meta record))
           cpc-title (:title cpc-record)]
-      ;; (prn cpc-record)
+      ; Loop through unspsc-records and get the most-likely match.
       (prn :cpa (:label record) :cpc cpc-title
            :keywords
            (get-keywords (normalise (str (:label record) " " cpc-title))))
