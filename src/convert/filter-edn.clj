@@ -27,11 +27,18 @@
                                          (:note cpc-record))))))
       record))
 
+(defn get-nouns [text]
+  ; TODO: Find plural forms as well (waters/ferries/cruises).
+  (let [words (str/split (str/lower-case text) #"\s+")]
+    (into #{} (filter #(dict %) words))))
+
 ; UNSPSC
-; Match based on 3+ common nouns?
+; Match based on 3+ common nouns from:
+; CPA title, CPC title, extra.
 ; Filter out non-nouns from the label.
 (defn match-unspsc [record]
   (when (= (:level record) 3)
+    (prn (:label record) (get-nouns (:label record)))
     ,))
 
 (defn extend-with-unspsc [record]
