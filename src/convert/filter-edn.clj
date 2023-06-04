@@ -100,6 +100,9 @@
 (defn get-best-match [matches]
   (last (sort-by #(count (:matched-keywords %)) matches)))
 
+; TODO: multi-thread.
+; Total Number of Cores:	8 (4 performance and 4 efficiency)
+; Run on JVM (benchmark against bb).
 (defn match-unspsc [record]
   (when (= (:level record) 3)
     (let [cpc-record (:record (meta record))
@@ -108,7 +111,7 @@
       ;; (prn :cpa (:label record) :cpc cpc-title :keywords keywords)
       (let [matches (match-unspsc-keywords keywords)
             best-match (get-best-match matches)]
-        (prn (count matches))
+        (prn record (count matches)) ;;;
         (:record best-match)))))
 
 (defn extend-with-unspsc [record]
