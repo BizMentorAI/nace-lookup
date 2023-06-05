@@ -1,6 +1,9 @@
 import * as cherry_core from '/js/cljs_core.js';
 var match_l6_item = function (item, regexp) {
-let fields1 = cherry_core.vector(cherry_core.keyword("label").call(null, item), cherry_core.keyword("extra").call(null, item));
+let fields1 = cherry_core.flatten.call(null, cherry_core.vector(cherry_core.keyword("label").call(null, item), cherry_core.map.call(null, function (_PERCENT_1) {
+return cherry_core.get.call(null, cherry_core.keyword("extra").call(null, item), _PERCENT_1);
+}, cherry_core.keys.call(null, cherry_core.keyword("extra").call(null, item)))));
+cherry_core.prn.call(null, fields1);
 return cherry_core.first.call(null, cherry_core.filter.call(null, function (_PERCENT_1) {
 return cherry_core.re_find.call(null, regexp, _PERCENT_1);
 }, fields1));
