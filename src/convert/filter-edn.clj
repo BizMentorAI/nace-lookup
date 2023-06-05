@@ -10,6 +10,7 @@
 (def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
                                (edn/read-string (slurp "src/data/unspsc.edn"))))
 
+; Extra: remove HTML, remove \n, make hash :extra {:cpa "..." :cpc "..." :unspsc "..."}
 ; CPC
 (defn get-cpc [{:keys [:code]}]
   (let [map-record
@@ -86,44 +87,44 @@
       (str/replace #"(?i)(cow|chick|pigeon) pea" "$1pea")
       (str/replace #"\b(except|excluding|without).+$" "")))
 
-; UNSPSC
-(defn match-unspsc-keywords [keywords]
-  (reduce (fn [acc unspsc-item]
-            (let [a (into #{} (get-keywords (normalise (or (:desc unspsc-item) ""))))
-                  matched-keywords (clojure.set/intersection a keywords)]
-              (if (not (empty? matched-keywords))
-                (conj acc {:record unspsc-item :matched-keywords matched-keywords})
-                acc)))
-          []
-          unspsc-L6-records))
+;; ; UNSPSC
+;; (defn match-unspsc-keywords [keywords]
+;;   (reduce (fn [acc unspsc-item]
+;;             (let [a (into #{} (get-keywords (normalise (or (:desc unspsc-item) ""))))
+;;                   matched-keywords (clojure.set/intersection a keywords)]
+;;               (if (not (empty? matched-keywords))
+;;                 (conj acc {:record unspsc-item :matched-keywords matched-keywords})
+;;                 acc)))
+;;           []
+;;           unspsc-L6-records))
 
-(defn get-best-match [matches]
-  (last (sort-by #(count (:matched-keywords %)) matches)))
+;; (defn get-best-match [matches]
+;;   (last (sort-by #(count (:matched-keywords %)) matches)))
 
-; TODO: multi-thread.
-; Total Number of Cores:	8 (4 performance and 4 efficiency)
-; Run on JVM (benchmark against bb).
-(defn match-unspsc [record]
-  (when (= (:level record) 3)
-    (let [cpc-record (:record (meta record))
-          cpc-title (:title cpc-record)
-          keywords (get-keywords (normalise (str (:label record) " " cpc-title)))]
-      ;; (prn :cpa (:label record) :cpc cpc-title :keywords keywords)
-      (let [matches (match-unspsc-keywords keywords)
-            best-match (get-best-match matches)]
-        (prn record (count matches)) ;;;
-        (:record best-match)))))
+;; ; TODO: multi-thread.
+;; ; Total Number of Cores:	8 (4 performance and 4 efficiency)
+;; ; Run on JVM (benchmark against bb).
+;; (defn match-unspsc [record]
+;;   (when (= (:level record) 3)
+;;     (let [cpc-record (:record (meta record))
+;;           cpc-title (:title cpc-record)
+;;           keywords (get-keywords (normalise (str (:label record) " " cpc-title)))]
+;;       ;; (prn :cpa (:label record) :cpc cpc-title :keywords keywords)
+;;       (let [matches (match-unspsc-keywords keywords)
+;;             best-match (get-best-match matches)]
+;;         (prn record (count matches)) ;;;
+;;         (:record best-match)))))
 
-(defn extend-with-unspsc [record]
-  (or (if-let [unspsc-record (match-unspsc record)]
-        (-> record
-            ;; (assoc :unspsc (with-meta
-            ;;                  (:code unspsc-record)
-            ;;                  {:record unspsc-record}))
-            (assoc :extra (str/trim (str (:extra record) " "
-                                         (:title unspsc-record) " "
-                                         (:desc unspsc-record))))))
-      record))
+;; (defn extend-with-unspsc [record]
+;;   (or (if-let [unspsc-record (match-unspsc record)]
+;;         (-> record
+;;             ;; (assoc :unspsc (with-meta
+;;             ;;                  (:code unspsc-record)
+;;             ;;                  {:record unspsc-record}))
+;;             (assoc :extra (str/trim (str (:extra record) " "
+;;                                          (:title unspsc-record) " "
+;;                                          (:desc unspsc-record))))))
+;;       record))
 
 (defn process-category [record]
   (case (:level record)
@@ -142,7 +143,8 @@
   (when (#{1 4 6} (:level record))
     (-> (process-category record)
         extend-with-cpc
-        extend-with-unspsc)))
+        ;; extend-with-unspsc
+        )))
 
 ; Remove empty (L1) L4 groups.
 ; (not (empty? (:items l4-item)))
