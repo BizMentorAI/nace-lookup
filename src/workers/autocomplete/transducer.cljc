@@ -5,8 +5,6 @@
   (let [fields (flatten
                 [(:label item)
                  (map #(get (:extra item) %) (keys (:extra item)))])]
-    (prn fields)
-
     (first (filter #(re-find regexp %) fields))))
 
 ; A transducer (sometimes referred to as xform or xf)
