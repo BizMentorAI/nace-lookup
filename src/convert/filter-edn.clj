@@ -7,8 +7,10 @@
 
 (def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
 (def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
-(def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
-                               (edn/read-string (slurp "src/data/unspsc.edn"))))
+(def cpc-isic-map-table (edn/read-string (slurp "src/data/cpc2isic.edn")))
+(def isic-naics-map-table (edn/read-string (slurp "src/data/isic2naics.edn")))
+;; (def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
+;;                                (edn/read-string (slurp "src/data/unspsc.edn"))))
 
 ; Extra: remove HTML, remove \n, make hash :extra {:cpa "..." :cpc "..." :unspsc "..."}
 ; CPC
@@ -22,12 +24,26 @@
 (defn extend-with-cpc [record]
   (or (if-let [cpc-record (get-cpc record)]
         (-> record
-            (with-meta {:record cpc-record})
+            (with-meta {:cpc-record cpc-record})
             (assoc :cpc (:code cpc-record))
             (assoc :extra (str/trim (str (:extra record) " "
                                          (:title cpc-record) " "
                                          (:note cpc-record))))))
       record))
+
+(defn extend-with-isic-code [record]
+  (or (if-let [cpc-record (meta record)]
+        (let [cpc-isic-map-record
+              (first
+               (filter #(= (:cpc-21-code %) (:code cpc-record))
+                       cpc-isic-map-table))]
+          (with-meta record {:isic-code
+                             (:isic-4-code
+                              (when cpc-isic-map-record
+                                (:isic-4-code cpc-isic-map-record)))})))
+      record))
+
+;isic-naics-map-table
 
 (defn acronym? [word]
   (re-find #"^[A-Z0-9-]+$" word))
@@ -106,7 +122,7 @@
 ;; ; Run on JVM (benchmark against bb).
 ;; (defn match-unspsc [record]
 ;;   (when (= (:level record) 3)
-;;     (let [cpc-record (:record (meta record))
+;;     (let [cpc-record (:record (meta cpc-record))
 ;;           cpc-title (:title cpc-record)
 ;;           keywords (get-keywords (normalise (str (:label record) " " cpc-title)))]
 ;;       ;; (prn :cpa (:label record) :cpc cpc-title :keywords keywords)
@@ -143,6 +159,8 @@
   (when (#{1 4 6} (:level record))
     (-> (process-category record)
         extend-with-cpc
+        extend-with-isic-code
+        extend-with-naics-code
         ;; extend-with-unspsc
         )))
 

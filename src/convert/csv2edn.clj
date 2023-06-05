@@ -37,4 +37,6 @@
 ;; (process "src/data/cpa.csv" #(update-all % [:order :level] to-int))
 ;; (process "src/data/cpc.csv" #(update-all % [:id] to-int))
 ;; (process "src/data/cpa2cpc.csv" #(update-all % [:cpa-21-count :cpc-21-count] to-int))
-(process "src/data/unspsc.csv" #(update-all % [:id] to-int))
+;; (process "src/data/unspsc.csv" #(update-all % [:id] to-int))
+;; (process "src/data/cpc2isic.csv" #(dissoc % :_))
+(process "src/data/isic2naics.csv" identity)
