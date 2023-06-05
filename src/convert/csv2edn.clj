@@ -22,7 +22,7 @@
     (with-open [reader (io/reader path)]
       (println (str "~ Writing " out-path "."))
       (let [records (csv-data->maps (csv/read-csv reader))
-            results (map (fn [record] (hook record)) records)
+            results (map hook records)
             clean-results
             (map (fn [record]
                    (into {} (filter #(not (= (second %) "")) record)))
@@ -39,4 +39,7 @@
 ;; (process "src/data/cpa2cpc.csv" #(update-all % [:cpa-21-count :cpc-21-count] to-int))
 ;; (process "src/data/unspsc.csv" #(update-all % [:id] to-int))
 ;; (process "src/data/cpc2isic.csv" #(dissoc % :_))
-(process "src/data/isic2naics.csv" identity)
+;; (process "src/data/isic2naics.csv" identity)
+(process "src/data/naics.csv" identity
+         ;; #(update-all % [:code] to-int)
+         )

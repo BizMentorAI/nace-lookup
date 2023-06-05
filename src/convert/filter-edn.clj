@@ -9,6 +9,7 @@
 (def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
 (def cpc-isic-map-table (edn/read-string (slurp "src/data/cpc2isic.edn")))
 (def isic-naics-map-table (edn/read-string (slurp "src/data/isic2naics.edn")))
+(def naics-records (edn/read-string (slurp "src/data/naics.edn")))
 ;; (def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
 ;;                                (edn/read-string (slurp "src/data/unspsc.edn"))))
 
@@ -21,29 +22,47 @@
         (first (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))]
     cpc-record))
 
+(defn extend-meta [hash extra-meta]
+  (with-meta hash (merge (meta hash) extra-meta)))
+
 (defn extend-with-cpc [record]
-  (or (if-let [cpc-record (get-cpc record)]
-        (-> record
-            (with-meta {:cpc-record cpc-record})
-            (assoc :cpc (:code cpc-record))
-            (assoc :extra (str/trim (str (:extra record) " "
-                                         (:title cpc-record) " "
-                                         (:note cpc-record))))))
-      record))
+  (if-let [cpc-record (get-cpc record)]
+    (-> record
+        (extend-meta {:cpc-record cpc-record})
+        (assoc :cpc (:code cpc-record))
+        (assoc :extra (str/trim (str (:extra record) " "
+                                     (:title cpc-record) " "
+                                     (:note cpc-record)))))
+    record))
 
 (defn extend-with-isic-code [record]
-  (or (if-let [cpc-record (meta record)]
-        (let [cpc-isic-map-record
-              (first
-               (filter #(= (:cpc-21-code %) (:code cpc-record))
-                       cpc-isic-map-table))]
-          (with-meta record {:isic-code
-                             (:isic-4-code
-                              (when cpc-isic-map-record
-                                (:isic-4-code cpc-isic-map-record)))})))
-      record))
+  (if-let [cpc-record (:cpc-record (meta record))]
+    (let [cpc-isic-map-record
+          (first
+           (filter #(= (:cpc-21-code %) (:code cpc-record))
+                   cpc-isic-map-table))]
+      (extend-meta record {:isic-code (:isic-4-code cpc-isic-map-record)}))
+    record))
 
-;isic-naics-map-table
+(defn extend-with-naics-code [record]
+  (if-let [isic-code (:isic-code (meta record))]
+    (let [f (fn [i] (= (:isic-40 i) isic-code))
+          isic-map-record (first (filter f isic-naics-map-table))]
+      (extend-meta record {:naics-code
+                           (:2022-naics-us isic-map-record)}))
+    record))
+
+; TODO extend with ISIC desc as well
+(defn extend-with-naics-extra [record]
+  (if-let [naics-code (:naics-code (meta record))]
+    (let [naics-record
+          (first (filter #(= (:code %) naics-code) naics-records))]
+      (-> record
+          (extend-meta {:naics-record naics-record})
+          (assoc :extra (str/trim (str (:extra record) " "
+                                       (:title naics-record) " "
+                                       (:note naics-record))))))
+    record))
 
 (defn acronym? [word]
   (re-find #"^[A-Z0-9-]+$" word))
@@ -161,6 +180,7 @@
         extend-with-cpc
         extend-with-isic-code
         extend-with-naics-code
+        extend-with-naics-extra
         ;; extend-with-unspsc
         )))
 
