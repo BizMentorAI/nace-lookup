@@ -5,6 +5,7 @@
 
 (require '[inflections :refer (plural singular)])
 
+(def cpa-records (edn/read-string (slurp "src/data/cpa.edn")))
 (def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
 (def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
 (def cpc-isic-map-table (edn/read-string (slurp "src/data/cpc2isic.edn")))
@@ -30,9 +31,9 @@
     (-> record
         (extend-meta {:cpc-record cpc-record})
         (assoc :cpc (:code cpc-record))
-        (assoc :extra (str/trim (str (:extra record) " "
-                                     (:title cpc-record) " "
-                                     (:note cpc-record)))))
+        (assoc-in [:extra :cpc]
+                  (str/trim
+                   (str (:title cpc-record) " " (:note cpc-record)))))
     record))
 
 (defn extend-with-isic-code [record]
@@ -56,12 +57,12 @@
 (defn extend-with-naics-extra [record]
   (if-let [naics-code (:naics-code (meta record))]
     (let [naics-record
-          (first (filter #(= (:code %) naics-code) naics-records))]
+          (first (filter #(= (:id %) naics-code) naics-records))]
       (-> record
           (extend-meta {:naics-record naics-record})
-          (assoc :extra (str/trim (str (:extra record) " "
-                                       (:title naics-record) " "
-                                       (:note naics-record))))))
+          (assoc-in [:extra :naics]
+                    (str/trim
+                     (str (:title naics-record) " " (:description naics-record))))))
     record))
 
 (defn acronym? [word]
@@ -166,8 +167,8 @@
     1 {:level 1 :label (:desc record)}
     4 {:level 2 :code (:code record) :label (:desc record)}
     6 {:level 3 :code (:code record) :label (:desc record)
-       :extra (str/trim (str (:includes record) " "
-                             (:includes-2 record)))}))
+       :extra {:cpa (str/trim (str (:includes record) " "
+                                   (:includes-2 record)))}}))
 
   ;; (let [base {:level (Integer/parseInt (second row))
   ;;             :code (nth row 3) :label (nth row 4)}
@@ -180,9 +181,7 @@
         extend-with-cpc
         extend-with-isic-code
         extend-with-naics-code
-        extend-with-naics-extra
-        ;; extend-with-unspsc
-        )))
+        extend-with-naics-extra)))
 
 ; Remove empty (L1) L4 groups.
 ; (not (empty? (:items l4-item)))
@@ -219,6 +218,5 @@
                                #(conj % item))))
               [] sequence))))
 
-(let [records (edn/read-string (slurp "src/data/cpa.edn"))]
-  (spit "public/workers/autocomplete/data.json"
-        (json/generate-string (nest records) {:pretty true})))
+(spit "public/workers/autocomplete/data.json"
+      (json/generate-string (nest cpa-records) {:pretty true}))
