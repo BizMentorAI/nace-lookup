@@ -2,9 +2,7 @@
   "Usage: (persistent! (into [] (partial transducer search-term) data))")
 
 (defn- match-l6-item [item regexp]
-  (let [fields (flatten
-                [(:label item)
-                 (map #(get (:extra item) %) (keys (:extra item)))])]
+  (let [fields (flatten [(:label item) (vals (:extra item))])]
     (first (filter #(re-find regexp %) fields))))
 
 ; A transducer (sometimes referred to as xform or xf)

@@ -10,12 +10,10 @@
 (def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
 (def cpc-isic-map-table (edn/read-string (slurp "src/data/cpc2isic.edn")))
 (def isic-naics-map-table (edn/read-string (slurp "src/data/isic2naics.edn")))
-(def naics-records (edn/read-string (slurp "src/data/naics.edn")))
+(def naics-records (edn/read-string (slurp "src/data/naics-index.edn")))
 ;; (def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
 ;;                                (edn/read-string (slurp "src/data/unspsc.edn"))))
 
-; Extra: remove HTML, remove \n, make hash :extra {:cpa "..." :cpc "..." :unspsc "..."}
-; CPC
 (defn get-cpc [{:keys [:code]}]
   (let [map-record
         (first (filter #(= (:cpa-21-code %) code) cpc-map-table))
@@ -26,14 +24,26 @@
 (defn extend-meta [hash extra-meta]
   (with-meta hash (merge (meta hash) extra-meta)))
 
+(defn normalise-2 [text]
+  (-> (str/lower-case text)
+      (str/replace #"</?\w+>" "")
+      (str/replace #"[-:,*()\.]" "")
+      (str/replace #"\d+" "")
+      (str/replace #"\b(and|or|this|subcategory|of|does|not|includes|cf|other|the|an?|nec)\b" "")
+      (str/replace #"\(s\)" "")
+      (str/replace #"\b\((except|excluding|without)[^)]\)" "")
+      (str/replace #"\s+" " ")))
+
+(defn normalise-fields [record fields]
+  (normalise-2 (str/trim (str/join " " (map #(% record) fields)))))
+
 (defn extend-with-cpc [record]
   (if-let [cpc-record (get-cpc record)]
     (-> record
         (extend-meta {:cpc-record cpc-record})
         (assoc :cpc (:code cpc-record))
         (assoc-in [:extra :cpc]
-                  (str/trim
-                   (str (:title cpc-record) " " (:note cpc-record)))))
+                  (normalise-fields cpc-record [:title :note])))
     record))
 
 (defn extend-with-isic-code [record]
@@ -56,13 +66,18 @@
 ; TODO extend with ISIC desc as well
 (defn extend-with-naics-extra [record]
   (if-let [naics-code (:naics-code (meta record))]
-    (let [naics-record
-          (first (filter #(= (:id %) naics-code) naics-records))]
+    (let [matched-naics-records
+          (filter #(= (:code %) naics-code) naics-records)
+          matched-descs (map :desc matched-naics-records)]
       (-> record
-          (extend-meta {:naics-record naics-record})
+          (extend-meta {:naics-records matched-naics-records})
           (assoc-in [:extra :naics]
-                    (str/trim
-                     (str (:title naics-record) " " (:description naics-record))))))
+                    (normalise-2
+                     (str/join " "
+                               (into #{}
+                                     (str/split
+                                      (str/join " " matched-descs)
+                                      #"\s+")))))))
     record))
 
 (defn acronym? [word]
@@ -123,6 +138,7 @@
       (str/replace #"(?i)(cow|chick|pigeon) pea" "$1pea")
       (str/replace #"\b(except|excluding|without).+$" "")))
 
+; Extra: remove HTML.
 ;; ; UNSPSC
 ;; (defn match-unspsc-keywords [keywords]
 ;;   (reduce (fn [acc unspsc-item]
@@ -167,8 +183,7 @@
     1 {:level 1 :label (:desc record)}
     4 {:level 2 :code (:code record) :label (:desc record)}
     6 {:level 3 :code (:code record) :label (:desc record)
-       :extra {:cpa (str/trim (str (:includes record) " "
-                                   (:includes-2 record)))}}))
+       :extra {:cpa (normalise-fields record [:includes :includes-2])}}))
 
   ;; (let [base {:level (Integer/parseInt (second row))
   ;;             :code (nth row 3) :label (nth row 4)}

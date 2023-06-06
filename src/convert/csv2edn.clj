@@ -40,6 +40,5 @@
 ;; (process "src/data/unspsc.csv" #(update-all % [:id] to-int))
 ;; (process "src/data/cpc2isic.csv" #(dissoc % :_))
 ;; (process "src/data/isic2naics.csv" identity)
-(process "src/data/naics.csv" identity
-         ;; #(update-all % [:code] to-int)
-         )
+;; (process "src/data/naics-desc.csv" identity)
+(process "src/data/naics-index.csv" identity)

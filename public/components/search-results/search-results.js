@@ -44,6 +44,7 @@ class SearchResults extends HTMLElement {
               div.addEventListener("click", (event) => {
                 // TODO: Could we somehow get event.currentTarget
                 // so we could highlight it (the last visited item)?
+                console.log(item) ////
                 this.modal.renderBody([
                   // TODO: Should be somewhere in setup.
                   createStyleLink("components/search-results/modal.css"),
@@ -58,11 +59,13 @@ class SearchResults extends HTMLElement {
                     tag("div", {class: "code"}, item.code),
                     tag("div", {class: "label"}, item.label)]),
 
-                  tag("p", {style: {
-                            maxWidth: "500px",
-                            textStyle: "italic",
-                            display: inspectMode ? "block" : "none"}},
-                      item.extra)])})}))))
+                  // TODO: singularise?
+                  tag("div", {style: {
+                              maxWidth: "500px",
+                              display: inspectMode ? "block" : "none"}},
+                      Object.entries(item.extra).map(([ key, text ]) => (
+                        [tag("h3", key), tag("code", text)]
+                      )).flat())])})}))))
     } else {
       this.results.replaceChildren(
         tag("div", {class: "no-results"}, [
