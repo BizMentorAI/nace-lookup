@@ -58,9 +58,10 @@
 (defn extend-with-naics-code [record]
   (if-let [isic-code (:isic-code (meta record))]
     (let [f (fn [i] (= (:isic-40 i) isic-code))
-          isic-map-record (first (filter f isic-naics-map-table))]
+          naics-record (first (filter f isic-naics-map-table))]
+    (prn naics-record)
       (extend-meta record {:naics-code
-                           (:2022-naics-us isic-map-record)}))
+                           (:2022-naics-us naics-record)}))
     record))
 
 ; TODO extend with ISIC desc as well
