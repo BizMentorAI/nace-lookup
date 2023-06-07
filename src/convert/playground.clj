@@ -6,7 +6,7 @@
 (def cpc-isic-map-table (edn/read-string (slurp "src/data/cpc2isic.edn")))
 (def isic-naics-map-table (edn/read-string (slurp "src/data/isic2naics.edn")))
 (def naics-records-index (edn/read-string (slurp "src/data/naics-index.edn")))
-(def naics-records-desc (edn/read-string (slurp "src/data/naics-index.edn")))
+(def naics-records-desc (edn/read-string (slurp "src/data/naics-desc.edn")))
 
 ; NAICS --> ISIC
 (def naics-codes-index (into #{} (map :code naics-records-index)))
