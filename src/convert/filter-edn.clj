@@ -193,11 +193,13 @@
 
 (defn process-record [record]
   (when (#{1 4 6} (:level record))
-    (-> (process-category record)
+    (-> record
+        process-category
         extend-with-cpc
-        extend-with-isic-code
-        extend-with-naics-code
-        extend-with-naics-extra)))
+        ;; extend-with-isic-code
+        ;; extend-with-naics-code
+        ;; extend-with-naics-extra
+        )))
 
 ; Remove empty (L1) L4 groups.
 ; (not (empty? (:items l4-item)))
