@@ -41,4 +41,5 @@
 ;; (process "src/data/cpc2isic.csv" #(dissoc % :_))
 ;; (process "src/data/isic2naics.csv" identity)
 ;; (process "src/data/naics-desc.csv" identity)
-(process "src/data/naics-index.csv" identity)
+;; (process "src/data/naics-index.csv" identity)
+(process "src/data/prodcom2022-structure.csv" #(dissoc % :fr :el :hr :pt :fi :ro :sl :es- :et :cs :hu :pl :it :nl :sk :de :sv :da :bg :lt :lv :mt))
