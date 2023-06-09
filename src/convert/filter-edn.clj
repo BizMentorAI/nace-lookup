@@ -11,6 +11,7 @@
 (def cpc-isic-map-table (edn/read-string (slurp "src/data/cpc2isic.edn")))
 (def isic-naics-map-table (edn/read-string (slurp "src/data/isic2naics.edn")))
 (def naics-records (edn/read-string (slurp "src/data/naics-index.edn")))
+(def prodcom-records (edn/read-string (slurp "src/data/prodcom2022-structure.edn")))
 ;; (def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
 ;;                                (edn/read-string (slurp "src/data/unspsc.edn"))))
 
@@ -32,7 +33,8 @@
       (str/replace #"\b(and|or|this|subcategory|of|does|not|includes|cf|other|the|an?|nec)\b" "")
       (str/replace #"\(s\)" "")
       (str/replace #"\b\((except|excluding|without)[^)]\)" "")
-      (str/replace #"\s+" " ")))
+      (str/replace #"\s+" " ")
+      (str/trim)))
 
 (defn normalise-fields [record fields]
   (normalise-2 (str/trim (str/join " " (map #(% record) fields)))))
@@ -44,6 +46,24 @@
         (assoc :cpc (:code cpc-record))
         (assoc-in [:extra :cpc]
                   (normalise-fields cpc-record [:title :note])))
+    record))
+
+(defn get-prodcom [{:keys [:code]}]
+  (filter #(= (:cpa %) code) prodcom-records))
+
+(defn extend-with-prodcom [record]
+  (if (= (:level record) 3)
+    (if-let [prodcom-records (get-prodcom record)]
+      (do
+        (-> record
+            (extend-meta {:prodcom-records prodcom-records})
+            (assoc-in [:extra :prodcom]
+                      (str/join " "
+                                (into #{}
+                                      (str/split
+                                       (normalise-2 (str/join " " (map :en prodcom-records)))
+                                       #"\s+"))))))
+      record)
     record))
 
 (defn extend-with-isic-code [record]
@@ -196,6 +216,7 @@
     (-> record
         process-category
         extend-with-cpc
+        extend-with-prodcom
         ;; extend-with-isic-code
         ;; extend-with-naics-code
         ;; extend-with-naics-extra
