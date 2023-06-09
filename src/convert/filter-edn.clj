@@ -61,7 +61,7 @@
                       (str/join " "
                                 (into #{}
                                       (str/split
-                                       (normalise-2 (str/join " " (map :en prodcom-records)))
+                                       (normalise-2 (str/join "\n" (map :en prodcom-records)))
                                        #"\s+"))))))
       record)
     record))
