@@ -6,8 +6,12 @@
 ;(prn (into #{} (filter #(= (:level %) 3) prodcom-records)))
 ;(prn (map #(vec [(:cpa %), (:prd2022_code %)]) (filter #(= (:level %) 3) prodcom-records)))
 
+; (nest records)
+(def results
+  (->> prodcom-records
+   (filter #(= (:level %) 3))
+   (map #(select-keys % [:nace :cpa :prd :en]))))
+
 (spit
- "results.json"
-                                        ;"public/workers/autocomplete/data.json"
-                                        ;(json/generate-string (nest cpa-records) {:pretty true})
- (json/generate-string prodcom-records {:pretty true}))
+ "results.json" ;"public/workers/autocomplete/data.json"
+ (json/generate-string results {:pretty true}))
