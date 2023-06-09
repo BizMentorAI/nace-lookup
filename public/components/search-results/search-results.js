@@ -49,10 +49,10 @@ class SearchResults extends HTMLElement {
                   // TODO: Should be somewhere in setup.
                   createStyleLink("components/search-results/modal.css"),
 
-                  tag("h3", "Business NACE code is"),
-                  tag("div", {class: "row"}, [
-                    tag("div", {class: "code"}, item.l4Item.code),
-                    tag("div", {class: "label"}, item.l4Item.label)]),
+                  // tag("h3", "Business NACE code is"),
+                  // tag("div", {class: "row"}, [
+                  //   tag("div", {class: "code"}, item.l4Item.code),
+                  //   tag("div", {class: "label"}, item.l4Item.label)]),
 
                   tag("h3", "Product or service CPA code is"),
                   tag("div", {class: "row"}, [

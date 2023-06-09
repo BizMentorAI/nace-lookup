@@ -3,20 +3,24 @@
   ; NOTE: This doesn't work with workers.autocomplete.transducer like we're used to in CLJ.
   (:require ["/workers/autocomplete/transducer.js" :refer (transducer)]))
 
-; Does inlining work?
-;(def r (inline-resource "/Users/jakub/Documents/Projects/bizmentor/nace-finder-modern/README.org"))
+                                        ; Does inlining work?
+                                        ;(def r (inline-resource "/Users/jakub/Documents/Projects/bizmentor/nace-finder-modern/README.org"))
 ;; (def r (inline-readme))
 ;; (js/console.log r)
 
 (defn ^:async fetch-data []
-  ; TODO: The JSON path should come from a variable (tangling).
+                                        ; TODO: The JSON path should come from a variable (tangling).
   (let [response (js/await (js/fetch "/workers/autocomplete/data.json"))
         body (js/await (.json response))] body))
 
 (def data (js->clj (js/await (fetch-data)) {:keywordize-keys true}))
 
 (defn- filter-items [data search-term]
-  (persistent! (into [] (partial transducer search-term) data)))
+  ;(persistent! (into [] (partial transducer search-term) data))
+  (let [regexp (re-pattern (str "(?i)\\b" search-term))]
+    (map
+     #(dissoc (merge % {:label (:en %) :extra {} :heading false :code (:prd %)}) :en)
+     (filter #(re-find regexp (:en %)) data))))
 
 (defn- convert-format [items]
   (map (fn [item]
