@@ -69,8 +69,8 @@ class SearchResults extends HTMLElement {
     } else {
       this.results.replaceChildren(
         tag("div", {class: "no-results"}, [
-         tag("h3", {class: "heading"}, "Nothing found"),
-         tag("p", "Try a shorter keyword.")]))
+         tag("h3", {class: "heading"}, "No matching results in the EU classification system"),
+         tag("p", "Try a related search term.")]))
     }
   }
 
