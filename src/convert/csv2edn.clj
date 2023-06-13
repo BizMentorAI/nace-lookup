@@ -52,4 +52,5 @@
 ;;               (set/rename-keys {:prd2022_code :prd})))
 ;; (process "src/data/cpa2cn.csv" #(dissoc % :_))
 ;; (process "src/data/hs-h4.csv" #(update-all (dissoc % :nomenclaturecode) [:tier] to-int))
-(process "src/data/cpc212hs2017.csv" #(dissoc % :_))
+;; (process "src/data/cpc212hs2017.csv" #(dissoc % :_))
+(process "src/data/hs2022-hs2017.csv" identity)
