@@ -12,7 +12,6 @@
   (let [out-path (str/replace path #".json$" ".edn")]
     (println (str "~ Writing " out-path "."))
     (let [record (json/parse-string (slurp path) true)
-          _ (prn record)
           result (hook record)]
       (spit out-path (with-out-str (pprint result))))))
 

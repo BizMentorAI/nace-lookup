@@ -5,21 +5,17 @@
 
 (require '[inflections :refer (plural singular)])
 
-(def cpa-records (edn/read-string (slurp "src/data/cpa.edn")))
-(def cpc-map-table (edn/read-string (slurp "src/data/cpa2cpc.edn")))
-(def cpc-records (edn/read-string (slurp "src/data/cpc.edn")))
-;; (def cpc-isic-map-table (edn/read-string (slurp "src/data/cpc2isic.edn")))
-;; (def isic-naics-map-table (edn/read-string (slurp "src/data/isic2naics.edn")))
-(def cn-map-table (edn/read-string (slurp "src/data/cpa2cn.edn")))
-(def hs-map-table (edn/read-string (slurp "src/data/cpc212hs2017.edn")))
-;; (def naics-records (edn/read-string (slurp "src/data/naics-index.edn")))
+(def cpa-records     (edn/read-string (slurp "src/data/cpa.edn")))
+(def cpc-map-table   (edn/read-string (slurp "src/data/cpa2cpc.edn")))
+(def cpc-records     (edn/read-string (slurp "src/data/cpc.edn")))
+(def cn-map-table    (edn/read-string (slurp "src/data/cpa2cn.edn")))
+(def hs-map-table    (edn/read-string (slurp "src/data/cpc212hs2017.edn")))
 (def prodcom-records (edn/read-string (slurp "src/data/prodcom2022-structure.edn")))
-(def cn-records (edn/read-string (slurp "src/data/cn2023.edn")))
-(def hs-records (edn/read-string (slurp "src/data/hs-h4.edn")))
-;; (def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
-;;                                (edn/read-string (slurp "src/data/unspsc.edn"))))
+(def cn-records      (edn/read-string (slurp "src/data/cn2023.edn")))
+(def hs-2017-records (edn/read-string (slurp "src/data/hs-h4.edn")))
+(def hs-2022-records (edn/read-string (slurp "src/data/hs2022.edn")))
 
-(defn get-cpc [{:keys [:code]}]
+(defn get-cpc [{:keys [code]}]
   (let [map-record
         (first (filter #(= (:cpa-21-code %) code) cpc-map-table))
         cpc-record
@@ -91,50 +87,15 @@
   (let [cpc-record (:cpc-record (meta record))
         cpc-code (:code cpc-record)
         map-records (filter #(= (:cpc-21 %) cpc-code) hs-map-table)
-        selected-hs-records
+        selected-hs-2017-records
         (flatten (map (fn [map-record]
                         (filter #(= (str/replace (:hs-2017 map-record) #"\." "")
                                     (:code %))
-                                hs-records))
+                                hs-2017-records))
                       map-records))]
-    (extend-meta record {:hs-records selected-hs-records})
-    (when (not (empty? selected-hs-records))
-      (assoc-in record [:extra :hs] (str/join "\n" (map #(str/trim (:desc %)) selected-hs-records))))))
-
-;; (defn extend-with-isic-code [record]
-;;   (if-let [cpc-record (:cpc-record (meta record))]
-;;     (let [cpc-isic-map-record
-;;           (first
-;;            (filter #(= (:cpc-21-code %) (:code cpc-record))
-;;                    cpc-isic-map-table))]
-;;       (extend-meta record {:isic-code (:isic-4-code cpc-isic-map-record)}))
-;;     record))
-
-;; (defn extend-with-naics-code [record]
-;;   (if-let [isic-code (:isic-code (meta record))]
-;;     (let [f (fn [i] (= (:isic-40 i) isic-code))
-;;           naics-record (first (filter f isic-naics-map-table))]
-;;     (prn naics-record)
-;;       (extend-meta record {:naics-code
-;;                            (:2022-naics-us naics-record)}))
-;;     record))
-
-;; ; TODO extend with ISIC desc as well
-;; (defn extend-with-naics-extra [record]
-;;   (if-let [naics-code (:naics-code (meta record))]
-;;     (let [matched-naics-records
-;;           (filter #(= (:code %) naics-code) naics-records)
-;;           matched-descs (map :desc matched-naics-records)]
-;;       (-> record
-;;           (extend-meta {:naics-records matched-naics-records})
-;;           (assoc-in [:extra :naics]
-;;                     (normalise-2
-;;                      (str/join " "
-;;                                (into #{}
-;;                                      (str/split
-;;                                       (str/join " " matched-descs)
-;;                                       #"\s+")))))))
-;;     record))
+    (extend-meta record {:hs-2017-records selected-hs-2017-records})
+    (when (not (empty? selected-hs-2017-records))
+      (assoc-in record [:extra :hs] (str/join "\n" (map #(str/trim (:desc %)) selected-hs-2017-records))))))
 
 (defn acronym? [word]
   (re-find #"^[A-Z0-9-]+$" word))
@@ -194,46 +155,6 @@
       (str/replace #"(?i)(cow|chick|pigeon) pea" "$1pea")
       (str/replace #"\b(except|excluding|without).+$" "")))
 
-; Extra: remove HTML.
-;; ; UNSPSC
-;; (defn match-unspsc-keywords [keywords]
-;;   (reduce (fn [acc unspsc-item]
-;;             (let [a (into #{} (get-keywords (normalise (or (:desc unspsc-item) ""))))
-;;                   matched-keywords (clojure.set/intersection a keywords)]
-;;               (if (not (empty? matched-keywords))
-;;                 (conj acc {:record unspsc-item :matched-keywords matched-keywords})
-;;                 acc)))
-;;           []
-;;           unspsc-L6-records))
-
-;; (defn get-best-match [matches]
-;;   (last (sort-by #(count (:matched-keywords %)) matches)))
-
-;; ; TODO: multi-thread.
-;; ; Total Number of Cores:	8 (4 performance and 4 efficiency)
-;; ; Run on JVM (benchmark against bb).
-;; (defn match-unspsc [record]
-;;   (when (= (:level record) 3)
-;;     (let [cpc-record (:record (meta cpc-record))
-;;           cpc-title (:title cpc-record)
-;;           keywords (get-keywords (normalise (str (:label record) " " cpc-title)))]
-;;       ;; (prn :cpa (:label record) :cpc cpc-title :keywords keywords)
-;;       (let [matches (match-unspsc-keywords keywords)
-;;             best-match (get-best-match matches)]
-;;         (prn record (count matches)) ;;;
-;;         (:record best-match)))))
-
-;; (defn extend-with-unspsc [record]
-;;   (or (if-let [unspsc-record (match-unspsc record)]
-;;         (-> record
-;;             ;; (assoc :unspsc (with-meta
-;;             ;;                  (:code unspsc-record)
-;;             ;;                  {:record unspsc-record}))
-;;             (assoc :extra (str/trim (str (:extra record) " "
-;;                                          (:title unspsc-record) " "
-;;                                          (:desc unspsc-record))))))
-;;       record))
-
 (defn process-category [record]
   (case (:level record)
     1 {:level 1 :label (:desc record)}
@@ -241,36 +162,15 @@
     6 {:level 3 :code (:code record) :label (:desc record)
        :extra {:cpa (normalise-fields record [:includes :includes-2])}}))
 
-  ;; (let [base {:level (Integer/parseInt (second row))
-  ;;             :code (nth row 3) :label (nth row 4)}
-  ;;       extra (str/trim (str (nth row 5) " " (nth row 6)))]
-  ;;   (if (empty? extra) base (assoc base :extra extra)))
-
 (defn process-record [record]
   (when (#{1 4 6} (:level record))
     (let [i (process-category record)]
       (if (= (:level i) 3)
-        (-> i
-            extend-with-cpc
-            extend-with-prodcom
-            extend-with-cn
-            extend-with-hs)
+        (-> i extend-with-cpc extend-with-prodcom extend-with-cn extend-with-hs)
         i))))
 
-; Remove empty (L1) L4 groups.
-; (not (empty? (:items l4-item)))
-
 (defn get-sequence [records]
-  (remove nil? (map process-record records))
-  ;; (reduce (fn [acc item]
-  ;;           ;; (binding [*out* *err*] (prn item))
-  ;;           (if (= (:level item) level)
-  ;;             (conj acc (assoc (dissoc item :level) :items []))
-  ;;             (conj (butlast acc)
-  ;;                   (update-in (last acc) [:items] #(conj % (dissoc item :level))))))
-  ;;         []
-  ;;         (filter identity (map process-row data)))
-  )
+  (remove nil? (map process-record records)))
 
 (defn nest [records]
   (binding [*out* *err*]
@@ -279,13 +179,13 @@
                 (case level
                   1 (conj acc (assoc item :items [])) ; TODO: dissoc :level
 
-                  ; acc[-1].items
+                                        ; acc[-1].items
                   2 (do
                       (update-in acc
                                  [(dec (count acc)) :items]
                                  #(conj % (assoc item :items []))))
 
-                  ; acc[-1].items[acc[-1].items.last.items]
+                                        ; acc[-1].items[acc[-1].items.last.items]
                   3 (update-in acc
                                [(dec (count acc)) :items (dec (count (:items (last acc)))) :items]
                                #(conj % item))))
