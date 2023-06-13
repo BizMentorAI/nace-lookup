@@ -11,9 +11,11 @@
 ;; (def cpc-isic-map-table (edn/read-string (slurp "src/data/cpc2isic.edn")))
 ;; (def isic-naics-map-table (edn/read-string (slurp "src/data/isic2naics.edn")))
 (def cn-map-table (edn/read-string (slurp "src/data/cpa2cn.edn")))
+(def hs-map-table (edn/read-string (slurp "src/data/cpc212hs2017.edn")))
 ;; (def naics-records (edn/read-string (slurp "src/data/naics-index.edn")))
 (def prodcom-records (edn/read-string (slurp "src/data/prodcom2022-structure.edn")))
 (def cn-records (edn/read-string (slurp "src/data/cn2023.edn")))
+(def hs-records (edn/read-string (slurp "src/data/hs-h4.edn")))
 ;; (def unspsc-L6-records (filter #(not (= (mod (:id %) 10) 0))
 ;;                                (edn/read-string (slurp "src/data/unspsc.edn"))))
 
@@ -70,7 +72,7 @@
       record)
     record))
 
-(defn extend-with-cn [{:keys [:code] :as record}]
+(defn extend-with-cn [{:keys [code] :as record}]
   (if (= (:level record) 3)
     (let [map-items (filter #(= (:cpa %) code) cn-map-table)
           cn-records (flatten
@@ -88,6 +90,9 @@
                                                 (map :desc cn-records)))
                                      #"\s+"))))))
     record))
+
+(defn extend-with-hs [{:keys [code] :as record}]
+  record)
 
 ;; (defn extend-with-isic-code [record]
 ;;   (if-let [cpc-record (:cpc-record (meta record))]
@@ -236,15 +241,14 @@
 
 (defn process-record [record]
   (when (#{1 4 6} (:level record))
-    (-> record
-        process-category
-        extend-with-cpc
-        extend-with-prodcom
-        extend-with-cn
-        ;; extend-with-isic-code
-        ;; extend-with-naics-code
-        ;; extend-with-naics-extra
-        )))
+    (let [i (process-category record)]
+      (if (= (:level i) 3)
+        (-> i
+            extend-with-cpc
+            extend-with-prodcom
+            extend-with-cn
+            extend-with-hs)
+        i))))
 
 ; Remove empty (L1) L4 groups.
 ; (not (empty? (:items l4-item)))
