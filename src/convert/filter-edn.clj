@@ -56,40 +56,36 @@
   (filter #(= (:cpa %) code) prodcom-records))
 
 (defn extend-with-prodcom [record]
-  (if (= (:level record) 3)
-    (if-let [prodcom-records (get-prodcom record)]
-      (do
-        (-> record
-            (extend-meta {:prodcom-records prodcom-records})
-            (assoc-in [:extra :prodcom]
-                      (str/join " "
-                                (into #{}
-                                      (str/split
-                                       (normalise-2
-                                        (str/join "\n"
-                                                  (map :en prodcom-records)))
-                                       #"\s+"))))))
-      record)
-    record))
-
-(defn extend-with-cn [{:keys [code] :as record}]
-  (if (= (:level record) 3)
-    (let [map-items (filter #(= (:cpa %) code) cn-map-table)
-          cn-records (flatten
-                      (map
-                       (fn [map-item]
-                         (filter #(= (map-item :cn) (% :code)) cn-records))
-                       map-items))]
+  (if-let [prodcom-records (get-prodcom record)]
+    (do
       (-> record
-          (assoc-in [:extra :cn]
+          (extend-meta {:prodcom-records prodcom-records})
+          (assoc-in [:extra :prodcom]
                     (str/join " "
                               (into #{}
                                     (str/split
                                      (normalise-2
                                       (str/join "\n"
-                                                (map :desc cn-records)))
+                                                (map :en prodcom-records)))
                                      #"\s+"))))))
     record))
+
+(defn extend-with-cn [{:keys [code] :as record}]
+  (let [map-items (filter #(= (:cpa %) code) cn-map-table)
+        cn-records (flatten
+                    (map
+                     (fn [map-item]
+                       (filter #(= (map-item :cn) (% :code)) cn-records))
+                     map-items))]
+    (-> record
+        (assoc-in [:extra :cn]
+                  (str/join " "
+                            (into #{}
+                                  (str/split
+                                   (normalise-2
+                                    (str/join "\n"
+                                              (map :desc cn-records)))
+                                   #"\s+")))))))
 
 (defn extend-with-hs [{:keys [code] :as record}]
   record)
