@@ -87,8 +87,19 @@
                                               (map :desc cn-records)))
                                    #"\s+")))))))
 
-(defn extend-with-hs [{:keys [code] :as record}]
-  record)
+(defn extend-with-hs [record]
+  (let [cpc-record (:cpc-record (meta record))
+        cpc-code (:code cpc-record)
+        map-records (filter #(= (:cpc-21 %) cpc-code) hs-map-table)
+        selected-hs-records
+        (flatten (map (fn [map-record]
+                        (filter #(= (str/replace (:hs-2017 map-record) #"\." "")
+                                    (:code %))
+                                hs-records))
+                      map-records))]
+    (extend-meta record {:hs-records selected-hs-records})
+    (when (not (empty? selected-hs-records))
+      (assoc-in record [:extra :hs] (str/join "\n" (map #(str/trim (:desc %)) selected-hs-records))))))
 
 ;; (defn extend-with-isic-code [record]
 ;;   (if-let [cpc-record (:cpc-record (meta record))]
