@@ -14,7 +14,6 @@
 (def cn-title-records (edn/read-string (slurp "src/data/cn2023-titles.edn")))
 (def cn-desc-records  (edn/read-string (slurp "src/data/cn2023.edn")))
 (def hs-2017-records  (edn/read-string (slurp "src/data/hs-h4.edn")))
-(def hs-2022-records  (edn/read-string (slurp "src/data/hs2022.edn")))
 
 (defn get-cpc [{:keys [code]}]
   (let [map-record
@@ -36,25 +35,39 @@
         (assoc-in record [:extra extra-key] (str/join " " values))
         record))))
 
-(defn normalise-2 [text]
+;; (defn normalise [text]
+;;   (-> text
+;;       (str/replace #"\(excluding .*\)", "")
+;;       (str/replace #"[()]" "")
+;;       (str/replace #"\"" "")
+;;       (str/replace #"n.e.c." "")
+;;       (str/replace #"[\d,.]+" "")
+;;       (str/replace #"'s?" "")
+;;       (str/replace #"etc.?" "")
+;;       (str/replace #"</?\w+>" "")
+;;       (str/replace #"(?i)dry clean" "dry-clean")
+;;       (str/replace #"(?i)(cow|chick|pigeon) pea" "$1pea")
+;;       (str/replace #"\b(except|excluding|without).+$" "")))
+
+(defn normalise [text]
   (-> (str/lower-case text)
       (str/replace #"</?\w+>" "")
-      (str/replace #"[-:,*()\.]" "")
+      (str/replace #"[-:,*()\[\]\"\.]" "")
       (str/replace #"\d+" "")
       (str/replace #"\b(and|or|this|subcategory|of|does|not|includes|cf|other|the|an?|nec)\b" "")
       (str/replace #"\(s\)" "")
       (str/replace #"\b\((except|excluding|without)[^)]\)" "")
+      (str/replace #"\bexcl\b.+$" "") ; FIXME
       (str/replace #"\s+" " ")
       (str/trim)))
 
 (defn normalise-fields [record fields]
-  (normalise-2 (str/trim (str/join " " (map #(% record) fields)))))
+  (normalise (str/trim (str/join " " (map #(% record) fields)))))
 
 (defn extend-with-cpc [record]
   (if-let [cpc-record (get-cpc record)]
     (-> record
         (extend-meta {:cpc-record cpc-record})
-        ;; (assoc :cpc (:code cpc-record))
         (extend-extra :cpc (normalise-fields cpc-record [:title :note])))
     record))
 
@@ -67,12 +80,8 @@
       (-> record
           (extend-meta {:prodcom-records prodcom-records})
           (extend-extra :prodcom
-                        (into #{}
-                              (str/split
-                               (normalise-2
-                                (str/join "\n"
-                                          (map :en prodcom-records)))
-                               #"\s+")))))
+                        (normalise
+                         (str/join "\n" (map :en prodcom-records))))))
     record))
 
 (defn extend-with-cn [{:keys [code] :as record}]
@@ -80,7 +89,7 @@
         selected-cn-title-records
         (flatten
          (map (fn [map-item]
-                (filter #(= (map-item :cn) (:code %)) cn-title-records))
+                (filter #(= (map-item :cn) (:cn %)) cn-title-records))
               map-items))
 
         selected-cn-desc-records
@@ -91,20 +100,12 @@
           map-items))]
     (-> record
         (extend-extra :cn-title
-                      (into #{}
-                            (str/split
-                             (normalise-2
-                              (str/join "\n"
-                                        (map :dm selected-cn-title-records)))
-                             #"\s+")))
+                      (normalise
+                       (str/join "\n" (map :dm selected-cn-title-records))))
 
         (extend-extra :cn-desc
-                      (into #{}
-                            (str/split
-                             (normalise-2
-                              (str/join "\n"
-                                        (map :desc selected-cn-desc-records)))
-                             #"\s+"))))))
+                      (normalise
+                       (str/join "\n" (map :desc selected-cn-desc-records)))))))
 
 (defn extend-with-hs [record]
   (let [cpc-record (:cpc-record (meta record))
@@ -118,10 +119,12 @@
                       map-records))]
     (extend-meta record {:hs-2017-records selected-hs-2017-records})
     (when (not (empty? selected-hs-2017-records))
-      (extend-extra record :hs (str/join "\n" (map #(str/trim (:desc %)) selected-hs-2017-records))))))
-
-(defn acronym? [word]
-  (re-find #"^[A-Z0-9-]+$" word))
+      (extend-extra record :hs
+                    (normalise
+                     (str/join "\n"
+                               (into #{}
+                                     (map (comp str/trim :desc)
+                                          selected-hs-2017-records))))))))
 
 (def generic-keywords
   (into #{}
@@ -137,26 +140,12 @@
 (defn tokenise [text]
   (str/split text #"[\s,;:]+"))
 
-(defn normalise [text]
-  (-> text
-      (str/replace #"\(excluding .*\)", "")
-      (str/replace #"[()]" "")
-      (str/replace #"\"" "")
-      (str/replace #"n.e.c." "")
-      (str/replace #"[\d,.]+" "")
-      (str/replace #"'s?" "")
-      (str/replace #"etc.?" "")
-      (str/replace #"</?\w+>" "")
-      (str/replace #"(?i)dry clean" "dry-clean")
-      (str/replace #"(?i)(cow|chick|pigeon) pea" "$1pea")
-      (str/replace #"\b(except|excluding|without).+$" "")))
-
 (defn process-category [record]
   (case (:level record)
     1 {:level 1 :label (:desc record)}
     4 {:level 2 :code (:code record) :label (:desc record)}
     6 (let [i {:level 3 :code (:code record) :label (:desc record)}]
-        (extend-extra i :cpa (normalise-fields record [:includes :includes-2])))))
+        (extend-extra i :cpa (normalise-fields record [:includes :includes])))))
 
 (defn process-record [record]
   (when (#{1 4 6} (:level record))
