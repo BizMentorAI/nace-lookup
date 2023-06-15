@@ -5,15 +5,16 @@
 
 (require '[inflections :refer (plural singular)])
 
-(def cpa-records     (edn/read-string (slurp "src/data/cpa.edn")))
-(def cpc-map-table   (edn/read-string (slurp "src/data/cpa2cpc.edn")))
-(def cpc-records     (edn/read-string (slurp "src/data/cpc.edn")))
-(def cn-map-table    (edn/read-string (slurp "src/data/cpa2cn.edn")))
-(def hs-map-table    (edn/read-string (slurp "src/data/cpc212hs2017.edn")))
-(def prodcom-records (edn/read-string (slurp "src/data/prodcom2022-structure.edn")))
-(def cn-records      (edn/read-string (slurp "src/data/cn2023.edn")))
-(def hs-2017-records (edn/read-string (slurp "src/data/hs-h4.edn")))
-(def hs-2022-records (edn/read-string (slurp "src/data/hs2022.edn")))
+(def cpa-records      (edn/read-string (slurp "src/data/cpa.edn")))
+(def cpc-map-table    (edn/read-string (slurp "src/data/cpa2cpc.edn")))
+(def cpc-records      (edn/read-string (slurp "src/data/cpc.edn")))
+(def cn-map-table     (edn/read-string (slurp "src/data/cpa2cn.edn")))
+(def hs-map-table     (edn/read-string (slurp "src/data/cpc212hs2017.edn")))
+(def prodcom-records  (edn/read-string (slurp "src/data/prodcom2022-structure.edn")))
+(def cn-title-records (edn/read-string (slurp "src/data/cn2023-titles.edn")))
+(def cn-desc-records  (edn/read-string (slurp "src/data/cn2023.edn")))
+(def hs-2017-records  (edn/read-string (slurp "src/data/hs-h4.edn")))
+(def hs-2022-records  (edn/read-string (slurp "src/data/hs2022.edn")))
 
 (defn get-cpc [{:keys [code]}]
   (let [map-record
@@ -23,7 +24,17 @@
     cpc-record))
 
 (defn extend-meta [hash extra-meta]
-  (with-meta hash (merge (meta hash) extra-meta)))
+  (with-meta hash (merge (or (meta hash) {}) extra-meta)))
+
+(defn extend-extra [record extra-key value]
+  (if (string? value)
+    (if (not (empty? (str/trim value)))
+      (assoc-in record [:extra extra-key] value)
+      record)
+    (let [values (filter (comp not empty?) value)]
+      (if (not (empty? values))
+        (assoc-in record [:extra extra-key] (str/join " " values))
+        record))))
 
 (defn normalise-2 [text]
   (-> (str/lower-case text)
@@ -44,8 +55,7 @@
     (-> record
         (extend-meta {:cpc-record cpc-record})
         ;; (assoc :cpc (:code cpc-record))
-        (assoc-in [:extra :cpc]
-                  (normalise-fields cpc-record [:title :note])))
+        (extend-extra :cpc (normalise-fields cpc-record [:title :note])))
     record))
 
 (defn get-prodcom [{:keys [:code]}]
@@ -56,32 +66,45 @@
     (do
       (-> record
           (extend-meta {:prodcom-records prodcom-records})
-          (assoc-in [:extra :prodcom]
-                    (str/join " "
-                              (into #{}
-                                    (str/split
-                                     (normalise-2
-                                      (str/join "\n"
-                                                (map :en prodcom-records)))
-                                     #"\s+"))))))
+          (extend-extra :prodcom
+                        (into #{}
+                              (str/split
+                               (normalise-2
+                                (str/join "\n"
+                                          (map :en prodcom-records)))
+                               #"\s+")))))
     record))
 
 (defn extend-with-cn [{:keys [code] :as record}]
   (let [map-items (filter #(= (:cpa %) code) cn-map-table)
-        cn-records (flatten
-                    (map
-                     (fn [map-item]
-                       (filter #(= (map-item :cn) (% :code)) cn-records))
-                     map-items))]
+        selected-cn-title-records
+        (flatten
+         (map (fn [map-item]
+                (filter #(= (map-item :cn) (:code %)) cn-title-records))
+              map-items))
+
+        selected-cn-desc-records
+        (flatten
+         (map
+          (fn [map-item]
+            (filter #(= (map-item :cn) (% :code)) cn-desc-records))
+          map-items))]
     (-> record
-        (assoc-in [:extra :cn]
-                  (str/join " "
-                            (into #{}
-                                  (str/split
-                                   (normalise-2
-                                    (str/join "\n"
-                                              (map :desc cn-records)))
-                                   #"\s+")))))))
+        (extend-extra :cn-title
+                      (into #{}
+                            (str/split
+                             (normalise-2
+                              (str/join "\n"
+                                        (map :dm selected-cn-title-records)))
+                             #"\s+")))
+
+        (extend-extra :cn-desc
+                      (into #{}
+                            (str/split
+                             (normalise-2
+                              (str/join "\n"
+                                        (map :desc selected-cn-desc-records)))
+                             #"\s+"))))))
 
 (defn extend-with-hs [record]
   (let [cpc-record (:cpc-record (meta record))
@@ -95,7 +118,7 @@
                       map-records))]
     (extend-meta record {:hs-2017-records selected-hs-2017-records})
     (when (not (empty? selected-hs-2017-records))
-      (assoc-in record [:extra :hs] (str/join "\n" (map #(str/trim (:desc %)) selected-hs-2017-records))))))
+      (extend-extra record :hs (str/join "\n" (map #(str/trim (:desc %)) selected-hs-2017-records))))))
 
 (defn acronym? [word]
   (re-find #"^[A-Z0-9-]+$" word))
@@ -111,35 +134,8 @@
                "W" "kvar" "/" "can" "only" "use" "other" "it" "simply"
                "further" "but" "their" "organisation"]))))
 
-; Here the lib fucks up.
-(def dont-singularise
-  #{"miscellaneous" "religious" "alliaceous" "tuberous" "citrus" "gas"
-    "precious" "semi-precious" "leguminous" "asparagus" "oleaginous"
-    "apparatus" "coniferous" "non-coniferous" "bituminous" "gaseous"
-    "non-ferrous" "ferrous" "calcareous"})
-
-(def pl-sg-map
-  {"sloes" "sloe", "olives" "olive", "leaves" "leaf", "cloves" "clove",
-   "valves" "valve", "nurseries" "nursery", "roes" "roe"})
-
-(defn sg [word]
-  (or (pl-sg-map word) (singular word)))
-
-(defn singular-fix [word]
-  (if (dont-singularise word) word (sg word)))
-
 (defn tokenise [text]
   (str/split text #"[\s,;:]+"))
-
-(defn get-keywords [text]
-  (let [words (tokenise text)]
-    (into #{}
-          (map
-           ; Leave acronyms as is, lower-case other words.
-           #(if (acronym? %) % (singular-fix (str/lower-case %)))
-
-           ; Filter out generic words.
-           (filter #(not (generic-keywords (str/lower-case %))) words)))))
 
 (defn normalise [text]
   (-> text
@@ -159,8 +155,8 @@
   (case (:level record)
     1 {:level 1 :label (:desc record)}
     4 {:level 2 :code (:code record) :label (:desc record)}
-    6 {:level 3 :code (:code record) :label (:desc record)
-       :extra {:cpa (normalise-fields record [:includes :includes-2])}}))
+    6 (let [i {:level 3 :code (:code record) :label (:desc record)}]
+        (extend-extra i :cpa (normalise-fields record [:includes :includes-2])))))
 
 (defn process-record [record]
   (when (#{1 4 6} (:level record))
