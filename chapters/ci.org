@@ -1,5 +1,5 @@
 #+TITLE: CI
-#+SETUPFILE: ../setupfile.org
+#+SETUPFILE: setupfile.org
 
 * Check YAML syntax in pre-commit hooks
 Babashka: [[https://github.com/clj-commons/clj-yaml][clj-yaml]] is aliased as yaml.
