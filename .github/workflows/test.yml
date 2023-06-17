@@ -36,7 +36,7 @@ jobs:
     - name: Add shell helpers
       shell: zsh {0}
       run: |
-        mkdir .env &&
+        #mkdir .env &&
         echo 'run() { echo "$ $*"; $* }' >> $PWD/.env/setup.sh &&
         echo 'abort() { echo "$*"; exit 1 }' >> $PWD/.env/setup.sh &&
         echo 'et() { java -jar $ET_JAR $@ }' >> $PWD/.env/setup.sh

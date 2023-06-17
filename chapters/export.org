@@ -199,7 +199,7 @@ Better to run it as a script, so we can easier automate and there's theme switch
 
   (setq org-publish-project-alist
         '(
-          ("bizmentor" :components ("bm.org" "bm.attachments" "bm.assets" "bm.data" "bm.web"))
+          ("nace-lookup" :components ("nace-lookup.org" "nace-lookup.attachments" "nace-lookup.assets" "nace-lookup.data" "nace-lookup.web"))
           ("bm.org"
            :base-directory "."
            :publishing-directory "output/doc"
