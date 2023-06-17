@@ -9,6 +9,16 @@ Because of legal reasons, it's important to get the correct NACE/CPA codes, othe
 
 Best-case scenario for the LEOs would be to give the entrepreneurs easy to use lookup tool, so they could find the codes themselves and then the LEO employees would only check them to make sure they are correct.
 
+#+begin_quote
+Aim was to get business founder to select the NACE L4 code for their primary business activity. LEO said founders cannot do it, very few people in the LEO can even get it right.
+
+I realised that CPA L6 should help because founder/LEO could search for the business’s main product/service which is easier to understand that ‘Main biz activity’.
+
+But L6 turns out to be poorly worded shit just like L4 and lacks good keywords. We set out to import other mapped classification titles to build a set of keywords to improve search. But only managed about a 15% improvement.
+
+Then I discovered UNSPSC and GPC go to a really granular level of detail, right down to the search keyword terms we wanted but there are no mappings.
+#+end_quote
+
 ** Standalone project
 That is a feature we need for BizMentor. However since many other people suffer from this very problem, it deserves to be a standalone project that we can charge for.
 
@@ -59,7 +69,7 @@ False positives again.
 * Implementation
 
 * Tasks
-** TODO Review we have the right versions of each specification
+** TODO Make sure we have the right versions of each specification
 - Possibly change file names to reflect that.
 
 ** TODO Copy all fields as they are, no replacements
@@ -77,8 +87,9 @@ False positives again.
 - Depends on the size.
 - autocomplete.json vs autocomplete-inspect.json loaded for ~?inspect~.
 
-** TODO Sort by score
-- Direct match (operating system).
+** TODO Scoring
+- Sort L4 categories by total score (direct heading match + total L6 matches weight).
+- Direct match ("operating system").
 - Number of matches (CPA title, CN desc).
 - Weight of matches (title > desc).
 - Maybe show which classification matches(?) On the right-hand side.
@@ -90,18 +101,6 @@ Ok if you can see if you can map the GOC class onto the NACE level 4 I will doub
 - So we can add missing keywords.
 
 ** TODO Consider adding tests
-
-Aim was to get business founder to select the NACE L4 code for their primary business activity. LEO said founders cannot do it, very few people in the LEO can even get it right.
-
-I realised that CPA L6 should help because founder/LEO could search for the business’s main product/service which is easier to understand that ‘Main biz activity’.
-
-But L6 turns out to be poorly worded shit just like L4 and lacks good keywords. We set out to import other mapped classification titles to build a set of keywords to improve search. But only managed about a 15% improvement.
-
-Then I discovered UNSPSC and GPC go to a really granular level of detail, right down to the search keyword terms we wanted but there are no mappings.
-
-Mireia thinks we should show the keywords in the search results and a user click would display the relevant codes. But we can’t find a way to get the keywords to level 6 without hiring smart people and we can’t afford that right now.
-
-When working on my staffing screens, I realised that we probably could map the keywords to L4 without an exorbitant amount of manual effort and without having to be overly concerned about Fiverr quality.
 
 LEO will need CPA in future, we want it in the app from day one if possible to allow for data analysis to improve financial projections. Prodcom is likely to come into play in future years. CN is not essential in day one of app but would really help as it would ensure accurate Tax payment projections.
 
