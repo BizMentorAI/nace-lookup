@@ -5,14 +5,8 @@
 ruby -ryaml -e 'p YAML.load_file(".github/workflows/test.yml")'
 Babashka: https://github.com/clj-commons/clj-yaml alias as yaml
 
-* TODO Cache CLJ_CONFIG (packages)
-
-* TODO Cache Node packages
-
-[[https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container][Running jobs in a container]]
-
-#+begin_src dockerfile
-  FROM ubuntu:latest
+#+begin_src clojure :tangle .git/hooks/pre-commit :shebang "#!/usr/bin/env bb"
+(println "HERE")
 #+end_src
 
 # TODO: Unite setup.sh & profile.sh from chapters/dev/env.
@@ -27,7 +21,7 @@ Babashka: https://github.com/clj-commons/clj-yaml alias as yaml
 #
 # Make a normal script, so we don't depend on GH actions.
 
-#+begin_src yaml :tangle ../../.github/workflows/test.yml :mkdirp yes
+#+begin_src yaml :tangle ../.github/workflows/test.yml :mkdirp yes
   #################################################
   # This file is tangled from chapters/dev/ci.org #
   #################################################
