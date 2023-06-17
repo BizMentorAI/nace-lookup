@@ -1,5 +1,5 @@
 #+TITLE: Orgmode publish
-#+SETUPFILE: ../setupfile.org
+#+SETUPFILE: setupfile.org
 
 **** TODO Chapter under construction
 /{{{highlight(This chapter is under construction as the actual code is the priority.)}}}/
