@@ -1,5 +1,5 @@
 #################################################
-# This file is tangled from chapters/dev/ci.org #
+# This file is tangled from chapters/ci.org #
 #################################################
 
 name: ClojureScript tests
@@ -14,6 +14,7 @@ concurrency:
 
 env:
   SERVER: 158.101.36.84
+  PUBLISH_PATH: /www/nace-lookup
   ET_JAR: /root/.local/share/et/et.jar # Rather than /github/home.
 
 jobs:
@@ -48,11 +49,8 @@ jobs:
     - name: Tangle source files
       shell: zsh {0}
       run: |
-        for chapter in chapters/*(/); do
-          cd $chapter
-          emacs -batch --eval '(dolist (file argv) (message file) (find-file file) (org-babel-tangle))' *.org
-          cd -
-        done
+        cd chapters
+        emacs -batch --eval '(dolist (file argv) (message file) (find-file file) (org-babel-tangle))' *.org
 
     - name: Set up ENV
       shell: zsh {0}
@@ -69,38 +67,18 @@ jobs:
 
         run cat $PWD/.env/setup.sh
 
-    - name: Replace localhost:3000
-      shell: zsh {0}
-      run: |
-        source .env/setup.sh && run sed -i "s;http://localhost:3000;http://158.101.36.84:8000/$SHA/web;g" **/*(.)
-
-    - name: Build JS
-      shell: zsh {0}
-      run: |
-        source .env/setup.sh &&
-        run npm install &&
-        run et chapters/app/setup.org release
-
-    - name: Run unit tests
-      shell: zsh {0}
-      run: |
-        source .env/setup.sh &&
-        run et chapters/dev/testing.org test/unit
-
-    # - name: Generate graphs
+    # - name: Run unit tests
     #   shell: zsh {0}
     #   run: |
     #     source .env/setup.sh &&
-    #     run et chapters/core/profit-and-loss.org generate-graphs ||
-    #     #ET_JAR=$ET_JAR run et chapters/core/profit-and-loss.org generate-graphs ||
-    #     (cat /tmp/generate-graphs.sh && exit 1)
+    #     run et chapters/dev/testing.org test/unit
 
     - name: Generate documentation
       shell: zsh {0}
       run: |
         source .env/setup.sh &&
-        run et chapters/dev/export.org install &&
-        run et chapters/dev/export.org publish
+        run et chapters/export.org install &&
+        run et chapters/export.org publish
 
     # https://zellwk.com/blog/github-actions-deploy/
     - name: Install SSH key
@@ -120,14 +98,14 @@ jobs:
       shell: zsh {0}
       run: |
         source .env/setup.sh &&
-        # run rsync output root@$SERVER:/bm/www/$SHA
+        # run rsync output root@$SERVER:$PUBLISH_PATH/$SHA
         run echo "SHA: $SHA" &&
-        run scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 2222 -r output root@$SERVER:/bm/www/$SHA
+        run scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 2222 -r output root@$SERVER:$PUBLISH_PATH/$SHA
 
     - name: Update link to the branch
       # No idea why we have to call rm, it just wouldn't work on the server.
       shell: zsh {0}
       run: |
         source .env/setup.sh &&
-        command="rm /bm/www/${GITHUB_REF##*/}; ln -sf /bm/www/$SHA /bm/www/${GITHUB_REF##*/}; rm /bm/www/$(date +%Y-%m-%d); ln -sf /bm/www/$SHA /bm/www/$(date +%Y-%m-%d)" &&
+        command="rm $PUBLISH_PATH/${GITHUB_REF##*/}; ln -sf $PUBLISH_PATH/$SHA $PUBLISH_PATH/${GITHUB_REF##*/}; rm $PUBLISH_PATH/$(date +%Y-%m-%d); ln -sf $PUBLISH_PATH/$SHA $PUBLISH_PATH/$(date +%Y-%m-%d)" &&
         run ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 root@$SERVER $command
