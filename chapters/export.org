@@ -198,9 +198,9 @@ Better to run it as a script, so we can easier automate and there's theme switch
   ;;   (my/literate/mkprologue "https://jakub-stastny.github.io/rental-property-management/" buffer-name))
 
   (setq org-publish-project-alist
-        '(
-          ("nace-lookup" :components ("nace-lookup.org" "nace-lookup.attachments" "nace-lookup.assets" "nace-lookup.data" "nace-lookup.web"))
-          ("bm.org"
+        '(("nace-lookup"
+           :components ("nace-lookup.org" "nace-lookup.attachments"))
+          ("nace-lookup.org"
            :base-directory "."
            :publishing-directory "output/doc"
            :base-extension "org"
@@ -210,29 +210,20 @@ Better to run it as a script, so we can easier automate and there's theme switch
            :org-html-doctype "html5"      ; check works
            :headline-levels 4
            :auto-preamble f)
-          ("bm.attachments"
-           :base-directory "attachments"
+          ("nace-lookup.attachments"
+           :base-directory "chapters/assets"
            :publishing-directory "output/doc/attachments"
            :base-extension "png\\|jpg\\|pdf\\|json"
            :recursive t
            :publishing-function org-publish-attachment)
-          ("bm.data"
-           :base-directory "src/data"
-           :publishing-directory "output/doc/data"
-           :base-extension "json"
-           :publishing-function org-publish-attachment)
-          ("bm.assets"
-           :base-directory "src/assets"
-           :publishing-directory "output/doc/assets"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf"
-           :recursive f
-           :publishing-function org-publish-attachment)
-          ("bm.web"
-           :base-directory "public"
-           :publishing-directory "output/web"
-           :base-extension "html\\|css\\|js\\|png\\|jpg\\|gif\\|ico\\|pdf\\|edn"
-           :recursive f
-           :publishing-function org-publish-attachment)))
+          ; TODO: compile Cherry.
+          ;; ("nace-lookup.web"
+          ;;  :base-directory "public"
+          ;;  :publishing-directory "output/web"
+          ;;  :base-extension "html\\|css\\|js\\|png\\|jpg\\|gif\\|ico\\|pdf\\|edn"
+          ;;  :recursive f
+          ;;  :publishing-function org-publish-attachment)
+          ))
 
   ;; Set a theme that looks well when exported into HTML.
   (load-theme 'tsdh-light)
@@ -241,7 +232,7 @@ Better to run it as a script, so we can easier automate and there's theme switch
   (setq org-html-htmlize-output-type 'css)
 
   (org-mode)
-  (org-publish-project "bizmentor")
+  (org-publish-project "nace-lookup")
 #+end_src
 
 #+name: republish
