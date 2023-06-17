@@ -199,9 +199,9 @@ Better to run it as a script, so we can easier automate and there's theme switch
 
   (setq org-publish-project-alist
         '(("nace-lookup"
-           :components ("nace-lookup.org" "nace-lookup.attachments"))
+           :components ("nace-lookup.org" "nace-lookup.assets"))
           ("nace-lookup.org"
-           :base-directory "."
+           :base-directory "chapters"
            :publishing-directory "output/doc"
            :base-extension "org"
            :exclude "setupfile.org"
@@ -210,9 +210,9 @@ Better to run it as a script, so we can easier automate and there's theme switch
            :org-html-doctype "html5"      ; check works
            :headline-levels 4
            :auto-preamble f)
-          ("nace-lookup.attachments"
+          ("nace-lookup.assets"
            :base-directory "chapters/assets"
-           :publishing-directory "output/doc/attachments"
+           :publishing-directory "output/doc/assets"
            :base-extension "png\\|jpg\\|pdf\\|json"
            :recursive t
            :publishing-function org-publish-attachment)
