@@ -3,7 +3,7 @@
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.edn :as edn])
 
-(require '[inflections :refer (plural singular)])
+(require '[inflections :refer (plural)])
 
 (def cpa-records      (edn/read-string (slurp "src/data/cpa.edn")))
 (def cpc-map-table    (edn/read-string (slurp "src/data/cpa2cpc.edn")))
@@ -32,7 +32,7 @@
       record)
     (let [values (filter (comp not empty?) value)]
       (if (not (empty? values))
-        (assoc-in record [:extra extra-key] (str/join " " values))
+        (assoc-in record [:extra extra-key] (str/join "\n" values))
         record))))
 
 ;; (defn normalise [text]
@@ -62,7 +62,7 @@
       (str/trim)))
 
 (defn normalise-fields [record fields]
-  (normalise (str/trim (str/join " " (map #(% record) fields)))))
+  (str/join " " (map #(normalise (or (% record) "")) fields)))
 
 (defn extend-with-cpc [record]
   (if-let [cpc-record (get-cpc record)]
@@ -79,9 +79,7 @@
     (do
       (-> record
           (extend-meta {:prodcom-records prodcom-records})
-          (extend-extra :prodcom
-                        (normalise
-                         (str/join "\n" (map :en prodcom-records))))))
+          (extend-extra :prodcom (map (comp :en normalise) prodcom-records))))
     record))
 
 (defn extend-with-cn [{:keys [code] :as record}]
@@ -99,13 +97,9 @@
             (filter #(= (map-item :cn) (% :code)) cn-desc-records))
           map-items))]
     (-> record
-        (extend-extra :cn-title
-                      (normalise
-                       (str/join "\n" (map :dm selected-cn-title-records))))
+        (extend-extra :cn-title (map (comp :dm normalise) selected-cn-title-records))
 
-        (extend-extra :cn-desc
-                      (normalise
-                       (str/join "\n" (map :desc selected-cn-desc-records)))))))
+        (extend-extra :cn-desc (map (comp :desc normalise) selected-cn-desc-records)))))
 
 (defn extend-with-hs [record]
   (let [cpc-record (:cpc-record (meta record))
@@ -119,12 +113,7 @@
                       map-records))]
     (extend-meta record {:hs-2017-records selected-hs-2017-records})
     (when (not (empty? selected-hs-2017-records))
-      (extend-extra record :hs
-                    (normalise
-                     (str/join "\n"
-                               (into #{}
-                                     (map (comp str/trim :desc)
-                                          selected-hs-2017-records))))))))
+      (extend-extra record :hs (map (comp :desc normalise) selected-hs-2017-records)))))
 
 (def generic-keywords
   (into #{}
@@ -136,9 +125,6 @@
                "primarily" "from" "kg" "mm" "cm" "km" "m" ">" "<" "v"
                "W" "kvar" "/" "can" "only" "use" "other" "it" "simply"
                "further" "but" "their" "organisation"]))))
-
-(defn tokenise [text]
-  (str/split text #"[\s,;:]+"))
 
 (defn process-category [record]
   (case (:level record)

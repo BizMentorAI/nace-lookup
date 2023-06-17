@@ -1,0 +1,251 @@
+#+TITLE: Orgmode publish
+#+SETUPFILE: ../setupfile.org
+
+**** TODO Chapter under construction
+/{{{highlight(This chapter is under construction as the actual code is the priority.)}}}/
+
+* Export as documentation
+
+Use org-publish-project to publish. Load tsbh-light theme first (load-theme).
+
+Install ~htmlize~ package if published project isn't syntax-highlighted.
+
+~touch * assets/*~ in order to skip the cache.
+
+https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
+
+* Styles
+#+begin_src css :tangle ../../src/assets/styles.css :mkdirp yes
+  #outline-container-putting-it-together { display: none; }
+
+  .todo.WIP { background: gold; }
+
+  html {
+    font-family: sans-serif;
+    line-height: 1.25;
+  }
+
+  .highlight { background: gold; }
+
+  body {
+    margin: 3ex 1em;
+  }
+
+  ul {
+    padding-left: 1em;
+  }
+
+
+  ul {
+    list-style: none; /* Remove default bullets */
+  }
+
+  ul li::before {
+    content: "\21FE";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    /* TODO: checkmark */
+    /* orgmode list add custom html class */
+    /* https://emacs.stackexchange.com/questions/31803/custom-class-attribute-in-org-mode */
+    /* content: "\2714";  /\* Add content: \2022 is the CSS Code/unicode for a bullet *\/ */
+    color: darkgreen; /* Change the color */
+    font-weight: bold; /* If you want it to be bold */
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width: 1em; /* Also needed for space (tweak if needed) */
+    margin-left: -0.5em; /* Also needed for space (tweak if needed) */
+    font-size: 14pt;
+  }
+
+  /* pre.src { */
+  /*   background: cornsilk; */
+  /*   margin-left: 0; */
+  /* } */
+
+  a:hover { text-decoration: none; }
+  /* a:visited, a:link { color: blue; } */
+  /* a:hover { color: red; } */
+
+  /* h1 { */
+  /*   color: brown; */
+  /* } */
+
+  /* h2 { */
+  /*   color: #060d52; */
+  /*   margin-bottom: 0; */
+  /* } */
+
+  /* h3, h4, h5, h6 { */
+  /*   color: olivedrab; */
+  /* } */
+
+  /* .todo { */
+  /*   color: white; */
+  /*   border-radius: 5px; */
+  /* } */
+
+  /* .todo, .done { */
+  /*   padding: 3px; */
+  /*   color: white; */
+  /*   border-radius: 5px; */
+  /* } */
+
+  /* .todo { background: red; } */
+  /* .done { background: green; } */
+
+  blockquote {
+    background: aliceblue;
+    color: dimgrey;
+    font-style: italic;
+    border-left: 10px solid darkslategrey;
+    margin: 1.5em 0;
+    padding: 0.5em 10px;
+    padding-top: 1em;
+    quotes: "\201C""\201D""\2018""\2019";
+    border-radius: 5px;
+  }
+
+  blockquote:before {
+    color: darkslategrey;
+    font-style: italic;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+
+  blockquote p {
+    margin: 0; padding: 0;
+    padding-left: 15px;
+    padding-bottom: 5px;
+  }
+
+  /* @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic); */
+  /* blockquote{ */
+  /*   font-size: 1.4em; */
+  /*   width:60%; */
+  /*   margin:50px auto; */
+  /*   font-family:Open Sans; */
+  /*   font-style:italic; */
+  /*   color: #555555; */
+  /*   padding:1.2em 30px 1.2em 75px; */
+  /*   border-left:8px solid #78C0A8 ; */
+  /*   line-height:1.6; */
+  /*   position: relative; */
+  /*   background:#EDEDED; */
+  /* } */
+
+  /* blockquote::before{ */
+  /*   font-family:Arial; */
+  /*   content: "\201C"; */
+  /*   color:#78C0A8; */
+  /*   font-size:4em; */
+  /*   position: absolute; */
+  /*   left: 10px; */
+  /*   top:-10px; */
+  /* } */
+
+  /* blockquote::after{ */
+  /*   content: ''; */
+  /* } */
+#+end_src
+
+
+#+begin_src js :tangle ../../src/assets/script.js :mkdirp yes
+  const $ = document.querySelector.bind(document)
+  const $$ = document.querySelectorAll.bind(document)
+
+  $$("[class^='section-number-']").forEach((section) => {
+    const linkTarget = section.parentNode.id.match(/^org/) ? section.innerText : section.parentNode.id
+    section.innerHTML = `<a href="#${linkTarget}">§<a name="${linkTarget}"></a></a>`
+  })
+#+end_src
+
+**** TODO This doesn't apply to non-associated buffers
+Such as if you open a code block in a new buffer using ~C-c '~, it doesn't respect the editorconfig settings.
+
+Although currently even if I edit say the CSS above IN THE BUFFER, it still doesn't work. INVESTIGATE!
+
+#+name: install
+#+begin_src emacs-lisp :task yes :doc "Install dependencies required for export" :shebang "#!/usr/bin/env emacs --script"
+  ; Run in shell: et export:install
+
+  (package-initialize)
+
+  (add-to-list 'package-archives
+               '("melpa" . "http://melpa.org/packages/"))
+  (add-to-list 'package-archives
+               '("org" . "http://orgmode.org/elpa/"))
+
+  (package-refresh-contents)
+
+  (dolist (pkg '(htmlize json-mode clojure-mode))
+    (package-install pkg))
+#+end_src
+
+* Publishing script
+
+Better to run it as a script, so we can easier automate and there's theme switch required.
+
+#+name: publish
+#+begin_src emacs-lisp :task yes :doc "Export documentation" :shebang "#!/usr/bin/env emacs --script"
+  ; Run in shell: et export:publish
+
+  ;; Set up load paths.
+  (package-initialize)
+
+  (require 'ox-publish)
+
+  ;; (defun mkprologue (buffer-name)
+  ;;   (my/literate/mkprologue "https://jakub-stastny.github.io/rental-property-management/" buffer-name))
+
+  (setq org-publish-project-alist
+        '(
+          ("bizmentor" :components ("bm.org" "bm.attachments" "bm.assets" "bm.data" "bm.web"))
+          ("bm.org"
+           :base-directory "."
+           :publishing-directory "output/doc"
+           :base-extension "org"
+           :exclude "setupfile.org"
+           :recursive f
+           :publishing-function org-html-publish-to-html
+           :org-html-doctype "html5"      ; check works
+           :headline-levels 4
+           :auto-preamble f)
+          ("bm.attachments"
+           :base-directory "attachments"
+           :publishing-directory "output/doc/attachments"
+           :base-extension "png\\|jpg\\|pdf\\|json"
+           :recursive t
+           :publishing-function org-publish-attachment)
+          ("bm.data"
+           :base-directory "src/data"
+           :publishing-directory "output/doc/data"
+           :base-extension "json"
+           :publishing-function org-publish-attachment)
+          ("bm.assets"
+           :base-directory "src/assets"
+           :publishing-directory "output/doc/assets"
+           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf"
+           :recursive f
+           :publishing-function org-publish-attachment)
+          ("bm.web"
+           :base-directory "public"
+           :publishing-directory "output/web"
+           :base-extension "html\\|css\\|js\\|png\\|jpg\\|gif\\|ico\\|pdf\\|edn"
+           :recursive f
+           :publishing-function org-publish-attachment)))
+
+  ;; Set a theme that looks well when exported into HTML.
+  (load-theme 'tsdh-light)
+
+  ;; Publish.
+  (setq org-html-htmlize-output-type 'css)
+
+  (org-mode)
+  (org-publish-project "bizmentor")
+#+end_src
+
+#+name: republish
+#+begin_src sh :task yes :doc "Re-publish, bypassing the cache"
+  rm -rf output/doc ~/.org-timestamps
+  ./.env/bin/et.clj export:publish
+#+end_src

@@ -1,0 +1,13 @@
+#+HTML_DOCTYPE: html5
+#+OPTIONS: toc:nil html-postamble:nil
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../assets/styles.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+#+HTML_HEAD: <script type="module" src="../../assets/script.js"></script>
+
+#+MACRO: highlight @@html:<span class="highlight">$1</span>@@
+#+MACRO: colour @@html:<span style="color: $1">$2</span>@@
+#+MACRO: read-faq /*For developers:* I recommend you to read the [[../extras/faq.org][FAQ]] first, so you understand the guarantees this documentation gives you./
+
+# https://orgmode.org/manual/Per_002dfile-keywords.html
+#+TODO: TODO MAYBE WIP PATRICIA | DONE

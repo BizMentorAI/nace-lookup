@@ -1,0 +1,66 @@
+* Proof-of-concept: Web components & Cherry
+/This is a small project to make sure web component are viable as a React replacement and that [[https://github.com/squint-cljs/cherry][Cherry]] is reasonably ready for production./
+
+** Motivation
+- Web components is the only front-end tech I know of that allows real decoupling. You can use a custom element even before it gets actually loaded. That allows a great flexibility and speed as we're loading everything asynchronously.
+- Web components seems powerful enough to replace React and in doing so, we could get rid of the hell of NPM dependencies as well as constant debugging of WebPack and similar time wasting activities.
+- Use the best tool for the job: DOM-heavy manipulations are easier done in JavaScript, whereas calculations are better served by Clojure.
+- Cherry fits into that asynchronous paradigm, allowing to easily compile single files rather than the whole bundle as other tools tend to do (such as WebPack, ShadowCLJS and the likes).
+- Cherry offers modern JS features like modules, ~await~/~async~ etc.
+
+** Objectives
+- Use native browser features.
+- Stay completely out of the NPM land and avoid dependency hell.
+- No huge bundles, no more pain with WebPack and the likes.
+- Load asynchronously, first layout so we render fast, then whatever's needed.
+- Test logic-heavy code (and don't bother with ther rest).
+
+** CSS
+- Inline CSS meant for critical render — preload the rest.
+
+** Custom tangling
+- Stay as close to the browser as possible.
+- Allow transpile with Cherry/Squint (or anything else for the matter).
+
+** Limitations
+- Cherry doesn't support packages as of May 2023.
+  - That means no ~cljs.spec.alpha~.
+  - Can we compile ~bm-data~ with Cherry? (Multimethods?)
+    - If not, include as-is (compiled bundle), that's OK too, although being able to just copy the code rather than the bundle would be preferable.
+
+* Usage
+** Development
+- Run ~watch.clj~ ([[./.env/bin/watch.clj]]) in order to compile changed ~.clj[sc]~ files.
+- And any web server, for instance: ~(cd public; python3 -m http.server 8000)~.
+
+** Inspect mode
+- Add ~?dev~ to your URL in order to see the app in the inspect mode.
+
+*** Features
+- Screen info in top right corner.
+- Shows extra data (if available) in the modal.
+
+** Production build
+As the only dependency is Cherry itself (which comes minified), there's no need for any production build.
+
+Current size (as of 16/5/2023):
+
+- Custom code (~public/**/*.{js,css,html}~) only ~84 kb~.
+- Cherry (~public/js/cljs_core.js~) ~332 kb~ (minified).
+- Data (~public/workers/autocomplete/data.json~) ~812 kb~ (async).
+
+** Hosting
+- [[https://rococo-panda-597db4.netlify.app/][Deployed app]].
+- [[https://app.netlify.com/sites/rococo-panda-597db4/overview][Netlify app dashboard]].
+
+* Roadmap
+** TODO Watch: compile everything on start
+** TODO Run tests on CI
+** TODO Move into Org files in bm-core
+Then compile to here.
+
+Is it userful for this purpose?
+
+It definitely adds complexity (CI: compile -> commit & push to /this/ repo from the master one).
+
+It'd make it easier to share the codebase though with something like ~:tangle copy~.

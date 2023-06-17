@@ -1,0 +1,164 @@
+#+TITLE: CI
+#+SETUPFILE: ../setupfile.org
+
+* TODO Check YAML syntax in pre-commit hooks
+ruby -ryaml -e 'p YAML.load_file(".github/workflows/test.yml")'
+Babashka: https://github.com/clj-commons/clj-yaml alias as yaml
+
+* TODO Cache CLJ_CONFIG (packages)
+
+* TODO Cache Node packages
+
+[[https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container][Running jobs in a container]]
+
+#+begin_src dockerfile
+  FROM ubuntu:latest
+#+end_src
+
+# TODO: Unite setup.sh & profile.sh from chapters/dev/env.
+# TODO: Can we have our image with ZSH, Emacs, Java, Clojure & Babashka?
+# It'd save us ages.
+# Maybe run in Docker and cache the image.
+# https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container
+#
+# Rework the script, just install bb & et and then run all as an et task.
+
+# https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows
+#
+# Make a normal script, so we don't depend on GH actions.
+
+#+begin_src yaml :tangle ../../.github/workflows/test.yml :mkdirp yes
+  #################################################
+  # This file is tangled from chapters/dev/ci.org #
+  #################################################
+
+  name: ClojureScript tests
+
+  # Controls when the action will run.
+  on: push
+
+  # Cancel in-progress builds on the same branch.
+  concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+  env:
+    SERVER: 158.101.36.84
+    ET_JAR: /root/.local/share/et/et.jar # Rather than /github/home.
+
+  jobs:
+    build: # Job name.
+      runs-on: ubuntu-latest
+
+      container:
+        image: jakubstastny/base
+
+      steps:
+      # - name: Update ET
+      #   run: rm $ET_JAR && wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P $(dirname $ET_JAR)
+
+      - uses: actions/checkout@v2
+
+      - name: Run in $GITHUB_WORKSPACE
+        run: cd $GITHUB_WORKSPACE
+
+      - name: Add shell helpers
+        shell: zsh {0}
+        run: |
+          mkdir .env &&
+          echo 'run() { echo "$ $*"; $* }' >> $PWD/.env/setup.sh &&
+          echo 'abort() { echo "$*"; exit 1 }' >> $PWD/.env/setup.sh &&
+          echo 'et() { java -jar $ET_JAR $@ }' >> $PWD/.env/setup.sh
+
+      - name: Fix ownership
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh && run chown root -R .
+
+      - name: Tangle source files
+        shell: zsh {0}
+        run: |
+          for chapter in chapters/*(/); do
+            cd $chapter
+            emacs -batch --eval '(dolist (file argv) (message file) (find-file file) (org-babel-tangle))' *.org
+            cd -
+          done
+
+      - name: Set up ENV
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run whoami && run echo "HOME: $HOME" &&
+          run echo "XDG_CONFIG_HOME: $XDG_CONFIG_HOME"
+
+          test -f $ET_JAR || abort "ET_JAR $ET_JAR not found"
+
+          echo "~ Saving ENV vars into .env/setup.sh" &&
+          echo 'export PATH=$PWD/.env/bin:$PATH' >> $PWD/.env/setup.sh &&
+          echo "export SHA=$(git rev-parse HEAD | cut -c 1-7)" >> $PWD/.env/setup.sh &&
+
+          run cat $PWD/.env/setup.sh
+
+      - name: Replace localhost:3000
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh && run sed -i "s;http://localhost:3000;http://158.101.36.84:8000/$SHA/web;g" **/*(.)
+
+      - name: Build JS
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run npm install &&
+          run et chapters/app/setup.org release
+
+      - name: Run unit tests
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run et chapters/dev/testing.org test/unit
+
+      # - name: Generate graphs
+      #   shell: zsh {0}
+      #   run: |
+      #     source .env/setup.sh &&
+      #     run et chapters/core/profit-and-loss.org generate-graphs ||
+      #     #ET_JAR=$ET_JAR run et chapters/core/profit-and-loss.org generate-graphs ||
+      #     (cat /tmp/generate-graphs.sh && exit 1)
+
+      - name: Generate documentation
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run et chapters/dev/export.org install &&
+          run et chapters/dev/export.org publish
+
+      # https://zellwk.com/blog/github-actions-deploy/
+      - name: Install SSH key
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run mkdir ~/.ssh && run chmod 700 ~/.ssh &&
+          echo "${{ secrets.SSH_DEPLOY_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+
+      - name: Adding known hosts
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run zsh -c "ssh-keyscan -H $SERVER -P 2222 2> /dev/null >> ~/.ssh/known_hosts"
+
+      - name: Copy build artifacts
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          # run rsync output root@$SERVER:/bm/www/$SHA
+          run echo "SHA: $SHA" &&
+          run scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 2222 -r output root@$SERVER:/bm/www/$SHA
+
+      - name: Update link to the branch
+        # No idea why we have to call rm, it just wouldn't work on the server.
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          command="rm /bm/www/${GITHUB_REF##*/}; ln -sf /bm/www/$SHA /bm/www/${GITHUB_REF##*/}; rm /bm/www/$(date +%Y-%m-%d); ln -sf /bm/www/$SHA /bm/www/$(date +%Y-%m-%d)" &&
+          run ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 root@$SERVER $command
+#+end_src

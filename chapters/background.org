@@ -1,0 +1,92 @@
+#+TITLE: About
+#+SETUPFILE: setupfile.org
+
+* About
+
+** Issues
+*** Title, desc and notes vs keywords
+Let's say we want to buy a door handle. We type ~handle~ into the search. One of the search results is /Operating systems, packaged/.
+
+[[./assets/search-false-positive.png]]
+
+What? Why? Well, it's because both CPA and CPC descriptions contains the word /handles/ (as a verb rather than noun). For instance the CPC description:
+
+/operating systems packaged subclass published lowlevel software which {{{highlight(handles)}}} interface to peripheral hardware schedules tasks allocates storage presents default interface to user when no application program is running all client network operating systems/
+
+That's an example of what a description looks like. It contains some keywords, but it also contains words that are not keywords specific to given item, but which may act as keywords to a completely different item.
+
+Some of these are even negated (for instance in /reaction engines, {{{highlight(excluding turbo-jets)}}}/). Some of these can be filtered out, but not all of them.
+
+Ideally out of this description we'd get something like:
+
+#+begin_src clojure
+  ["operating systems" "lowlevel software" "hardware interface"
+   "storage allocation" "client network operating systems"]
+#+end_src
+
+*** Not enough keywords contained in NACE/CPA titles
+NACE/CPA is heavily geared towards agriculture, which unfortunately doesn't suit are users who are mostly into manufacturing and services.
+
+So while there's a category for camel spunk with keywords to match /dromaderies, llamas, alpacas, guanacos, vicunas and other camelids/, good luck finding guitar, pan or even shirt.
+
+*** Mapping to other specifications is rarely close to 1:1
+Apart from CPC, which maps to CPA in a relationship close to 1:1,
+
+*** Not enough keywords for good probabilistic matching
+False positives again.
+
+** Stats
+- 21 L1 items.
+- 576 L4 items.
+- 1716 L6 items.
+
+** Related classifications
+*** PRODCOM
+*** GPC
+*** UNSPSC
+*** HS
+*** CN
+
+* Implementation
+
+* Tasks
+** TODO Publish org mode onto my server
+GitHub CI
+
+** TODO L4 mapping
+Ok if you can see if you can map the GOC class onto the NACE level 4 I will double check your mapping. Then we can give it to Fiverr woman and get her to map the GPC AttributValueTitles onto the NACE level 4. So a NACE L4 can have zero or more GPC titles mapped onto it. Do one as an example to make it clear to her.
+
+** TODO Remove excl
+violins string musical instruments played with bow excl violins guitars mandolins zithers string musical instruments
+
+** TODO Apply search terms separately
+blue balls -> first apply blue, then balls to the result.
+
+** TODO Scoring
+operating system -> if direct match, highlight red
+
+
+
+Aim was to get business founder to select the NACE L4 code for their primary business activity. LEO said founders cannot do it, very few people in the LEO can even get it right.
+
+I realised that CPA L6 should help because founder/LEO could search for the business’s main product/service which is easier to understand that ‘Main biz activity’.
+
+But L6 turns out to be poorly worded shit just like L4 and lacks good keywords. We set out to import other mapped classification titles to build a set of keywords to improve search. But only managed about a 15% improvement.
+
+Then I discovered UNSPSC and GPC go to a really granular level of detail, right down to the search keyword terms we wanted but there are no mappings.
+
+Mireia thinks we should show the keywords in the search results and a user click would display the relevant codes. But we can’t find a way to get the keywords to level 6 without hiring smart people and we can’t afford that right now.
+
+When working on my staffing screens, I realised that we probably could map the keywords to L4 without an exorbitant amount of manual effort and without having to be overly concerned about Fiverr quality.
+
+LEO will need CPA in future, we want it in the app from day one if possible to allow for data analysis to improve financial projections. Prodcom is likely to come into play in future years. CN is not essential in day one of app but would really help as it would ensure accurate Tax payment projections.
+
+———
+
+All the effort involved in building what ought to have been simple meant I have had to do a lot of research and speed read a number of reports. That made me aware that this problem is worldwide with all the classifications created and maintained by NGO and GOs.
+
+So if we can, in time get this mapping really accurate by adding the keywords that ought to have been added in the first place, and mapping those keywords to the lowest levels of the various classifications then this should be a tool that is very useful to many people worldwide - government organisations, businesses, accountants, company formation agents, tax advisors, etc.
+
+But the make/break will be determined by how accurate we can get the keywords. We will probably have to take insurance out against providing wrong answers which leads to people over/underpaying tax or mis-declaring goods so I will be looking for ways to reduce liability - legal terms of use, once we suggest the answers we should make users review the hierarchy to confirm accuracy, anything to reduce our liability, etc. But even that won’t be enough in court unless we have made “best efforts” To get accurate keywords.
+
+note versions, make sure they all correspond, change file names
