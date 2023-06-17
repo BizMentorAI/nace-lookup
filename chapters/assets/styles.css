@@ -1,0 +1,130 @@
+#outline-container-putting-it-together { display: none; }
+
+.todo.WIP { background: gold; }
+
+html {
+  font-family: sans-serif;
+  line-height: 1.25;
+}
+
+.highlight { background: gold; }
+
+body {
+  margin: 3ex 1em;
+}
+
+ul {
+  padding-left: 1em;
+}
+
+
+ul {
+  list-style: none; /* Remove default bullets */
+}
+
+ul li::before {
+  content: "\21FE";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  /* TODO: checkmark */
+  /* orgmode list add custom html class */
+  /* https://emacs.stackexchange.com/questions/31803/custom-class-attribute-in-org-mode */
+  /* content: "\2714";  /\* Add content: \2022 is the CSS Code/unicode for a bullet *\/ */
+  color: darkgreen; /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1em; /* Also needed for space (tweak if needed) */
+  margin-left: -0.5em; /* Also needed for space (tweak if needed) */
+  font-size: 14pt;
+}
+
+/* pre.src { */
+/*   background: cornsilk; */
+/*   margin-left: 0; */
+/* } */
+
+a:hover { text-decoration: none; }
+/* a:visited, a:link { color: blue; } */
+/* a:hover { color: red; } */
+
+/* h1 { */
+/*   color: brown; */
+/* } */
+
+/* h2 { */
+/*   color: #060d52; */
+/*   margin-bottom: 0; */
+/* } */
+
+/* h3, h4, h5, h6 { */
+/*   color: olivedrab; */
+/* } */
+
+/* .todo { */
+/*   color: white; */
+/*   border-radius: 5px; */
+/* } */
+
+/* .todo, .done { */
+/*   padding: 3px; */
+/*   color: white; */
+/*   border-radius: 5px; */
+/* } */
+
+/* .todo { background: red; } */
+/* .done { background: green; } */
+
+blockquote {
+  background: aliceblue;
+  color: dimgrey;
+  font-style: italic;
+  border-left: 10px solid darkslategrey;
+  margin: 1.5em 0;
+  padding: 0.5em 10px;
+  padding-top: 1em;
+  quotes: "\201C""\201D""\2018""\2019";
+  border-radius: 5px;
+}
+
+blockquote:before {
+  color: darkslategrey;
+  font-style: italic;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  margin: 0; padding: 0;
+  padding-left: 15px;
+  padding-bottom: 5px;
+}
+
+/* @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic); */
+/* blockquote{ */
+/*   font-size: 1.4em; */
+/*   width:60%; */
+/*   margin:50px auto; */
+/*   font-family:Open Sans; */
+/*   font-style:italic; */
+/*   color: #555555; */
+/*   padding:1.2em 30px 1.2em 75px; */
+/*   border-left:8px solid #78C0A8 ; */
+/*   line-height:1.6; */
+/*   position: relative; */
+/*   background:#EDEDED; */
+/* } */
+
+/* blockquote::before{ */
+/*   font-family:Arial; */
+/*   content: "\201C"; */
+/*   color:#78C0A8; */
+/*   font-size:4em; */
+/*   position: absolute; */
+/*   left: 10px; */
+/*   top:-10px; */
+/* } */
+
+/* blockquote::after{ */
+/*   content: ''; */
+/* } */

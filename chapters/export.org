@@ -15,7 +15,7 @@ Install ~htmlize~ package if published project isn't syntax-highlighted.
 https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
 
 * Styles
-#+begin_src css :tangle ../../src/assets/styles.css :mkdirp yes
+#+begin_src css :tangle assets/styles.css :mkdirp yes
   #outline-container-putting-it-together { display: none; }
 
   .todo.WIP { background: gold; }
@@ -149,7 +149,7 @@ https://orgmode.org/worg/org-tutorials/org-publish-html-tutorial.html
 #+end_src
 
 
-#+begin_src js :tangle ../../src/assets/script.js :mkdirp yes
+#+begin_src js :tangle assets/script.js :mkdirp yes
   const $ = document.querySelector.bind(document)
   const $$ = document.querySelectorAll.bind(document)
 
