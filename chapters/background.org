@@ -9,18 +9,26 @@ Because of legal reasons, it's important to get the correct NACE/CPA codes, othe
 
 Best-case scenario for the LEOs would be to give the entrepreneurs easy to use lookup tool, so they could find the codes themselves and then the LEO employees would only check them to make sure they are correct.
 
+*** Patricia's comment
 #+begin_quote
-Aim was to get business founder to select the NACE L4 code for their primary business activity. LEO said founders cannot do it, very few people in the LEO can even get it right.
+  Aim was to get business founder to select the NACE L4 code for their primary business activity. LEO said founders cannot do it, very few people in the LEO can even get it right.
 
-I realised that CPA L6 should help because founder/LEO could search for the business’s main product/service which is easier to understand that ‘Main biz activity’.
+  I realised that CPA L6 should help because founder/LEO could search for the business’s main product/service which is easier to understand that ‘Main biz activity’.
 
-But L6 turns out to be poorly worded shit just like L4 and lacks good keywords. We set out to import other mapped classification titles to build a set of keywords to improve search. But only managed about a 15% improvement.
+  But L6 turns out to be poorly worded shit just like L4 and lacks good keywords. We set out to import other mapped classification titles to build a set of keywords to improve search. But only managed about a 15% improvement.
 
-Then I discovered UNSPSC and GPC go to a really granular level of detail, right down to the search keyword terms we wanted but there are no mappings.
+  Then I discovered UNSPSC and GPC go to a really granular level of detail, right down to the search keyword terms we wanted but there are no mappings.
 #+end_quote
 
 ** Standalone project
 That is a feature we need for BizMentor. However since many other people suffer from this very problem, it deserves to be a standalone project that we can charge for.
+
+*** Patricia's comment
+#+begin_quote
+  All the effort involved in building what ought to have been simple meant I have had to do a lot of research and speed read a number of reports. That made me aware that this problem is worldwide with all the classifications created and maintained by NGO and GOs.
+
+  So if we can, in time get this mapping really accurate by adding the keywords that ought to have been added in the first place, and mapping those keywords to the lowest levels of the various classifications then this should be a tool that is very useful to many people worldwide - government organisations, businesses, accountants, company formation agents, tax advisors, etc.
+#+end_quote
 
 ** Issues
 *** Title, desc and notes vs keywords
@@ -106,8 +114,5 @@ LEO will need CPA in future, we want it in the app from day one if possible to a
 
 ———
 
-All the effort involved in building what ought to have been simple meant I have had to do a lot of research and speed read a number of reports. That made me aware that this problem is worldwide with all the classifications created and maintained by NGO and GOs.
-
-So if we can, in time get this mapping really accurate by adding the keywords that ought to have been added in the first place, and mapping those keywords to the lowest levels of the various classifications then this should be a tool that is very useful to many people worldwide - government organisations, businesses, accountants, company formation agents, tax advisors, etc.
 
 But the make/break will be determined by how accurate we can get the keywords. We will probably have to take insurance out against providing wrong answers which leads to people over/underpaying tax or mis-declaring goods so I will be looking for ways to reduce liability - legal terms of use, once we suggest the answers we should make users review the hierarchy to confirm accuracy, anything to reduce our liability, etc. But even that won’t be enough in court unless we have made “best efforts” To get accurate keywords.
