@@ -80,6 +80,8 @@ False positives again.
 ** TODO Make sure we have the right versions of each specification
 - Possibly change file names to reflect that.
 
+** TODO Restart Git history from 0
+
 ** TODO Copy all fields as they are, no replacements
 - CPA includes/also includes etc, preserve fields as they are, even copy over excludes.
 

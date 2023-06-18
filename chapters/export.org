@@ -213,7 +213,7 @@ Better to run it as a script, so we can easier automate and there's theme switch
           ("nace-lookup.assets"
            :base-directory "chapters/assets"
            :publishing-directory "output/doc/assets"
-           :base-extension "png\\|jpg\\|pdf\\|json"
+           :base-extension "png\\|jpg\\|pdf\\|json\\|js\\|css"
            :recursive t
            :publishing-function org-publish-attachment)
           ; TODO: compile Cherry.
