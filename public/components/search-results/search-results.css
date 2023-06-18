@@ -1,0 +1,63 @@
+@import "/theme.css";
+
+#error {
+  background: var(--error-bg);
+  color: var(--error-fg);
+  padding: 10px;
+}
+
+#error h3 {
+  margin-top: 7px;
+}
+
+#results {
+  margin-top: 10px;
+  border: 1px solid var(--neutral-dark);
+}
+
+#results:empty {
+  display: none;
+}
+
+.l1-item {
+  background: var(--brand-light);
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--brand-dark);
+  font-size: 12px;
+}
+
+.l6-item {
+  color: var(--neutral-medium);
+  padding: 7px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.l6-item:hover {
+  background: teal;
+  font-weight: 700;
+  color: snow;
+}
+
+.l6-item:hover .highlight {
+  background: orange;
+}
+
+.highlight {
+  background: var(--highlight);
+}
+
+.no-results {
+  text-align: center;
+}
+
+.no-results .heading {
+  color: slategrey;
+}
+
+.no-results p {
+  font-style: italic;
+  color: var(--neutral-medium);
+}

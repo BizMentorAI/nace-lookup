@@ -1,0 +1,19 @@
+@media (max-width: 600px) {
+  :host {
+    width: 100vw;
+    /* background: lightgreen; */
+    padding: 5vw 15px;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 600px) {
+  :host {
+    width: 600px;
+    margin: auto;
+  }
+}
+
+h4 {
+  text-align: center;
+}

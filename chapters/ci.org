@@ -1,0 +1,124 @@
+#+TITLE: CI
+#+SETUPFILE: setupfile.org
+
+* Check YAML syntax in pre-commit hooks
+Babashka: [[https://github.com/clj-commons/clj-yaml][clj-yaml]] is aliased as yaml.
+
+#+begin_src clojure :tangle ../.git/hooks/pre-commit :shebang "#!/usr/bin/env bb"
+  (let [path ".github/workflows/test.yml"]
+    (yaml/parse-string (slurp path)))
+#+end_src
+
+#+begin_src yaml :tangle ../.github/workflows/test.yml :mkdirp yes
+  #################################################
+  # This file is tangled from chapters/ci.org #
+  #################################################
+
+  name: ClojureScript tests
+
+  # Controls when the action will run.
+  on: push
+
+  # Cancel in-progress builds on the same branch.
+  concurrency:
+    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+    cancel-in-progress: true
+
+  env:
+    SERVER: 158.101.36.84
+    PUBLISH_PATH: /www/nace-lookup
+    ET_JAR: /root/.local/share/et/et.jar # Rather than /github/home.
+
+  jobs:
+    build: # Job name.
+      runs-on: ubuntu-latest
+
+      container:
+        image: jakubstastny/base
+
+      steps:
+      # - name: Update ET
+      #   run: rm $ET_JAR && wget --quiet https://github.com/jakub-stastny/et/raw/doc/doc/downloads/et.jar -P $(dirname $ET_JAR)
+
+      - uses: actions/checkout@v2
+
+      - name: Run in $GITHUB_WORKSPACE
+        run: cd $GITHUB_WORKSPACE
+
+      - name: Add shell helpers
+        shell: zsh {0}
+        run: |
+          #mkdir .env &&
+          echo 'run() { echo "$ $*"; $* }' >> $PWD/.env/setup.sh &&
+          echo 'abort() { echo "$*"; exit 1 }' >> $PWD/.env/setup.sh &&
+          echo 'et() { java -jar $ET_JAR $@ }' >> $PWD/.env/setup.sh
+
+      - name: Fix ownership
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh && run chown root -R .
+
+      - name: Tangle source files
+        shell: zsh {0}
+        run: |
+          cd chapters
+          emacs -batch --eval '(dolist (file argv) (message file) (find-file file) (org-babel-tangle))' *.org
+
+      - name: Set up ENV
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run whoami && run echo "HOME: $HOME" &&
+          run echo "XDG_CONFIG_HOME: $XDG_CONFIG_HOME"
+
+          test -f $ET_JAR || abort "ET_JAR $ET_JAR not found"
+
+          echo "~ Saving ENV vars into .env/setup.sh" &&
+          echo 'export PATH=$PWD/.env/bin:$PATH' >> $PWD/.env/setup.sh &&
+          echo "export SHA=$(git rev-parse HEAD | cut -c 1-7)" >> $PWD/.env/setup.sh &&
+
+          run cat $PWD/.env/setup.sh
+
+      # - name: Run unit tests
+      #   shell: zsh {0}
+      #   run: |
+      #     source .env/setup.sh &&
+      #     run et chapters/dev/testing.org test/unit
+
+      - name: Generate documentation
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run et chapters/export.org install &&
+          run et chapters/export.org publish
+
+      # https://zellwk.com/blog/github-actions-deploy/
+      - name: Install SSH key
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run mkdir ~/.ssh && run chmod 700 ~/.ssh &&
+          echo "${{ secrets.SSH_DEPLOY_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+
+      - name: Adding known hosts
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          run zsh -c "ssh-keyscan -H $SERVER -P 2222 2> /dev/null >> ~/.ssh/known_hosts"
+
+      - name: Copy build artifacts
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          # run rsync output root@$SERVER:$PUBLISH_PATH/$SHA
+          run echo "SHA: $SHA" &&
+          run scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -P 2222 -r output root@$SERVER:$PUBLISH_PATH/$SHA
+
+      - name: Update link to the branch
+        # No idea why we have to call rm, it just wouldn't work on the server.
+        shell: zsh {0}
+        run: |
+          source .env/setup.sh &&
+          command="rm $PUBLISH_PATH/${GITHUB_REF##*/}; ln -sf $PUBLISH_PATH/$SHA $PUBLISH_PATH/${GITHUB_REF##*/}; rm $PUBLISH_PATH/$(date +%Y-%m-%d); ln -sf $PUBLISH_PATH/$SHA $PUBLISH_PATH/$(date +%Y-%m-%d)" &&
+          run ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 root@$SERVER $command
+#+end_src

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Component library</title>
+
+    <!-- See view-source:https://squint-cljs.github.io/cherry/ -->
+    <script type="importmap">
+      {
+        "imports": {
+          "components": "/components",
+          "config": "/config.js",
+          "framework": "/framework.js"
+        }
+      }
+    </script>
+
+    <!-- Developer convenience. -->
+    <script type="module">
+      import { tag } from "framework"
+      window.tag = tag
+    </script>
+
+    <!-- Things that shouldn't be defered. -->
+    <script type="text/javascript">
+      const $ = document.querySelector.bind(document)
+      const $$ = document.querySelectorAll.bind(document)
+
+      function ready(selector, fn) {
+        window.addEventListener("DOMContentLoaded", (e) => fn($(selector)))
+      }
+    </script>
+
+    <script type="module" src="components/search-results/search-results.js"></script>
+    <script type="module" src="components/modal/modal.js"></script>
+
+    <style>
+      html {
+        font-family: Helvetica;
+      }
+
+      body {
+        margin: 25px;
+        /* background: snow; */
+      }
+
+      h1 {
+        color: crimson;
+      }
+
+      h2 {
+        color: royalblue;
+      }
+
+      h3 {
+        color: mediumseagreen;
+      }
+
+      h1, h2, h3, p {
+        text-align: center;
+      }
+
+      .card {
+        border: 2px lightsteelblue solid;
+        border-radius: 7px;
+        padding: 10px;
+        box-shadow: 5px 5px 7px #888888;
+        margin-bottom: 27px;
+      }
+    </style>
+  </head>
+
+  <!-- TODO: Extract out as dev-cards[title,children]/dev-card[context-title,children] -->
+  <!-- The tricky bit is to deal with structured data. -->
+  <!-- Maybe we use them to initial render, but won't allow upgrading through that? -->
+  <!-- <dev-cards title="Search results"> -->
+  <!--   <dev-card title="Empty results"> -->
+  <!--     <search-results data-items="[]"> -->
+  <!--     </search-results> -->
+  <!--   </dev-card> -->
+  <!-- </dev-cards> -->
+
+  <body>
+    <h1>Component library</h1>
+    <h2>Search results</h2>
+    <h3>Initial state</h3>
+    <p class="desc">
+      This should show nothing.
+    </p>
+
+    <div class="card">
+      <search-results></search-results>
+    </div>
+
+    <h3>Results found</h3>
+    <p class="desc">
+      This example will highlight the term <em>web</em>. Notice that the search is not case sensitive and that the search is done only in the leaf nodes, not in the headings.
+    </p>
+
+    <div class="card">
+      <search-results id="results"></search-results>
+
+      <script>
+        ready("search-results#results", (element) => {
+          element.showResults("web", [
+            {heading: true, label: "Modern web tech stack"},
+            {label: "Web components"},
+            {label: "ClojureScript & Cherry"},
+            {label: "Babashka for REPL & testing"},
+            {heading: true, label: "Spiritual endeavours"},
+            {label: "Energy healing"},
+            {label: "Mediumship"},
+          ])
+        })
+      </script>
+    </div>
+
+    <h3>Nothing found</h3>
+    <div class="card">
+      <search-results data-items="[]"></search-results>
+    </div>
+
+    <h3>Error</h3>
+    <div class="card">
+      <search-results id="error"></search-results>
+
+      <script>
+        ready("search-results#error", (element) => {
+          element.showError()
+        })
+      </script>
+    </div>
+
+    <h2>Modal</h2>
+    <div class="card" style="text-align: center">
+      <button id="show-modal">Show modal</button>
+      <bm-modal></bm-modal>
+
+      <script>
+        ready("bm-modal", (element) => {
+          $("#show-modal").addEventListener("click", (e) => {
+            element.renderBody([tag("p", "Hello world!")])
+          })
+        })
+      </script>
+    </div>
+  </body>
+</html>

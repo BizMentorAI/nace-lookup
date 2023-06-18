@@ -1,0 +1,45 @@
+@import "/theme.css";
+
+#screen {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px;
+  font-size: 8pt;
+  color: var(--neutral-light);
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+bm-header {
+  /* background: red; */
+  /* color: white; */
+}
+
+main {
+  flex: 1;
+  padding: 0 35px;
+}
+
+@media (min-width: 600px) {
+  main {
+    width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  main {
+    width: 600px;
+    margin: 0 auto;
+  }
+}
+
+bm-footer {
+  /* background: red; */
+  /* color: white; */
+}

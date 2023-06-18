@@ -1,0 +1,11 @@
+@import "/theme.css";
+
+input {
+  padding: 10px 15px;
+  width: stretch;
+  width: -webkit-fill-available;
+  font-size: 12pt;
+  border-radius: 25px;
+  border: 1px solid var(--neutral-dark);
+  color: var(--neutral-medium);
+}

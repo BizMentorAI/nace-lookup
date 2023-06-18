@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NACE code lookup</title>
+
+    <!-- See view-source:https://squint-cljs.github.io/cherry/ -->
+    <script type="importmap">
+      {
+        "imports": {
+          "components": "/components",
+          "workers": "/workers",
+          "config": "/config.js",
+          "framework": "/framework.js"
+        }
+      }
+    </script>
+
+    <!-- Developer convenience. -->
+    <script type="module">
+      import { tag } from "framework"
+      window.tag = tag
+    </script>
+
+    <script type="module" src="components/layout/layout.js"></script>
+    <script type="module" src="components/nace-lookup/nace-lookup.js"></script>
+
+    <style>
+      html {
+        font-family: Helvetica;
+      }
+
+      body {
+        margin: 0;
+        /* background: snow; */
+      }
+    </style>
+  </head>
+
+  <body>
+    <bm-layout>
+      <bm-nace-lookup>
+      </bm-nace-lookup>
+    </bm-layout>
+  </body>
+</html>

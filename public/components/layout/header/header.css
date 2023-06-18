@@ -1,0 +1,33 @@
+@import "/theme.css";
+
+:host {
+  padding: 20px 0 0 0;
+  text-align: center;
+}
+
+:host h1 {
+  margin: 7px 0;
+  color: var(--brand-main);
+}
+
+h1, ul {
+  margin: 5px 0;
+  text-transform: uppercase;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0;
+  color: var(--neutral-medium);
+}
+
+li {
+}
+
+li + li::before {
+  content: " | ";
+  padding: 12px;
+}

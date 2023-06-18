@@ -1,0 +1,134 @@
+#+TITLE: Orgmode publish
+#+SETUPFILE: setupfile.org
+
+* Styles
+#+begin_src css :tangle assets/styles.css :mkdirp yes
+    #outline-container-putting-it-together { display: none; }
+
+    .todo.WIP { background: gold; }
+
+    html {
+      font-family: sans-serif;
+      line-height: 1.25;
+    }
+
+    .highlight { background: gold; }
+
+    body {
+      margin: 3ex 1em;
+    }
+
+    ul {
+      padding-left: 1em;
+    }
+
+
+    ul {
+      list-style: none;
+    }
+
+    ul li::before {
+      content: "\21FE";
+      color: darkgreen;
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+      margin-left: -0.5em;
+      font-size: 14pt;
+    }
+
+    a:hover { text-decoration: none; }
+
+    blockquote {
+      background: aliceblue;
+      color: dimgrey;
+      font-style: italic;
+      border-left: 10px solid darkslategrey;
+      margin: 1.5em 0;
+      padding: 0.5em 10px;
+      padding-top: 1em;
+      quotes: "\201C""\201D""\2018""\2019";
+      border-radius: 5px;
+    }
+
+    blockquote:before {
+      color: darkslategrey;
+      font-style: italic;
+      content: open-quote;
+      font-size: 4em;
+      line-height: 0.1em;
+      margin-right: 0.25em;
+      vertical-align: -0.4em;
+    }
+
+    blockquote p {
+      margin: 0;
+      padding: 0;
+      padding-left: 15px;
+      padding-bottom: 5px;
+    }
+#+end_src
+
+* JS
+#+begin_src js :tangle assets/script.js :mkdirp yes
+  const $ = document.querySelector.bind(document)
+  const $$ = document.querySelectorAll.bind(document)
+
+  $$("[class^='section-number-']").forEach((section) => {
+    const linkTarget = section.parentNode.id.match(/^org/) ? section.innerText : section.parentNode.id
+    section.innerHTML = `<a href="#${linkTarget}">§<a name="${linkTarget}"></a></a>`
+  })
+#+end_src
+
+* Publishing setup
+#+name: install
+#+begin_src emacs-lisp :task yes :doc "Install dependencies required for export" :shebang "#!/usr/bin/env emacs --script"
+  (package-initialize)
+
+  (add-to-list 'package-archives
+               '("melpa" . "http://melpa.org/packages/"))
+  (add-to-list 'package-archives
+               '("org" . "http://orgmode.org/elpa/"))
+
+  (package-refresh-contents)
+
+  (dolist (pkg '(htmlize json-mode clojure-mode))
+    (package-install pkg))
+#+end_src
+
+* Publishing script
+#+name: publish
+#+begin_src emacs-lisp :task yes :doc "Export documentation" :shebang "#!/usr/bin/env emacs --script"
+  (package-initialize)
+
+  (require 'ox-publish)
+
+  (setq org-publish-project-alist
+        '(("nace-lookup"
+           :components ("nace-lookup.org" "nace-lookup.assets"))
+          ("nace-lookup.org"
+           :base-directory "chapters"
+           :publishing-directory "output/doc"
+           :base-extension "org"
+           :exclude "setupfile.org"
+           :recursive f
+           :publishing-function org-html-publish-to-html
+           :org-html-doctype "html5"      ; check works
+           :headline-levels 4
+           :auto-preamble f)
+          ("nace-lookup.assets"
+           :base-directory "chapters/assets"
+           :publishing-directory "output/doc/assets"
+           :base-extension "png\\|jpg\\|pdf\\|json\\|js\\|css"
+           :recursive t
+           :publishing-function org-publish-attachment)))
+
+  ;; Set a theme that looks well when exported into HTML.
+  (load-theme 'tsdh-light)
+
+  ;; Publish.
+  (setq org-html-htmlize-output-type 'css)
+
+  (org-mode)
+  (org-publish-project "nace-lookup")
+#+end_src

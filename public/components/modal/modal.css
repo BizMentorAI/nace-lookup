@@ -1,0 +1,33 @@
+@import "/theme.css";
+
+/*
+ * https://developer.mozilla.org/en-US/docs/Web/CSS/::backdrop
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog
+ */
+
+form {
+  display: flex;
+}
+
+button {
+  margin-top: 24px;
+  flex-grow: 1;
+  font-size: 12pt;
+  width: 75px;
+  height: 35px;
+}
+
+h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+dialog {
+  border-radius: 7px;
+  border: 1px solid var(--neutral-dark);
+}
+
+dialog::backdrop {
+  /* background: var(--backdrop); */
+  background: rgba(54, 78, 79, 0.45);
+}

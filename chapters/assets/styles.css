@@ -1,0 +1,64 @@
+#outline-container-putting-it-together { display: none; }
+
+.todo.WIP { background: gold; }
+
+html {
+  font-family: sans-serif;
+  line-height: 1.25;
+}
+
+.highlight { background: gold; }
+
+body {
+  margin: 3ex 1em;
+}
+
+ul {
+  padding-left: 1em;
+}
+
+
+ul {
+  list-style: none;
+}
+
+ul li::before {
+  content: "\21FE";
+  color: darkgreen;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -0.5em;
+  font-size: 14pt;
+}
+
+a:hover { text-decoration: none; }
+
+blockquote {
+  background: aliceblue;
+  color: dimgrey;
+  font-style: italic;
+  border-left: 10px solid darkslategrey;
+  margin: 1.5em 0;
+  padding: 0.5em 10px;
+  padding-top: 1em;
+  quotes: "\201C""\201D""\2018""\2019";
+  border-radius: 5px;
+}
+
+blockquote:before {
+  color: darkslategrey;
+  font-style: italic;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  margin: 0;
+  padding: 0;
+  padding-left: 15px;
+  padding-bottom: 5px;
+}

@@ -1,0 +1,13 @@
+@import "/theme.css";
+
+:host {
+  padding: 20px 0 30px 0;
+  text-align: center;
+  color: var(--neutral-light);
+}
+
+@media (max-width: 600px) {
+  :host {
+    padding: 20px 0 17px 0;
+  }
+}
