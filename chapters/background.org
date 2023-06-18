@@ -3,7 +3,7 @@
 
 * About
 ** Value proposition
-Every project that the Irish Local enterprise office (LEO) works with needs to be assigned their corresponding NACE/CPA code. As of 2023 NACE/CPA doesn't have a good interface and LEO employees are spending many hours on the lookup that they have to do manually.
+Every project that the Irish Local enterprise office (LEO) works with needs to be assigned their corresponding NACE/CPA code. As of 2023 NACE/CPA doesn't have a good interface and LEO employees are spending many hours on the lookup that they have to search it manually in Excel files.
 
 Because of legal reasons, it's important to get the correct NACE/CPA codes, otherwise there may be fines.
 
@@ -96,6 +96,8 @@ False positives again.
 ** TODO Separate production build
 - Depends on the size.
 - autocomplete.json vs autocomplete-inspect.json loaded for ~?inspect~.
+
+** TODO Browse L6 -> parent L4 & L4 -> all children
 
 ** TODO Scoring
 - Sort L4 categories by total score (direct heading match + total L6 matches weight).
