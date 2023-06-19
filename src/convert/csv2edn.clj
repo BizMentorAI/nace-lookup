@@ -43,15 +43,15 @@
 ;; (process "src/data/isic2naics.csv" identity)
 ;; (process "src/data/naics-desc.csv" identity)
 ;; (process "src/data/naics-index.csv" identity)
-;; (process "src/data/prodcom2022-structure.csv"
-;;          #(-> %
-;;               (dissoc
-;;                :fr :el :hr :pt :fi :ro :sl :es- :et :cs :hu
-;;                :pl :it :nl :sk :de :sv :da :bg :lt :lv :mt)
-;;               (update-in [:level] to-int)
-;;               (set/rename-keys {:prd2022_code :prd})))
+(process "src/data/prodcom2022-structure.csv"
+         #(-> %
+              (dissoc
+               :fr :el :hr :pt :fi :ro :sl :es- :et :cs :hu
+               :pl :it :nl :sk :de :sv :da :bg :lt :lv :mt)
+              (update-in [:level] to-int)
+              (set/rename-keys {:prd2022_code :code :en :title})))
 ;; (process "src/data/cpa2cn.csv" #(dissoc % :_))
 ;; (process "src/data/hs-h4.csv" #(update-all (dissoc % :nomenclaturecode) [:tier] to-int))
 ;; (process "src/data/cpc212hs2017.csv" #(dissoc % :_))
 ;; (process "src/data/hs2022-hs2017.csv" identity)
-(process "src/data/cn2023-titles.csv" identity)
+;; (process "src/data/cn2023-titles.csv" identity)

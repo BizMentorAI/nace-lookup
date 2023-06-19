@@ -29,37 +29,44 @@
                     {:hash hash :extra-meta extra-meta})))
   (with-meta hash (merge (meta hash) extra-meta)))
 
-(defn extend-extra [record extra-key value]
-  (cond
-    (string? value)
-    (if (not (empty? (str/trim value)))
-      (assoc-in record [:extra extra-key] value)
-      record)
+(defmulti extend-extra
+  (fn [record extra-key value]
+    (when (or (not record) (not extra-key) (not value))
+      (throw (ex-info "Empty argument(s)"
+                      {:record record :extra-key extra-key :value value})))
+    (prn :ext record extra-key value)
+    (type record)))
 
-    (vector? value)
-    (let [values (filter (comp not empty?) value)]
-      (if (not (empty? values))
-        (assoc-in record [:extra extra-key]
-                  (str/join "\n"
-                            (remove #(= "Other" %) (distinct values))))
-        record))
+(defmethod extend-extra clojure.lang.PersistentList [record extra-key value]
+  (let [values (filter (comp not empty?) value)]
+    (if (not (empty? values))
+      (assoc-in record [:extra extra-key]
+                (str/join "\n"
+                          (remove #(= "Other" %) (distinct values))))
+      record)))
 
-    (map? value)
-    (let [cleaned-map
-          (into {}
-                (map
-                 (fn [[k v]]
-                   [k
-                    (if (coll? v)
-                      (str/join "\n"
-                                (map str/trim
-                                     (remove #(= "Other" %)
-                                             (distinct v))))
-                      v)])
-                 (remove #(empty? (val %)) value)))]
-      (if (not (empty? cleaned-map))
-        (assoc-in record [:extra extra-key] cleaned-map)
-        record))))
+(defmethod extend-extra clojure.lang.PersistentArrayMap [record extra-key value]
+  (let [cleaned-map
+        (into {}
+              (map
+               (fn [[k v]]
+                 [k
+                  (if (coll? v)
+                    (str/join "\n"
+                              (map str/trim
+                                   (remove #(= "Other" %)
+                                           (distinct v))))
+                    v)])
+               (remove #(empty? (val %)) value)))]
+    (prn "--->" cleaned-map (not (empty? cleaned-map)) record)
+    (if (not (empty? cleaned-map))
+      (assoc-in record [:extra extra-key] cleaned-map)
+      record)))
+
+(defmethod extend-extra java.lang.String [record extra-key value]
+  (if (not (empty? (str/trim value)))
+    (assoc-in record [:extra extra-key] value)
+    record))
 
 (defn get-cpc [{:keys [code]}]
   (let [map-record
@@ -72,7 +79,7 @@
   (if-let [cpc-record (get-cpc record)]
     (-> record
         (extend-meta {:cpc-record cpc-record})
-        (extend-extra :cpc (select-keys cpc-record [:title :note])))
+        (extend-extra :cpc (select-keys cpc-record [:code :title :note])))
     record))
 
 (defn get-prodcom [{:keys [:code]}]
@@ -80,9 +87,15 @@
 
 (defn extend-with-prodcom [record]
   (if-let [prodcom-records (get-prodcom record)]
+    (prn :ee
+         (map #(select-keys % [:code :title]) prodcom-records)
+         prodcom-records
+         (extend-extra record :prodcom
+                       (map #(select-keys % [:code :title]) prodcom-records)))
     (-> record
         (extend-meta {:prodcom-records prodcom-records})
-        (extend-extra :prodcom {:title (map :en prodcom-records)}))
+        (extend-extra :prodcom
+                      (map #(select-keys % [:code :title]) prodcom-records)))
     record))
 
 (defn extend-with-cn [{:keys [code] :as record}]
@@ -139,8 +152,8 @@
               extend-with-hs-dbg      (dbg :hs extend-with-hs)]
           ; Use the -dbg versions to see the output of each fn.
           (-> i
-              extend-with-cpc;-dbg
-              extend-with-prodcom;-dbg
+              extend-with-cpc-dbg
+              extend-with-prodcom-dbg
               extend-with-cn;-dbg
               extend-with-hs;-dbg
               (merge {:syn [] :rel [] :exc []})))
