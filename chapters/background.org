@@ -77,12 +77,6 @@ False positives again.
 * Implementation
 
 * Tasks
-** TODO Make sure we have the right versions of each specification
-- Possibly change file names to reflect that.
-
-** TODO Copy all fields as they are, no replacements
-- CPA includes/also includes etc, preserve fields as they are, even copy over excludes.
-
 ** TODO Extend L4 items with extra
 
 ** TODO Add keywords field manually
@@ -91,11 +85,18 @@ False positives again.
 - blue balls -> first apply blue, then balls to the result.
 - Highlight full match in a different colour.
 
+** TODO Try probabilistic matching again
+- Revive UNSPSC from Git history.
+- GPC.
+
 ** TODO Separate production build
 - Depends on the size.
 - autocomplete.json vs autocomplete-inspect.json loaded for ~?inspect~.
 
 ** TODO Browse L6 -> parent L4 & L4 -> all children
+
+** TODO SG/PL in JS
+https://www.npmjs.com/package/inflection
 
 ** TODO Scoring
 - Sort L4 categories by total score (direct heading match + total L6 matches weight).

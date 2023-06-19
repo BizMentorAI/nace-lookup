@@ -1,4 +1,4 @@
-#!/usr/bin/env bb -cp src/convert
+#!/usr/bin/env bb
 
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.edn :as edn])
@@ -13,21 +13,21 @@
 (def cn-desc-records  (edn/read-string (slurp "src/data/cn2023.edn")))
 (def hs-2017-records  (edn/read-string (slurp "src/data/hs-h4.edn")))
 
-(defn get-cpc [{:keys [code]}]
-  (let [map-record
-        (first (filter #(= (:cpa-21-code %) code) cpc-map-table))
-        cpc-record
-        (first (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))]
-    cpc-record))
+(defn inspect
+  ([value] (prn value) value)
+  ([label value] (prn label value) value))
+
+(defn dbg [label fun]
+  (fn [& args]
+    (let [result (apply fun args)]
+      (prn label result)
+      result)))
 
 (defn extend-meta [hash extra-meta]
-  (when (not hash)
+  (when (or (not hash) (not extra-meta))
     (throw (ex-info "Empty argument(s)"
                     {:hash hash :extra-meta extra-meta})))
-  (with-meta hash (merge (or (meta hash) {}) extra-meta)))
-
-(defn inspect [label value]
-  (prn label value) value)
+  (with-meta hash (merge (meta hash) extra-meta)))
 
 (defn extend-extra [record extra-key value]
   (cond
@@ -39,20 +39,40 @@
     (vector? value)
     (let [values (filter (comp not empty?) value)]
       (if (not (empty? values))
-        (assoc-in record [:extra extra-key] (str/join "\n" values))
+        (assoc-in record [:extra extra-key]
+                  (str/join "\n"
+                            (remove #(= "Other" %) (distinct values))))
         record))
 
     (map? value)
-    (let [cleaned-map (into {} (remove #(empty? (val %)) value))]
+    (let [cleaned-map
+          (into {}
+                (map
+                 (fn [[k v]]
+                   [k
+                    (if (coll? v)
+                      (str/join "\n"
+                                (map str/trim
+                                     (remove #(= "Other" %)
+                                             (distinct v))))
+                      v)])
+                 (remove #(empty? (val %)) value)))]
       (if (not (empty? cleaned-map))
         (assoc-in record [:extra extra-key] cleaned-map)
         record))))
+
+(defn get-cpc [{:keys [code]}]
+  (let [map-record
+        (first (filter #(= (:cpa-21-code %) code) cpc-map-table))
+        cpc-record
+        (first (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))]
+    cpc-record))
 
 (defn extend-with-cpc [record]
   (if-let [cpc-record (get-cpc record)]
     (-> record
         (extend-meta {:cpc-record cpc-record})
-        (extend-extra :cpc (select-keys record [:title :note])))
+        (extend-extra :cpc (select-keys cpc-record [:title :note])))
     record))
 
 (defn get-prodcom [{:keys [:code]}]
@@ -62,7 +82,7 @@
   (if-let [prodcom-records (get-prodcom record)]
     (-> record
         (extend-meta {:prodcom-records prodcom-records})
-        (extend-extra :prodcom {:xxx (map :en prodcom-records)}))
+        (extend-extra :prodcom {:title (map :en prodcom-records)}))
     record))
 
 (defn extend-with-cn [{:keys [code] :as record}]
@@ -96,22 +116,34 @@
     (if (not (empty? selected-hs-2017-records))
       (-> record
           (extend-meta {:hs-2017-records selected-hs-2017-records})
-          (extend-extra :hs (map :desc selected-hs-2017-records)))
+          (extend-extra :hs {:desc (map :desc selected-hs-2017-records)}))
       record)))
 
-
+; TODO: preserve the original level? Why exactly are we changing it?
 (defn process-category [record]
   (case (:level record)
     1 {:level 1 :label (:desc record)}
     4 {:level 2 :code (:code record) :label (:desc record)}
     6 (let [i {:level 3 :code (:code record) :label (:desc record)}]
-        (extend-extra i :cpa (select-keys record [:includes :includes-2 :excludes])))))
+        (extend-extra i :cpa
+                      (select-keys record
+                                   [:includes :includes-2 :excludes])))))
 
 (defn process-record [record]
   (when (#{1 4 6} (:level record))
     (let [i (process-category record)]
-      (if (= (:level i) 3)
-        (-> i extend-with-cpc extend-with-prodcom extend-with-cn extend-with-hs)
+      (if (#{2 3} (:level i))
+        (let [extend-with-cpc-dbg     (dbg :cpc extend-with-cpc)
+              extend-with-prodcom-dbg (dbg :prodcom extend-with-prodcom)
+              extend-with-cn-dbg      (dbg :cn extend-with-cn)
+              extend-with-hs-dbg      (dbg :hs extend-with-hs)]
+          ; Use the -dbg versions to see the output of each fn.
+          (-> i
+              extend-with-cpc;-dbg
+              extend-with-prodcom;-dbg
+              extend-with-cn;-dbg
+              extend-with-hs;-dbg
+              (merge {:syn [] :rel [] :exc []})))
         i))))
 
 (defn get-sequence [records]
