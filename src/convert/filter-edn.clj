@@ -128,27 +128,20 @@
 (defn extend-with-hs [record]
   (let [cpc-codes (into #{} (map :code (get-in record [:extra :cpc])))
         map-records (filter #(cpc-codes (:cpc-21 %)) hs-map-table)
-        _ (prn cpc-codes map-records)
 
         selected-hs-records
         (flatten (map (fn [map-record]
                         (filter #(= (str/replace (:hs-2017 map-record) #"\." "")
                                     (:code %))
                                 hs-records))
-                      map-records))
-
-        _ (prn selected-hs-records)
-        _ (println)
-        ]
-    ;; (prn selected-hs-records)
-    ;; (if (not (empty? selected-hs-records))
-    ;;   (-> record
-    ;;       (extend-meta {:hs-records selected-hs-records})
-    ;;       (extend-extra :hs (map
-    ;;                          #(select-keys % [:code :desc])
-    ;;                          selected-hs-records)))
-    ;;   record)
-    ))
+                      map-records))]
+    (if (not (empty? selected-hs-records))
+      (-> record
+          (extend-meta {:hs-records selected-hs-records})
+          (extend-extra :hs (map
+                             #(select-keys % [:code :desc])
+                             selected-hs-records)))
+      record)))
 
 ; TODO: preserve the original level? Why exactly are we changing it?
 (defn process-category [record]
