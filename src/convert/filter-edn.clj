@@ -35,35 +35,40 @@
       (throw (ex-info "Empty argument(s)"
                       {:record record :extra-key extra-key :value value})))
     (prn :ext record extra-key value)
-    (type record)))
+    (cond
+      (map? record) :map (coll? record) :coll (string? record) :string
+      true :other)))
 
-(defmethod extend-extra clojure.lang.PersistentList [record extra-key value]
+(defmethod extend-extra :coll [record extra-key value]
+  (throw (ex-info "fuck it" {})) ; Let's remove this body I think
   (let [values (filter (comp not empty?) value)]
     (if (not (empty? values))
       (assoc-in record [:extra extra-key]
-                (str/join "\n"
-                          (remove #(= "Other" %) (distinct values))))
+                (str/join "\n" (remove #{"Other"} (distinct values))))
       record)))
 
-(defmethod extend-extra clojure.lang.PersistentArrayMap [record extra-key value]
-  (let [cleaned-map
-        (into {}
-              (map
-               (fn [[k v]]
-                 [k
-                  (if (coll? v)
-                    (str/join "\n"
-                              (map str/trim
-                                   (remove #(= "Other" %)
-                                           (distinct v))))
-                    v)])
-               (remove #(empty? (val %)) value)))]
-    (prn "--->" cleaned-map (not (empty? cleaned-map)) record)
-    (if (not (empty? cleaned-map))
-      (assoc-in record [:extra extra-key] cleaned-map)
+(defn clean-value [value]
+  (if (coll? value)
+    (str/join "\n" (map str/trim (remove #{"Other"} (distinct value))))
+    value))
+
+(defn clean-map-from-pairs [list]
+  (into {} (map (fn [[k v]] [k (clean-value v)]) list)))
+
+; We can have a clean LIST of maps when 1:n.
+; Change defmulti to match not on the record, but rather on value.
+(defmethod extend-extra :map [record extra-key value]
+  (let [____ (prn :v value)
+        clean-pairs (remove (fn [[_ v]] (not (empty? v))) value)
+        _ (prn :cp clean-pairs) ;;;;
+        clean-map (clean-map-from-pairs clean-pairs)
+        __ (prn :cm clean-map)] ;;;;
+    (if (not (empty? clean-map))
+      (assoc-in record [:extra extra-key] clean-map)
       record)))
 
-(defmethod extend-extra java.lang.String [record extra-key value]
+(defmethod extend-extra :string [record extra-key value]
+  (throw (ex-info "fuck it" {})) ; Let's remove this body I think
   (if (not (empty? (str/trim value)))
     (assoc-in record [:extra extra-key] value)
     record))
@@ -87,15 +92,13 @@
 
 (defn extend-with-prodcom [record]
   (if-let [prodcom-records (get-prodcom record)]
-    (prn :ee
-         (map #(select-keys % [:code :title]) prodcom-records)
-         prodcom-records
-         (extend-extra record :prodcom
-                       (map #(select-keys % [:code :title]) prodcom-records)))
-    (-> record
-        (extend-meta {:prodcom-records prodcom-records})
-        (extend-extra :prodcom
-                      (map #(select-keys % [:code :title]) prodcom-records)))
+    (let [result
+          (-> record
+              (extend-meta {:prodcom-records prodcom-records})
+              (extend-extra :prodcom
+                            (map #(select-keys % [:code :title]) prodcom-records)))]
+      (prn :res result)
+      result)
     record))
 
 (defn extend-with-cn [{:keys [code] :as record}]
