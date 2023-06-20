@@ -34,73 +34,63 @@
     (when (or (not record) (not extra-key) (not value))
       (throw (ex-info "Empty argument(s)"
                       {:record record :extra-key extra-key :value value})))
-    (prn :ext record extra-key value)
-    (cond
-      (map? record) :map (coll? record) :coll (string? record) :string
-      true :other)))
+    (cond (map? value) :map (coll? value) :coll true :error)))
 
-(defmethod extend-extra :coll [record extra-key value]
-  (throw (ex-info "fuck it" {})) ; Let's remove this body I think
-  (let [values (filter (comp not empty?) value)]
-    (if (not (empty? values))
-      (assoc-in record [:extra extra-key]
-                (str/join "\n" (remove #{"Other"} (distinct values))))
-      record)))
-
-(defn clean-value [value]
+(defn- clean-value [value]
   (if (coll? value)
     (str/join "\n" (map str/trim (remove #{"Other"} (distinct value))))
     value))
 
-(defn clean-map-from-pairs [list]
+(defn- clean-pairs [hash]
+  (remove (fn [[_ v]] (not (empty? v))) hash))
+
+(defn- clean-map-from-pairs [list]
   (into {} (map (fn [[k v]] [k (clean-value v)]) list)))
 
-; We can have a clean LIST of maps when 1:n.
-; Change defmulti to match not on the record, but rather on value.
+(defn clean-map [hash]
+  (clean-map-from-pairs (clean-pairs hash)))
+
 (defmethod extend-extra :map [record extra-key value]
-  (let [____ (prn :v value)
-        clean-pairs (remove (fn [[_ v]] (not (empty? v))) value)
-        _ (prn :cp clean-pairs) ;;;;
-        clean-map (clean-map-from-pairs clean-pairs)
-        __ (prn :cm clean-map)] ;;;;
-    (if (not (empty? clean-map))
-      (assoc-in record [:extra extra-key] clean-map)
+  (let [result (clean-map value)]
+    (if (not (empty? result))
+      (inspect [:eem extra-key value] (assoc-in record [:extra extra-key] result))
       record)))
 
-(defmethod extend-extra :string [record extra-key value]
-  (throw (ex-info "fuck it" {})) ; Let's remove this body I think
-  (if (not (empty? (str/trim value)))
-    (assoc-in record [:extra extra-key] value)
-    record))
+(defmethod extend-extra :coll [record extra-key value]
+  (let [result (map clean-map value)]
+    (if (not (empty? result))
+      (inspect [:eec extra-key value] (assoc-in record [:extra extra-key] (vec result)))
+      record)))
 
+; CPC
 (defn get-cpc [{:keys [code]}]
-  (let [map-record
-        (first (filter #(= (:cpa-21-code %) code) cpc-map-table))
-        cpc-record
-        (first (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))]
-    cpc-record))
+  (let [map-records (filter #(= (:cpa-21-code %) code) cpc-map-table)]
+    (flatten (map (fn [map-record]
+                    (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))
+                  map-records))))
 
 (defn extend-with-cpc [record]
-  (if-let [cpc-record (get-cpc record)]
+  (let [cpc-records (get-cpc record)]
+    (prn :cr cpc-records)
     (-> record
-        (extend-meta {:cpc-record cpc-record})
-        (extend-extra :cpc (select-keys cpc-record [:code :title :note])))
-    record))
+        (extend-meta {:cpc-records cpc-records})
+        (extend-extra :cpc (map
+                            #(select-keys % [:code :title :note])
+                            cpc-records)))))
 
+; PRODCOM
 (defn get-prodcom [{:keys [:code]}]
   (filter #(= (:cpa %) code) prodcom-records))
 
 (defn extend-with-prodcom [record]
-  (if-let [prodcom-records (get-prodcom record)]
-    (let [result
-          (-> record
-              (extend-meta {:prodcom-records prodcom-records})
-              (extend-extra :prodcom
-                            (map #(select-keys % [:code :title]) prodcom-records)))]
-      (prn :res result)
-      result)
-    record))
+  (let [prodcom-records (get-prodcom record)]
+    (-> record
+        (extend-meta {:prodcom-records prodcom-records})
+        (extend-extra :prodcom (map
+                                #(select-keys % [:code :title])
+                                prodcom-records)))))
 
+; CN
 (defn extend-with-cn [{:keys [code] :as record}]
   (let [map-items (filter #(= (:cpa %) code) cn-map-table)
         selected-cn-title-records
@@ -116,9 +106,11 @@
             (filter #(= (map-item :cn) (% :code)) cn-desc-records))
           map-items))]
     (extend-extra record :cn
+                  ; TODO: Grab CN codes.
                   {:title (map :dm selected-cn-title-records)
                    :desc  (map :desc selected-cn-desc-records)})))
 
+; HS
 (defn extend-with-hs [record]
   (let [cpc-record (:cpc-record (meta record))
         cpc-code (:code cpc-record)
@@ -132,6 +124,7 @@
     (if (not (empty? selected-hs-2017-records))
       (-> record
           (extend-meta {:hs-2017-records selected-hs-2017-records})
+          ; TODO: Grab HS codes.
           (extend-extra :hs {:desc (map :desc selected-hs-2017-records)}))
       record)))
 
@@ -156,9 +149,9 @@
           ; Use the -dbg versions to see the output of each fn.
           (-> i
               extend-with-cpc-dbg
-              extend-with-prodcom-dbg
-              extend-with-cn;-dbg
-              extend-with-hs;-dbg
+              ;; extend-with-prodcom;-dbg
+              ;; extend-with-cn;-dbg
+              ;; extend-with-hs;-dbg
               (merge {:syn [] :rel [] :exc []})))
         i))))
 
@@ -184,5 +177,8 @@
                                #(conj % item))))
               [] sequence))))
 
-(spit "public/workers/autocomplete/data.json"
-      (json/generate-string (nest cpa-records) {:pretty true}))
+(spit "public/workers/autocomplete/data.edn"
+      (with-out-str (pprint (vec (nest cpa-records)))))
+
+;; (spit "public/workers/autocomplete/data.json"
+;;       (json/generate-string (nest cpa-records) {:pretty true}))
