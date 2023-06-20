@@ -3,15 +3,7 @@
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.edn :as edn])
 
-(def cpa-records      (edn/read-string (slurp "src/data/cpa21.edn")))
-(def cpc-map-table    (edn/read-string (slurp "src/data/cpa21-to-cpc21.edn")))
-(def cpc-records      (edn/read-string (slurp "src/data/cpc21.edn")))
-(def cn-map-table     (edn/read-string (slurp "src/data/cpa21-to-cn2023.edn")))
-(def hs-map-table     (edn/read-string (slurp "src/data/cpc21-to-hs2017.edn")))
-(def prodcom-records  (edn/read-string (slurp "src/data/prodcom2022-structure.edn")))
-(def cn-title-records (edn/read-string (slurp "src/data/cn2023-titles.edn")))
-(def cn-desc-records  (edn/read-string (slurp "src/data/cn2023.edn")))
-(def hs-2017-records  (edn/read-string (slurp "src/data/hs-h4.edn")))
+(def cpa-records (edn/read-string (slurp "src/data/cpa21.edn")))
 
 (defn inspect
   ([value] (prn value) value)
@@ -42,7 +34,7 @@
     value))
 
 (defn- clean-pairs [hash]
-  (remove (fn [[_ v]] (not (empty? v))) hash))
+  (remove (fn [[_ v]] (empty? v)) hash))
 
 (defn- clean-map-from-pairs [list]
   (into {} (map (fn [[k v]] [k (clean-value v)]) list)))
@@ -53,25 +45,28 @@
 (defmethod extend-extra :map [record extra-key value]
   (let [result (clean-map value)]
     (if (not (empty? result))
-      (inspect [:eem extra-key value] (assoc-in record [:extra extra-key] result))
+      (assoc-in record [:extra extra-key] result)
       record)))
 
 (defmethod extend-extra :coll [record extra-key value]
   (let [result (map clean-map value)]
     (if (not (empty? result))
-      (inspect [:eec extra-key value] (assoc-in record [:extra extra-key] (vec result)))
+      (assoc-in record [:extra extra-key] (vec result))
       record)))
 
 ; CPC
+(def cpc-map-table (edn/read-string (slurp "src/data/cpa21-to-cpc21.edn")))
+(def cpc-records   (edn/read-string (slurp "src/data/cpc21.edn")))
+
 (defn get-cpc [{:keys [code]}]
   (let [map-records (filter #(= (:cpa-21-code %) code) cpc-map-table)]
-    (flatten (map (fn [map-record]
-                    (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))
-                  map-records))))
+    (flatten
+     (map (fn [map-record]
+            (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))
+          map-records))))
 
 (defn extend-with-cpc [record]
   (let [cpc-records (get-cpc record)]
-    (prn :cr cpc-records)
     (-> record
         (extend-meta {:cpc-records cpc-records})
         (extend-extra :cpc (map
@@ -79,6 +74,8 @@
                             cpc-records)))))
 
 ; PRODCOM
+(def prodcom-records (edn/read-string (slurp "src/data/prodcom2022-structure.edn")))
+
 (defn get-prodcom [{:keys [:code]}]
   (filter #(= (:cpa %) code) prodcom-records))
 
@@ -91,6 +88,16 @@
                                 prodcom-records)))))
 
 ; CN
+(def cn-map-table     (edn/read-string (slurp "src/data/cpa21-to-cn2023.edn")))
+(def cn-title-records (edn/read-string (slurp "src/data/cn2023-titles.edn")))
+(def cn-desc-records  (edn/read-string (slurp "src/data/cn2023.edn")))
+
+(defn merge-cn-titles-and-descs [title-records desc-records]
+  ; TODO: Grab CN codes.
+  ;; {:title (map :dm selected-cn-title-records)
+  ;;  :desc (map :desc selected-cn-desc-records)}
+  )
+
 (defn extend-with-cn [{:keys [code] :as record}]
   (let [map-items (filter #(= (:cpa %) code) cn-map-table)
         selected-cn-title-records
@@ -105,28 +112,43 @@
           (fn [map-item]
             (filter #(= (map-item :cn) (% :code)) cn-desc-records))
           map-items))]
-    (extend-extra record :cn
-                  ; TODO: Grab CN codes.
-                  {:title (map :dm selected-cn-title-records)
-                   :desc  (map :desc selected-cn-desc-records)})))
+    (prn selected-cn-title-records)
+    (prn selected-cn-desc-records)
+    (println)
+    (extend-extra record :cn (merge-cn-titles-and-descs
+                              selected-cn-title-records
+                              selected-cn-desc-records))))
 
 ; HS
+; We have HS 2022 (already in src/data), but we couldn't find an updated
+; map table.
+(def hs-map-table (edn/read-string (slurp "src/data/cpc21-to-hs2017.edn")))
+(def hs-records   (edn/read-string (slurp "src/data/hs-h4.edn")))
+
 (defn extend-with-hs [record]
-  (let [cpc-record (:cpc-record (meta record))
-        cpc-code (:code cpc-record)
-        map-records (filter #(= (:cpc-21 %) cpc-code) hs-map-table)
-        selected-hs-2017-records
+  (let [cpc-codes (into #{} (map :code (get-in record [:extra :cpc])))
+        map-records (filter #(cpc-codes (:cpc-21 %)) hs-map-table)
+        _ (prn cpc-codes map-records)
+
+        selected-hs-records
         (flatten (map (fn [map-record]
                         (filter #(= (str/replace (:hs-2017 map-record) #"\." "")
                                     (:code %))
-                                hs-2017-records))
-                      map-records))]
-    (if (not (empty? selected-hs-2017-records))
-      (-> record
-          (extend-meta {:hs-2017-records selected-hs-2017-records})
-          ; TODO: Grab HS codes.
-          (extend-extra :hs {:desc (map :desc selected-hs-2017-records)}))
-      record)))
+                                hs-records))
+                      map-records))
+
+        _ (prn selected-hs-records)
+        _ (println)
+        ]
+    ;; (prn selected-hs-records)
+    ;; (if (not (empty? selected-hs-records))
+    ;;   (-> record
+    ;;       (extend-meta {:hs-records selected-hs-records})
+    ;;       (extend-extra :hs (map
+    ;;                          #(select-keys % [:code :desc])
+    ;;                          selected-hs-records)))
+    ;;   record)
+    ))
 
 ; TODO: preserve the original level? Why exactly are we changing it?
 (defn process-category [record]
@@ -148,10 +170,10 @@
               extend-with-hs-dbg      (dbg :hs extend-with-hs)]
           ; Use the -dbg versions to see the output of each fn.
           (-> i
-              extend-with-cpc-dbg
-              ;; extend-with-prodcom;-dbg
-              ;; extend-with-cn;-dbg
-              ;; extend-with-hs;-dbg
+              extend-with-cpc;-dbg
+              extend-with-prodcom;-dbg
+              ;extend-with-cn;-dbg
+              extend-with-hs;-dbg
               (merge {:syn [] :rel [] :exc []})))
         i))))
 
