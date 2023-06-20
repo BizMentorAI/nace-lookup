@@ -103,11 +103,6 @@
                         selected-desc-records
                         (filter #(= (map-item :cn) (% :code)) cn-desc-records)]
 
-                    (prn map-item)
-                    (prn selected-title-records)
-                    (prn selected-desc-records)
-                    (println)
-
                     (conj acc
                           {:code (:cn map-item)
                            :title (str/join "\n" (map :dm selected-title-records))
