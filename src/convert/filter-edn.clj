@@ -92,32 +92,28 @@
 (def cn-title-records (edn/read-string (slurp "src/data/cn2023-titles.edn")))
 (def cn-desc-records  (edn/read-string (slurp "src/data/cn2023.edn")))
 
-(defn merge-cn-titles-and-descs [title-records desc-records]
-  ; TODO: Grab CN codes.
-  ;; {:title (map :dm selected-cn-title-records)
-  ;;  :desc (map :desc selected-cn-desc-records)}
-  )
-
 (defn extend-with-cn [{:keys [code] :as record}]
   (let [map-items (filter #(= (:cpa %) code) cn-map-table)
-        selected-cn-title-records
-        (flatten
-         (map (fn [map-item]
-                (filter #(= (map-item :cn) (:cn %)) cn-title-records))
-              map-items))
 
-        selected-cn-desc-records
-        (flatten
-         (map
-          (fn [map-item]
-            (filter #(= (map-item :cn) (% :code)) cn-desc-records))
-          map-items))]
-    (prn selected-cn-title-records)
-    (prn selected-cn-desc-records)
-    (println)
-    (extend-extra record :cn (merge-cn-titles-and-descs
-                              selected-cn-title-records
-                              selected-cn-desc-records))))
+        selected-cn-records
+        (reduce (fn [acc map-item]
+                  (let [selected-title-records
+                        (filter #(= (map-item :cn) (:cn %)) cn-title-records)
+
+                        selected-desc-records
+                        (filter #(= (map-item :cn) (% :code)) cn-desc-records)]
+
+                    (prn map-item)
+                    (prn selected-title-records)
+                    (prn selected-desc-records)
+                    (println)
+
+                    (conj acc
+                          {:code (:cn map-item)
+                           :title (str/join "\n" (map :dm selected-title-records))
+                           :desc (str/join "\n" (map :desc selected-desc-records))})))
+                [] map-items)]
+    (extend-extra record :cn selected-cn-records)))
 
 ; HS
 ; We have HS 2022 (already in src/data), but we couldn't find an updated
@@ -165,7 +161,7 @@
           (-> i
               extend-with-cpc;-dbg
               extend-with-prodcom;-dbg
-              ;extend-with-cn;-dbg
+              extend-with-cn;-dbg
               extend-with-hs;-dbg
               (merge {:syn [] :rel [] :exc []})))
         i))))
