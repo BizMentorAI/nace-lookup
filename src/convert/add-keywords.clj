@@ -5,6 +5,8 @@
 (require '[clojure.walk :refer [postwalk]])
 (require '[babashka.process :refer [shell]])
 
+; TODO: Do manufacturing first.
+
 (def data-path "public/workers/autocomplete/data.edn")
 ;(def result-path "public/workers/autocomplete/data.json")
 (def records (atom (edn/read-string (slurp data-path))))
