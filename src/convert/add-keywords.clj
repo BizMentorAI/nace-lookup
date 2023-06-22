@@ -10,7 +10,7 @@
 (def records (atom (edn/read-string (slurp data-path))))
 
 (defn save-results []
-  (spit data-path (json/generate-string @records {:pretty true})))
+  (spit data-path (with-out-str (pr-str @records))))
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
