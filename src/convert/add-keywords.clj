@@ -20,25 +20,24 @@
   (print (str label ": ")) (flush)
   (remove empty? (str/split (read-line) #"\s*,\s*")))
 
-(defn edit-record [cursor]
-  (let [record (get-in @records cursor)]
-    (when-not record
-      (throw (ex-info "Empty record" {:cursor cursor})))
+(defn edit-record [cursor record]
+  (when-not record
+    (throw (ex-info "Empty record" {:cursor cursor})))
 
-    ; TODO: save into a TMP file and open in Vim?
-    (pprint record)
-    (println)
+  ; TODO: save into a TMP file and open in Vim?
+  (pprint record)
+  (println)
 
-    (let [syn (readline "syn")
-          rel (readline "rel")
-          exc (readline "exc")]
+  (let [syn (readline "syn")
+        rel (readline "rel")
+        exc (readline "exc")]
 
-      (reset! records (assoc-in @records (conj cursor :syn) syn))
-      (reset! records (assoc-in @records (conj cursor :rel) rel))
-      (reset! records (assoc-in @records (conj cursor :exc) exc))
+    (reset! records (assoc-in @records (conj cursor :syn) syn))
+    (reset! records (assoc-in @records (conj cursor :rel) rel))
+    (reset! records (assoc-in @records (conj cursor :exc) exc))
 
-      (save-results)
-      (commit record))))
+    (save-results)
+    (commit record)))
 
 (defn get-cursors [item cursor]
   (cond
@@ -58,8 +57,12 @@
 (let [cursors (get-cursors @records [])]
   (postwalk (fn [i]
               (if (and (vector? i)
-                       (= (count i) 5)
-                       (empty? (vals (select-keys i [:syn :rel :exc]))))
-                (edit-record i)
+                       (= (count i) 5))
+                (let [record (get-in @records i)]
+                  ;; (prn (select-keys record [:syn :rel :exc])
+                  ;;      (vals (select-keys record [:syn :rel :exc]))
+                  ;;      (empty? (vals (select-keys record [:syn :rel :exc]))))
+                  (when (empty? (apply concat (vals (select-keys record [:syn :rel :exc]))))
+                    (edit-record i record)))
                 i))
             cursors))
