@@ -6,18 +6,18 @@
 (require '[babashka.process :refer [shell]])
 
 (def data-path "public/workers/autocomplete/data.edn")
-(def result-path "public/workers/autocomplete/data.json")
+;(def result-path "public/workers/autocomplete/data.json")
 (def records (atom (edn/read-string (slurp data-path))))
 
 (defn save-results []
-  (spit result-path (json/generate-string @records {:pretty true})))
+  (spit data-path (json/generate-string @records {:pretty true})))
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
-    (shell "git" "commit" result-path "-m" message)))
+    (shell "git" "commit" data-path "-m" message)))
 
 (defn readline [label]
-  (println (str label ": "))
+  (print (str label ": ")) (flush)
   (remove empty? (str/split (read-line) #"\s*,\s*")))
 
 (defn edit-record [cursor]
@@ -25,6 +25,7 @@
     (when-not record
       (throw (ex-info "Empty record" {:cursor cursor})))
 
+    ; TODO: save into a TMP file and open in Vim?
     (pprint record)
     (println)
 
@@ -57,7 +58,8 @@
 (let [cursors (get-cursors @records [])]
   (postwalk (fn [i]
               (if (and (vector? i)
-                       (= (count i) 5))
+                       (= (count i) 5)
+                       (empty? (vals (select-keys i [:syn :rel :exc]))))
                 (edit-record i)
                 i))
             cursors))
