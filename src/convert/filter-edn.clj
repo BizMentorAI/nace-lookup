@@ -117,29 +117,37 @@
     (extend-extra record :cn selected-cn-records)))
 
 ; HS
-; We have HS 2022 (already in src/data), but we couldn't find an updated
-; map table.
-(def hs-map-table (edn/read-string (slurp "src/data/cpc21-to-hs2017.edn")))
-(def hs-records   (edn/read-string (slurp "src/data/hs-h4.edn")))
+(def hs-map-table   (edn/read-string (slurp "src/data/cpc21-to-hs2017.edn")))
+(def hs2017-records (edn/read-string (slurp "src/data/hs-h4.edn")))
+; The mapping is guessed, but it just might be alright.
+; TODO: Once CPC/HS2022 mapping is out, use it.
+(def hs2022-records (map #(set/rename-keys % {:id :code, :text :desc})
+                          (edn/read-string (slurp "src/data/hs2022.edn"))))
 
-(defn extend-with-hs [record]
+(defn extend-with-hs [record key-label all-records]
   ;(when (= (:level record) 2) (prn record)) ; Any extra?
   (let [cpc-codes (into #{} (map :code (get-in record [:extra :cpc])))
         map-records (filter #(cpc-codes (:cpc-21 %)) hs-map-table)
 
-        selected-hs-records
+        selected-records
         (flatten (map (fn [map-record]
                         (filter #(= (str/replace (:hs-2017 map-record) #"\." "")
                                     (:code %))
-                                hs-records))
+                                all-records))
                       map-records))]
-    (if (not (empty? selected-hs-records))
+    (if (not (empty? selected-records))
       (-> record
-          (extend-meta {:hs-records selected-hs-records})
-          (extend-extra :hs (map
-                             #(select-keys % [:code :desc])
-                             selected-hs-records)))
+          (extend-meta {(name (str key-label "-records")) selected-records})
+          (extend-extra key-label (map
+                                   #(select-keys % [:code :desc])
+                                   selected-records)))
       record)))
+
+(defn extend-with-hs2017 [record]
+  (extend-with-hs record :hs2017 hs2017-records))
+
+(defn extend-with-hs2022 [record]
+  (extend-with-hs record :hs2022 hs2022-records))
 
 (defn process-category [record]
   (if (= (:level record) 1)
@@ -158,13 +166,15 @@
         (let [extend-with-cpc-dbg     (dbg :cpc extend-with-cpc)
               extend-with-prodcom-dbg (dbg :prodcom extend-with-prodcom)
               extend-with-cn-dbg      (dbg :cn extend-with-cn)
-              extend-with-hs-dbg      (dbg :hs extend-with-hs)]
+              extend-with-hs2017-dbg  (dbg :hs extend-with-hs)
+              extend-with-hs2022-dbg  (dbg :hs extend-with-hs)]
           ; Use the -dbg versions to see the output of each fn.
           (-> i
               extend-with-cpc;-dbg
               extend-with-prodcom;-dbg
               extend-with-cn;-dbg
-              extend-with-hs;-dbg
+              extend-with-hs2017;-dbg
+              extend-with-hs2022;-dbg
               (merge {:syn [] :rel [] :exc []})))
         i))))
 
