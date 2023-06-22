@@ -125,7 +125,6 @@
                           (edn/read-string (slurp "src/data/hs2022.edn"))))
 
 (defn extend-with-hs [record key-label all-records]
-  ;(when (= (:level record) 2) (prn record)) ; Any extra?
   (let [cpc-codes (into #{} (map :code (get-in record [:extra :cpc])))
         map-records (filter #(cpc-codes (:cpc-21 %)) hs-map-table)
 
@@ -148,6 +147,14 @@
 
 (defn extend-with-hs2022 [record]
   (extend-with-hs record :hs2022 hs2022-records))
+
+; L4 only has CPA extras.
+; That could be alright for now.
+(defn report [record]
+  (when (and (= (:level record) 2) (:extra record))
+    (prn (:extra record)))
+
+  record)
 
 (defn process-category [record]
   (if (= (:level record) 1)
@@ -175,6 +182,7 @@
               extend-with-cn;-dbg
               extend-with-hs2017;-dbg
               extend-with-hs2022;-dbg
+              ;report
               (merge {:syn [] :rel [] :exc []})))
         i))))
 

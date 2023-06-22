@@ -79,6 +79,7 @@ False positives again.
 * Tasks
 ** Manual matching
 *** TODO Extend L4 items with extra
+- Currently we only use CPA extras for L4 items.
 
 *** TODO Check the data is accurate
 
