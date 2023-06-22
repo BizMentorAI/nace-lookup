@@ -2,6 +2,7 @@
 
 (require '[clojure.pprint :refer [pprint]])
 (require '[clojure.edn :as edn])
+(require '[clojure.set :as set])
 
 (def cpa-records (edn/read-string (slurp "src/data/cpa21.edn")))
 
@@ -65,6 +66,8 @@
             (filter #(= (:code %) (:cpc-21-code map-record)) cpc-records))
           map-records))))
 
+; NOTE: The map table seems to contain only L6 items,
+; but that's probably covered by PRODCOM.
 (defn extend-with-cpc [record]
   (let [cpc-records (get-cpc record)]
     (-> record
@@ -76,16 +79,19 @@
 ; PRODCOM
 (def prodcom-records (edn/read-string (slurp "src/data/prodcom2022-structure.edn")))
 
-(defn get-prodcom [{:keys [:code]}]
+; Get product sub-categories for L6 items (under L6)
+; which is what the PRODCOM specification provides.
+(defn get-prodcom [{:keys [code]}]
   (filter #(= (:cpa %) code) prodcom-records))
 
 (defn extend-with-prodcom [record]
   (let [prodcom-records (get-prodcom record)]
     (-> record
         (extend-meta {:prodcom-records prodcom-records})
-        (extend-extra :prodcom (map
-                                #(select-keys % [:code :title])
-                                prodcom-records)))))
+        (extend-extra :prodcom (distinct
+                                (map
+                                 #(select-keys % [:code :title])
+                                 prodcom-records))))))
 
 ; CN
 (def cn-map-table     (edn/read-string (slurp "src/data/cpa21-to-cn2023.edn")))
@@ -117,6 +123,7 @@
 (def hs-records   (edn/read-string (slurp "src/data/hs-h4.edn")))
 
 (defn extend-with-hs [record]
+  ;(when (= (:level record) 2) (prn record)) ; Any extra?
   (let [cpc-codes (into #{} (map :code (get-in record [:extra :cpc])))
         map-records (filter #(cpc-codes (:cpc-21 %)) hs-map-table)
 
@@ -134,15 +141,15 @@
                              selected-hs-records)))
       record)))
 
-; TODO: preserve the original level? Why exactly are we changing it?
 (defn process-category [record]
-  (case (:level record)
-    1 {:level 1 :label (:desc record)}
-    4 {:level 2 :code (:code record) :label (:desc record)}
-    6 (let [i {:level 3 :code (:code record) :label (:desc record)}]
-        (extend-extra i :cpa
-                      (select-keys record
-                                   [:includes :includes-2 :excludes])))))
+  (if (= (:level record) 1)
+    {:level 1 :label (:desc record)}
+    (let [i {:level (/ (:level record) 2)
+             :code (:code record)
+             :label (:desc record)}]
+      (extend-extra i :cpa
+                    (select-keys record
+                                 [:includes :includes-2 :excludes])))))
 
 (defn process-record [record]
   (when (#{1 4 6} (:level record))
@@ -169,18 +176,18 @@
     (let [sequence (get-sequence records)]
       (reduce (fn [acc {:keys [level] :as item}]
                 (case level
-                  1 (conj acc (assoc item :items [])) ; TODO: dissoc :level
+                  1 (conj acc (assoc (dissoc item :level) :items []))
 
                                         ; acc[-1].items
                   2 (do
                       (update-in acc
                                  [(dec (count acc)) :items]
-                                 #(conj % (assoc item :items []))))
+                                 #(conj % (assoc (dissoc item :level) :items []))))
 
                                         ; acc[-1].items[acc[-1].items.last.items]
                   3 (update-in acc
                                [(dec (count acc)) :items (dec (count (:items (last acc)))) :items]
-                               #(conj % item))))
+                               #(conj % (dissoc item :level)))))
               [] sequence))))
 
 (spit "public/workers/autocomplete/data.edn"
