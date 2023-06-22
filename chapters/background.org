@@ -77,42 +77,49 @@ False positives again.
 * Implementation
 
 * Tasks
-** TODO Make sure we have the right versions of each specification
-- Possibly change file names to reflect that.
+** Manual matching
+*** TODO Extend L4 items with extra
+- Currently we only use CPA extras for L4 items.
 
-** TODO Restart Git history from 0
+*** TODO Check the data is accurate
 
-** TODO Copy all fields as they are, no replacements
-- CPA includes/also includes etc, preserve fields as they are, even copy over excludes.
+*** TODO Script for adding keywords
+- L4 items as well.
 
-** TODO Extend L4 items with extra
+*** TODO Add keywords field manually
 
-** TODO Add keywords field manually
-
-** TODO Apply search terms separately
+** Search improvements
+*** TODO Apply search terms separately
 - blue balls -> first apply blue, then balls to the result.
 - Highlight full match in a different colour.
 
-** TODO Separate production build
-- Depends on the size.
-- autocomplete.json vs autocomplete-inspect.json loaded for ~?inspect~.
+*** TODO Browse L6 -> parent L4 & L4 -> all children
 
-** TODO Browse L6 -> parent L4 & L4 -> all children
+*** TODO SG/PL in JS
+https://www.npmjs.com/package/inflection
 
-** TODO Scoring
+*** TODO Scoring
 - Sort L4 categories by total score (direct heading match + total L6 matches weight).
 - Direct match ("operating system").
 - Number of matches (CPA title, CN desc).
 - Weight of matches (title > desc).
 - Maybe show which classification matches(?) On the right-hand side.
+** Probabilistic matching
+- Do we still care about UNSPSC / GPC?
 
-** TODO Prepare L4 mapping example
-Ok if you can see if you can map the GOC class onto the NACE level 4 I will double check your mapping. Then we can give it to Fiverr woman and get her to map the GPC AttributValueTitles onto the NACE level 4. So a NACE L4 can have zero or more GPC titles mapped onto it. Do one as an example to make it clear to her.
+*** TODO Try probabilistic matching again
+- Revive UNSPSC from Git history.
+- GPC.
 
-** TODO Capture user searches
+** Production
+*** TODO Separate production build
+- Depends on the size.
+- autocomplete.json vs autocomplete-inspect.json loaded for ~?inspect~.
+
+*** TODO Capture user searches
 - So we can add missing keywords.
 
-** TODO Consider adding tests
+*** TODO Consider adding tests
 
 LEO will need CPA in future, we want it in the app from day one if possible to allow for data analysis to improve financial projections. Prodcom is likely to come into play in future years. CN is not essential in day one of app but would really help as it would ensure accurate Tax payment projections.
 
