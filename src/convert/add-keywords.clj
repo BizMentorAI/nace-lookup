@@ -20,7 +20,6 @@
   (println (str label ": "))
   (remove empty? (str/split (read-line) #"\s*,\s*")))
 
-; TODO: Git commit with title.
 (defn edit-record [cursor]
   (let [record (get-in @records cursor)]
     (when-not record
@@ -32,6 +31,7 @@
     (let [syn (readline "syn")
           rel (readline "rel")
           exc (readline "exc")]
+
       (reset! records (assoc-in @records (conj cursor :syn) syn))
       (reset! records (assoc-in @records (conj cursor :rel) rel))
       (reset! records (assoc-in @records (conj cursor :exc) exc))
@@ -41,12 +41,12 @@
 
 (defn get-cursors [item cursor]
   (cond
-    (and (map? item) (not (= (:level item) 3)))
+    (and (map? item) (not (re-find #"^\d+\.\d+\.\d+$" (or (:code item) ""))))
     (map-indexed
      #(get-cursors %2 (conj cursor :items %1))
      (:items item))
 
-    (and (map? item) (= (:level item) 3))
+    (and (map? item) (re-find #"^\d+\.\d+\.\d+$" (or (:code item) "")))
     cursor
 
     (coll? item)
