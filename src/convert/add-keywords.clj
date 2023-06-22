@@ -59,9 +59,6 @@
               (if (and (vector? i)
                        (= (count i) 5))
                 (let [record (get-in @records i)]
-                  ;; (prn (select-keys record [:syn :rel :exc])
-                  ;;      (vals (select-keys record [:syn :rel :exc]))
-                  ;;      (empty? (vals (select-keys record [:syn :rel :exc]))))
                   (when (empty? (apply concat (vals (select-keys record [:syn :rel :exc]))))
                     (edit-record i record)))
                 i))
