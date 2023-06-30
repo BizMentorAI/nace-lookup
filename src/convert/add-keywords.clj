@@ -1,7 +1,9 @@
-#!/usr/bin/env bb
+#!/usr/bin/env clojure -M
 
-(require '[clojure.pprint :refer [pprint]])
+(require '[fipp.edn :refer [pprint]])
 (require '[clojure.edn :as edn])
+(require '[clojure.set :as set])
+(require '[clojure.string :as str])
 (require '[clojure.walk :refer [postwalk]])
 (require '[babashka.process :refer [shell]])
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env clojure -M
 
-;(require '[clojure.pprint :refer [pprint]])
 (require '[fipp.edn :refer [pprint]])
 (require '[clojure.edn :as edn])
 (require '[clojure.set :as set])
