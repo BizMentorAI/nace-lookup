@@ -18,7 +18,7 @@
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
-    (shell "git" "commit" data-path "-m" message)))
+    (shell {:out :string :err :string} "git" "commit" data-path "-m" message)))
 
 (defn readline [label]
   (print (str label ": ")) (flush)
