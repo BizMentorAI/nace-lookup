@@ -1,52 +1,58 @@
-#!/usr/bin/env bb
+#!/usr/bin/env clojure -M
 
-(require '[clojure.pprint :refer [pprint]])
+(require '[fipp.edn :refer [pprint]])
 (require '[clojure.edn :as edn])
+(require '[clojure.set :as set])
+(require '[clojure.string :as str])
 (require '[clojure.walk :refer [postwalk]])
 (require '[babashka.process :refer [shell]])
 
+; TODO: Do manufacturing first.
+
 (def data-path "public/workers/autocomplete/data.edn")
-(def result-path "public/workers/autocomplete/data.json")
 (def records (atom (edn/read-string (slurp data-path))))
 
 (defn save-results []
-  (spit result-path (json/generate-string @records {:pretty true})))
+  (pprint @records {:writer (clojure.java.io/writer
+                             "public/workers/autocomplete/data.edn")}))
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
-    (shell "git" "commit" result-path "-m" message)))
+    (shell "git" "commit" data-path "-m" message)))
 
 (defn readline [label]
-  (println (str label ": "))
-  (remove empty? (str/split (read-line) #"\s*,\s*")))
+  (print (str label ": ")) (flush)
+  (vec (remove empty? (str/split (read-line) #"\s*,\s*"))))
 
-; TODO: Git commit with title.
-(defn edit-record [cursor]
-  (let [record (get-in @records cursor)]
-    (when-not record
-      (throw (ex-info "Empty record" {:cursor cursor})))
+(defn edit-record [cursor record]
+  (when-not record
+    (throw (ex-info "Empty record" {:cursor cursor})))
 
-    (pprint record)
-    (println)
+  ; TODO: save into a TMP file and open in Vim?
+  (pprint record)
+  (println)
 
-    (let [syn (readline "syn")
-          rel (readline "rel")
-          exc (readline "exc")]
-      (reset! records (assoc-in @records (conj cursor :syn) syn))
-      (reset! records (assoc-in @records (conj cursor :rel) rel))
-      (reset! records (assoc-in @records (conj cursor :exc) exc))
+  (let [syn (readline "syn")
+        rel (readline "rel")
+        exc (readline "exc")]
 
+    (reset! records (assoc-in @records (conj cursor :syn) syn))
+    (reset! records (assoc-in @records (conj cursor :rel) rel))
+    (reset! records (assoc-in @records (conj cursor :exc) exc))
+
+    ; Do in a background thread.
+    (future
       (save-results)
       (commit record))))
 
 (defn get-cursors [item cursor]
   (cond
-    (and (map? item) (not (= (:level item) 3)))
+    (and (map? item) (not (re-find #"^\d+\.\d+\.\d+$" (or (:code item) ""))))
     (map-indexed
      #(get-cursors %2 (conj cursor :items %1))
      (:items item))
 
-    (and (map? item) (= (:level item) 3))
+    (and (map? item) (re-find #"^\d+\.\d+\.\d+$" (or (:code item) "")))
     cursor
 
     (coll? item)
@@ -58,6 +64,8 @@
   (postwalk (fn [i]
               (if (and (vector? i)
                        (= (count i) 5))
-                (edit-record i)
+                (let [record (get-in @records i)]
+                  (when (empty? (apply concat (vals (select-keys record [:syn :rel :exc]))))
+                    (edit-record i record)))
                 i))
             cursors))

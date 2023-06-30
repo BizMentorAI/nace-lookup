@@ -1,8 +1,9 @@
-#!/usr/bin/env bb
+#!/usr/bin/env clojure -M
 
-(require '[clojure.pprint :refer [pprint]])
+(require '[fipp.edn :refer [pprint]])
 (require '[clojure.edn :as edn])
 (require '[clojure.set :as set])
+(require '[clojure.string :as str])
 
 (def cpa-records (edn/read-string (slurp "src/data/cpa21.edn")))
 
@@ -208,8 +209,7 @@
                                #(conj % (dissoc item :level)))))
               [] sequence))))
 
-(spit "public/workers/autocomplete/data.edn"
-      (with-out-str (pprint (vec (nest cpa-records)))))
-
-;; (spit "public/workers/autocomplete/data.json"
-;;       (json/generate-string (nest cpa-records) {:pretty true}))
+(let [result (vec (nest cpa-records))]
+  (println "~ Result calculated, saving.")
+  (pprint result {:writer (clojure.java.io/writer
+                           "public/workers/autocomplete/data.edn")}))
