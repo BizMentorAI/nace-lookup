@@ -1,13 +1,12 @@
 #!/usr/bin/env clojure -M
 
 (require '[fipp.edn :refer [pprint]])
+(require '[puget.printer :as puget])
 (require '[clojure.edn :as edn])
 (require '[clojure.set :as set])
 (require '[clojure.string :as str])
 (require '[clojure.walk :refer [postwalk]])
 (require '[babashka.process :refer [shell]])
-
-; TODO: Do manufacturing first.
 
 (def data-path "public/workers/autocomplete/data.edn")
 (def records (atom (edn/read-string (slurp data-path))))
@@ -18,7 +17,7 @@
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
-    (shell "git" "commit" data-path "-m" message)))
+    (shell {:out :string :err :string} "git" "commit" data-path "-m" message)))
 
 (defn readline [label]
   (print (str label ": ")) (flush)
@@ -28,8 +27,7 @@
   (when-not record
     (throw (ex-info "Empty record" {:cursor cursor})))
 
-  ; TODO: save into a TMP file and open in Vim?
-  (pprint record)
+  (puget/cprint record)
   (println)
 
   (let [syn (readline "syn")
