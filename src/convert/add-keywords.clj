@@ -8,12 +8,14 @@
 ; TODO: Do manufacturing first.
 
 (def data-path "public/workers/autocomplete/data.edn")
-;(def result-path "public/workers/autocomplete/data.json")
 (def records (atom (edn/read-string (slurp data-path))))
 
+;; How to pretty-print efficiently?
+;; The following is slow:
+;; (with-out-str (pprint @records))
+;; But pr-str makes it one single line, unusable for Git.
 (defn save-results []
-  ; FIXME: CO se f tom kunda pyci?!
-  (spit data-path (with-out-str (pr-str @records))))
+  (spit data-path (pr-str @records)))
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
@@ -21,7 +23,7 @@
 
 (defn readline [label]
   (print (str label ": ")) (flush)
-  (remove empty? (str/split (read-line) #"\s*,\s*")))
+  (vec (remove empty? (str/split (read-line) #"\s*,\s*"))))
 
 (defn edit-record [cursor record]
   (when-not record
@@ -41,7 +43,7 @@
 
     (save-results)
     ;(commit record)
-    ))
+    (println "Saved.")))
 
 (defn get-cursors [item cursor]
   (cond

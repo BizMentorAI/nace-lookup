@@ -209,7 +209,9 @@
               [] sequence))))
 
 (spit "public/workers/autocomplete/data.edn"
-      (with-out-str (pprint (vec (nest cpa-records)))))
+      (let [result (vec (nest cpa-records))]
+        (println "~ Result calculated, saving.")
+        (with-out-str (pprint result))))
 
 ;; (spit "public/workers/autocomplete/data.json"
 ;;       (json/generate-string (nest cpa-records) {:pretty true}))
