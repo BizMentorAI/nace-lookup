@@ -13,9 +13,8 @@
 (def records (atom (edn/read-string (slurp data-path))))
 
 (defn save-results []
-  (spit data-path
-        (pprint @records {:writer (clojure.java.io/writer
-                                   "public/workers/autocomplete/data.edn")})))
+  (pprint @records {:writer (clojure.java.io/writer
+                             "public/workers/autocomplete/data.edn")}))
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
@@ -41,9 +40,10 @@
     (reset! records (assoc-in @records (conj cursor :rel) rel))
     (reset! records (assoc-in @records (conj cursor :exc) exc))
 
-    (save-results)
-    ;(commit record)
-    (println "Saved.")))
+    ; Do in a background thread.
+    (future
+      (save-results)
+      (commit record))))
 
 (defn get-cursors [item cursor]
   (cond
