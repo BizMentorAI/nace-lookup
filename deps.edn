@@ -1,3 +1,4 @@
 {:paths ["src"]
  :deps {
-  fipp/fipp {:mvn/version "0.6.26"}}}
+  fipp/fipp {:mvn/version "0.6.26"}
+  babashka/process {:mvn/version "0.5.21"}}}

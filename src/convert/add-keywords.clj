@@ -12,12 +12,10 @@
 (def data-path "public/workers/autocomplete/data.edn")
 (def records (atom (edn/read-string (slurp data-path))))
 
-;; How to pretty-print efficiently?
-;; The following is slow:
-;; (with-out-str (pprint @records))
-;; But pr-str makes it one single line, unusable for Git.
 (defn save-results []
-  (spit data-path (pr-str @records)))
+  (spit data-path
+        (pprint @records {:writer (clojure.java.io/writer
+                                   "public/workers/autocomplete/data.edn")})))
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
