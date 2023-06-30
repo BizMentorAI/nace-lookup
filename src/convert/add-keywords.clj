@@ -1,6 +1,7 @@
 #!/usr/bin/env clojure -M
 
 (require '[fipp.edn :refer [pprint]])
+(require '[puget.printer :as puget])
 (require '[clojure.edn :as edn])
 (require '[clojure.set :as set])
 (require '[clojure.string :as str])
@@ -28,8 +29,7 @@
   (when-not record
     (throw (ex-info "Empty record" {:cursor cursor})))
 
-  ; TODO: save into a TMP file and open in Vim?
-  (pprint record)
+  (puget/cprint record)
   (println)
 
   (let [syn (readline "syn")
