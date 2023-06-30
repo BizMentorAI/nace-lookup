@@ -12,6 +12,7 @@
 (def records (atom (edn/read-string (slurp data-path))))
 
 (defn save-results []
+  ; FIXME: CO se f tom kunda pyci?!
   (spit data-path (with-out-str (pr-str @records))))
 
 (defn commit [record]
@@ -39,7 +40,8 @@
     (reset! records (assoc-in @records (conj cursor :exc) exc))
 
     (save-results)
-    (commit record)))
+    ;(commit record)
+    ))
 
 (defn get-cursors [item cursor]
   (cond
