@@ -12,8 +12,7 @@
 (def records (atom (edn/read-string (slurp data-path))))
 
 (defn save-results []
-  (pprint @records {:writer (clojure.java.io/writer
-                             "public/workers/autocomplete/data.edn")}))
+  (pprint @records {:writer (clojure.java.io/writer data-path)}))
 
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
