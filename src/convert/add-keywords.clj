@@ -25,7 +25,7 @@
 
 (defn readline [label]
   (print (str label ": ")) (flush)
-  (vec (remove empty? (str/split (read-line) #"\s*,\s*"))))
+  (apply sorted-set (remove empty? (str/split (read-line) #"\s*,\s*"))))
 
 (defn edit-record [cursor record]
   (when-not record
@@ -54,6 +54,11 @@
       (save-results)
       (commit record))))
 
+(defn post-process [cursor record]
+  (prn record)
+  (reset! records (assoc-in @records (conj cursor :syn) (apply sorted-set (:syn record))))
+  (prn (get-in @records cursor)))
+
 (defn get-cursors [item cursor]
   (cond
     (and (map? item) (not (re-find #"^\d+\.\d+\.\d+$" (or (:code item) ""))))
@@ -74,7 +79,8 @@
               (if (and (vector? i)
                        (= (count i) 5))
                 (let [record (get-in @records i)]
-                  (when (empty? (apply concat (vals (select-keys record [:syn :rel :exc]))))
-                    (edit-record i record)))
+                  (if (empty? (apply concat (vals (select-keys record [:syn :rel :exc]))))
+                    (edit-record i record)
+                    (post-process i record)))
                 i))
             cursors))
