@@ -31,7 +31,9 @@
   (when-not record
     (throw (ex-info "Empty record" {:cursor cursor})))
 
-  (puget/cprint (dissoc record :syn :rel :exc))
+  (puget/cprint (select-keys record [:label]))
+  (println)
+  (puget/cprint (:extra record))
   (println)
 
   (let [syn (readline "syn")
