@@ -8,8 +8,12 @@
 (require '[clojure.walk :refer [postwalk]])
 (require '[babashka.process :refer [shell]])
 
-; Next step:
-; - Sort alphabetically & filter out possible duplicates in keywords.
+; Next steps:
+; - Review data.edn (above all rel).
+; - Handle L4 items as well.
+;
+; - Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn. Write the algorythm (for the documentation) of how the matching will work.
+;
 ; - Delete extra? Probably yes for this current version.
 ; - Convert to JSON.
 
@@ -31,24 +35,23 @@
 
 (defn readline [label]
   (print (str label ": ")) (flush)
-  (my-sorted-set (remove empty? (str/split (read-line) #"\s*,\s*"))))
+  (my-sorted-set (remove empty? (map str/trim (str/split (read-line) #",")))))
+
+(defn handle-int [fun]
+  (sun.misc.Signal/handle
+   (new sun.misc.Signal "INT")
+   (proxy [sun.misc.SignalHandler] []
+     (handle [signal] (fun)))))
 
 (defn pause-ctrl-c []
-  (sun.misc.Signal/handle
-   (new sun.misc.Signal "INT")
-   (proxy [sun.misc.SignalHandler] []
-     (handle [signal]
-       (prn "No stop INT" signal)))))
+  (handle-int #(println "~ Saving collection, wait before quitting.")))
 
-(defn unpause-ctrl-c []
-  (sun.misc.Signal/handle
-   (new sun.misc.Signal "INT")
-   (proxy [sun.misc.SignalHandler] []
-     (handle [signal]
-       (prn "Stop INT" signal)))))
+(defn resume-ctrl-c []
+  (handle-int #(System/exit 0)))
 
 (defn body [cursor record count-info]
-  (puget/cprint [(select-keys record [:code :label]) count-info])
+  (print (str count-info ": "))
+  (puget/cprint (select-keys record [:code :label]))
   (println)
   (puget/cprint
    (postwalk (fn [i]
@@ -66,24 +69,11 @@
     (reset! records (assoc-in @records (conj cursor :rel) rel))
     (reset! records (assoc-in @records (conj cursor :exc) exc))
 
-                                        ; TODO: Don't exit until results saved.
-                                        ;
-                                        ; Is exc useful at all?
-                                        ;
-                                        ; Review data.edn
-                                        ;
-                                        ; Progress counter: how many items of total are done.
-                                        ;
-                                        ; Are we doing L4 as well?
-                                        ;
-                                        ; Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn.
-                                        ; Write the algorythm (for the documentation) of how the matching will work.
     (future
-                                        ;(pause-ctrl-c)
+      (pause-ctrl-c)
       (save-results)
       (commit record)
-                                        ;(unpause-ctrl-c)
-      )))
+      (resume-ctrl-c))))
 
 (defn get-records
   ([]
@@ -125,8 +115,6 @@
     (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record))))))
 
 (defn process [{:keys [cursor record] :as item}]
-  (prn cursor (:code record))
-
   (if (processed? record)
     (edit-record cursor record)
     (post-process cursor record)))
