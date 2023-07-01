@@ -33,8 +33,12 @@
 
   (puget/cprint (select-keys record [:label]))
   (println)
-  ; TODO: prewalk: dissoc :code.
-  (puget/cprint (:extra record))
+  (puget/cprint
+   (postwalk (fn [i]
+               (when (not (and (coll? i)
+                               (= (count i) 2)
+                               (= (first i) :code))) i))
+             (:extra record)))
   (println)
 
   (let [syn (readline "syn")
