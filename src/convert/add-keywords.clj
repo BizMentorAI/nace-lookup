@@ -19,6 +19,9 @@
 (defn save-results []
   (pprint @records {:writer (clojure.java.io/writer data-path)}))
 
+(defn processed? [record]
+  (empty? (apply concat (vals (select-keys record [:syn :rel :exc])))))
+
 (defn commit [record]
   (let [message (str "Keywords for " (:code record) " " (:label record))]
     (shell {:out :string :err :string} "git" "commit" data-path "-m" message)))
@@ -44,11 +47,8 @@
      (handle [signal]
        (prn "Stop INT" signal)))))
 
-(defn edit-record [cursor record]
-  (when-not record
-    (throw (ex-info "Empty record" {:cursor cursor})))
-
-  (puget/cprint (select-keys record [:code :label]))
+(defn body [cursor record count-info]
+  (puget/cprint [(select-keys record [:code :label]) count-info])
   (println)
   (puget/cprint
    (postwalk (fn [i]
@@ -66,32 +66,24 @@
     (reset! records (assoc-in @records (conj cursor :rel) rel))
     (reset! records (assoc-in @records (conj cursor :exc) exc))
 
-    ; TODO: Don't exit until results saved.
-    ;
-    ; Is exc useful at all?
-    ;
-    ; Review data.edn
-    ;
-    ; Progress counter: how many items of total are done.
-    ;
-    ; Are we doing L4 as well?
-    ;
-    ; Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn.
-    ; Write the algorythm (for the documentation) of how the matching will work.
+                                        ; TODO: Don't exit until results saved.
+                                        ;
+                                        ; Is exc useful at all?
+                                        ;
+                                        ; Review data.edn
+                                        ;
+                                        ; Progress counter: how many items of total are done.
+                                        ;
+                                        ; Are we doing L4 as well?
+                                        ;
+                                        ; Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn.
+                                        ; Write the algorythm (for the documentation) of how the matching will work.
     (future
-      ;(pause-ctrl-c)
+                                        ;(pause-ctrl-c)
       (save-results)
       (commit record)
-      ;(unpause-ctrl-c)
+                                        ;(unpause-ctrl-c)
       )))
-
-(defn post-process [cursor record]
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record)))))
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record)))))
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record))))))
 
 (defn get-records
   ([]
@@ -109,20 +101,34 @@
      (coll? item)
      (map-indexed #(get-records %2 (conj cursor %1)) item))))
 
-(defn body [{:keys [cursor record] :as item} processed-item-count]
-  (if (empty? (apply concat (vals (select-keys record [:syn :rel :exc]))))
-    (edit-record cursor record)
-    (post-process cursor record)))
+(defn edit-record [cursor record]
+  (when-not record
+    (throw (ex-info "Empty record" {:cursor cursor})))
+
+  (let [processed-item-count
+        (reduce
+         (fn [acc {:keys [record]}]
+           (if (processed? record) acc (inc acc)))
+         0
+         (get-records))
+
+        count-info
+        (str processed-item-count " of " (count (get-records)))]
+    (body cursor record count-info)))
+
+(defn post-process [cursor record]
+  (when (not (vector? (get-in @records cursor)))
+    (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record)))))
+  (when (not (vector? (get-in @records cursor)))
+    (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record)))))
+  (when (not (vector? (get-in @records cursor)))
+    (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record))))))
 
 (defn process [{:keys [cursor record] :as item}]
   (prn cursor (:code record))
 
-  (let [processed-item-count
-        (reduce
-         (fn [acc i]
-           (if (empty? (apply concat (vals (select-keys i [:syn :rel :exc]))))
-             i (inc i)))
-         (get-records))]
-    (body item processed-item-count)))
+  (if (processed? record)
+    (edit-record cursor record)
+    (post-process cursor record)))
 
 (doseq [item (get-records)] (process item))
