@@ -1,6 +1,13 @@
 #+TITLE: NACE lookup overview
 #+SETUPFILE: setupfile.org
 
+https://unstats.un.org/unsd/classifications/Family/ListByDomain
+https://unstats.un.org/unsd/classifications/Family/Detail/5
+https://unstats.un.org/unsd/classifications/Family/Detail/1074
+https://unstats.un.org/unsd/classifications/Family/Detail/27
+https://tulli.fi/en/statistics/combined-nomenclature-cn
+https://ec.europa.eu/eurostat/web/nace/overview
+
 * About
 ** Value proposition
 Every project that the Irish Local enterprise office (LEO) works with needs to be assigned their corresponding NACE/CPA code. As of 2023 NACE/CPA doesn't have a good interface and LEO employees are spending many hours on the lookup that they have to search it manually in Excel files.
