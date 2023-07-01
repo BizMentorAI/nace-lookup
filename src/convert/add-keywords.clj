@@ -33,6 +33,7 @@
 
   (puget/cprint (select-keys record [:label]))
   (println)
+  ; TODO: prewalk: dissoc :code.
   (puget/cprint (:extra record))
   (println)
 
