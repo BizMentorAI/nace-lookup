@@ -8,6 +8,11 @@
 (require '[clojure.walk :refer [postwalk]])
 (require '[babashka.process :refer [shell]])
 
+; Next step:
+; - Sort alphabetically & filter out possible duplicates in keywords.
+; - Delete extra? Probably yes for this current version.
+; - Convert to JSON.
+
 (def data-path "public/workers/autocomplete/data.edn")
 (def records (atom (edn/read-string (slurp data-path))))
 
@@ -26,7 +31,7 @@
   (when-not record
     (throw (ex-info "Empty record" {:cursor cursor})))
 
-  (puget/cprint record)
+  (puget/cprint (dissoc record :syn :rel :exc))
   (println)
 
   (let [syn (readline "syn")
