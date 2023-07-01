@@ -30,6 +30,20 @@
   (print (str label ": ")) (flush)
   (my-sorted-set (remove empty? (str/split (read-line) #"\s*,\s*"))))
 
+(defn pause-ctrl-c []
+  (sun.misc.Signal/handle
+   (new sun.misc.Signal "INT")
+   (proxy [sun.misc.SignalHandler] []
+     (handle [signal]
+       (prn "No stop INT" signal)))))
+
+(defn unpause-ctrl-c []
+  (sun.misc.Signal/handle
+   (new sun.misc.Signal "INT")
+   (proxy [sun.misc.SignalHandler] []
+     (handle [signal]
+       (prn "Stop INT" signal)))))
+
 (defn edit-record [cursor record]
   (when-not record
     (throw (ex-info "Empty record" {:cursor cursor})))
@@ -52,17 +66,24 @@
     (reset! records (assoc-in @records (conj cursor :rel) rel))
     (reset! records (assoc-in @records (conj cursor :exc) exc))
 
-    ; Do in a background thread.
     ; TODO: Don't exit until results saved.
+    ;
     ; Is exc useful at all?
+    ;
     ; Review data.edn
+    ;
     ; Progress counter: how many items of total are done.
+    ;
     ; Are we doing L4 as well?
+    ;
     ; Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn.
     ; Write the algorythm (for the documentation) of how the matching will work.
     (future
+      ;(pause-ctrl-c)
       (save-results)
-      (commit record))))
+      (commit record)
+      ;(unpause-ctrl-c)
+      )))
 
 (defn post-process [cursor record]
   (when (not (vector? (get-in @records cursor)))
@@ -72,28 +93,36 @@
   (when (not (vector? (get-in @records cursor)))
     (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record))))))
 
-(defn get-cursors [item cursor]
-  (cond
-    (and (map? item) (not (re-find #"^\d+\.\d+\.\d+$" (or (:code item) ""))))
-    (map-indexed
-     #(get-cursors %2 (conj cursor :items %1))
-     (:items item))
+(defn get-records
+  ([]
+   (flatten (get-records @records [])))
 
-    (and (map? item) (re-find #"^\d+\.\d+\.\d+$" (or (:code item) "")))
-    cursor
+  ([item cursor]
+   (cond
+     (and (map? item) (not (re-find #"^\d+\.\d+\.\d+$" (or (:code item) ""))))
+     (map-indexed #(get-records %2 (conj cursor :items %1)) (:items item))
 
-    (coll? item)
-    (map-indexed
-     #(get-cursors %2 (conj cursor %1))
-     item)))
+                                        ; Return the leaf node.
+     (and (map? item) (re-find #"^\d+\.\d+\.\d+$" (or (:code item) "")))
+     {:cursor cursor :record item}
 
-(let [cursors (get-cursors @records [])]
-  (postwalk (fn [i]
-              (if (and (vector? i)
-                       (= (count i) 5))
-                (let [record (get-in @records i)]
-                  (if (empty? (apply concat (vals (select-keys record [:syn :rel :exc]))))
-                    (edit-record i record)
-                    (post-process i record)))
-                i))
-            cursors))
+     (coll? item)
+     (map-indexed #(get-records %2 (conj cursor %1)) item))))
+
+(defn body [{:keys [cursor record] :as item} processed-item-count]
+  (if (empty? (apply concat (vals (select-keys record [:syn :rel :exc]))))
+    (edit-record cursor record)
+    (post-process cursor record)))
+
+(defn process [{:keys [cursor record] :as item}]
+  (prn cursor (:code record))
+
+  (let [processed-item-count
+        (reduce
+         (fn [acc i]
+           (if (empty? (apply concat (vals (select-keys i [:syn :rel :exc]))))
+             i (inc i)))
+         (get-records))]
+    (body item processed-item-count)))
+
+(doseq [item (get-records)] (process item))
