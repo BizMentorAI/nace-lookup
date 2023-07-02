@@ -10,7 +10,6 @@
 
 ; Next steps:
 ; - Review data.edn (above all rel).
-; - Handle L4 items as well.
 ;
 ; - Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn. Write the algorythm (for the documentation) of how the matching will work.
 ;
@@ -53,12 +52,18 @@
   (print (str count-info ": "))
   (puget/cprint (select-keys record [:code :label]))
   (println)
-  (puget/cprint
-   (postwalk (fn [i]
-               (when (not (and (coll? i)
-                               (= (count i) 2)
-                               (= (first i) :code))) i))
-             (:extra record)))
+
+  (let [extra-body
+        (postwalk (fn [i]
+                    (when (not (and (coll? i)
+                                    (= (count i) 2)
+                                    (= (first i) :code))) i))
+                  (:extra record))]
+    (if (and (nil? extra-body)
+             (= (count (str/split (:code record) #"\.")) 2))
+      (println "\nNo extra metadata (L4 item).")
+      (puget/cprint extra-body)))
+
   (println)
 
   (let [syn (readline "syn")
@@ -81,13 +86,23 @@
 
   ([item cursor]
    (cond
-     (and (map? item) (not (re-find #"^\d+\.\d+\.\d+$" (or (:code item) ""))))
+     ; L2 item children.
+     (and (map? item) (:items item) (not (:code item)))
      (map-indexed #(get-records %2 (conj cursor :items %1)) (:items item))
 
-                                        ; Return the leaf node.
-     (and (map? item) (re-find #"^\d+\.\d+\.\d+$" (or (:code item) "")))
+     ; L4 item and its children.
+     ; Mental exercise: how is it possible that we don't discard :items by this?
+     (and (map? item) (:items item) (:code item))
+     (conj
+      (map-indexed #(get-records %2 (conj cursor :items %1)) (:items item))
+      {:cursor cursor :record (dissoc item :items)})
+
+     ; L6 item.
+     (and (map? item)
+          (re-find #"^\d+\.\d+\.\d+$" (:code item)))
      {:cursor cursor :record item}
 
+     ; Initial @records.
      (coll? item)
      (map-indexed #(get-records %2 (conj cursor %1)) item))))
 
@@ -118,5 +133,9 @@
   (if (processed? record)
     (edit-record cursor record)
     (post-process cursor record)))
+
+;; (pprint (get-records))
+;; (prn (map #(get-in % [:record]) (get-records)))
+;; (pprint (count (map #(get-in % [:record :code]) (get-records))))
 
 (doseq [item (get-records)] (process item))
