@@ -26,7 +26,10 @@
   (empty? (apply concat (vals (select-keys record [:syn :rel :exc])))))
 
 (defn commit [record count-info]
-  (let [message (str "Keywords for " (:code record) " " (:label record) " (" count-info ")")]
+  (let [message
+        (str "Keywords for "
+             (:code record) " " (:label record)
+             " (" count-info ")" " [skip ci]")]
     (shell {:out :string :err :string} "git" "commit" data-path "-m" message)))
 
 (defn my-sorted-set [coll]
@@ -61,7 +64,7 @@
                   (:extra record))]
     (if (and (nil? extra-body)
              (= (count (str/split (:code record) #"\.")) 2))
-      (println "\nNo extra metadata (L4 item).")
+      (println "No extra metadata (L4 item).")
       (puget/cprint extra-body)))
 
   (println)
