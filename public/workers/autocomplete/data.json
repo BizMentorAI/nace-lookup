@@ -662,8 +662,8 @@
     }, {
       "code" : "01.25.13",
       "label" : "Strawberries",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "strawberries" ],
+      "rel" : [ "fresh fruits" ],
       "exc" : [ ]
     }, {
       "code" : "01.25.19",
