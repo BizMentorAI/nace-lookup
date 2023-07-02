@@ -5004,8 +5004,8 @@
     "items" : [ {
       "code" : "17.12.11",
       "label" : "Newsprint, in rolls or sheets",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "newsprint in rolls", "newsprint in sheets" ],
+      "rel" : [ "fibres" ],
       "exc" : [ ]
     }, {
       "code" : "17.12.12",
@@ -7483,8 +7483,8 @@
   }, {
     "code" : "23.31",
     "label" : "Ceramic tiles and flags",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "ceramic tiles and flags" ],
+    "rel" : [ "ceramics" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "23.31.10",
@@ -9807,9 +9807,9 @@
     }, {
       "code" : "26.51.44",
       "label" : "Instruments and apparatus for telecommunications",
-      "syn" : [ ],
+      "syn" : [ "checking electrical quantities", "distortion factor meters", "telecommunications instruments", "telecommunications apparatus", "measuring electrical quantities", "gain measuring instruments", "cross-talk meters", "psophometers" ],
       "rel" : [ ],
-      "exc" : [ ]
+      "exc" : [ "oscillographs", "cathode-ray oscilloscope" ]
     }, {
       "code" : "26.51.45",
       "label" : "Instruments and apparatus for measuring or checking electrical quantities n.e.c.",
@@ -20966,8 +20966,8 @@
   }, {
     "code" : "77.22",
     "label" : "Rental services of video tapes and disks",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "ental services of disks", "rental services of video tapes" ],
+    "rel" : [ "CD", "DVD" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "77.22.10",
@@ -23245,9 +23245,9 @@
     }, {
       "code" : "96.02.19",
       "label" : "Other beauty treatment services",
-      "syn" : [ ],
+      "syn" : [ "beauty treatment services", "hygiene services", "personal hygiene", "infrared rays", "depilation", "body care", "treatment with ultraviolet rays" ],
       "rel" : [ ],
-      "exc" : [ ]
+      "exc" : [ "medical treatment" ]
     }, {
       "code" : "96.02.20",
       "label" : "Human hair, unworked",

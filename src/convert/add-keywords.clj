@@ -11,8 +11,8 @@
 ; Next steps:
 ; - Review data.edn (above all rel).
 ; - Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn. Write the algorythm (for the documentation) of how the matching will work.
-;
 (def data-path "public/workers/autocomplete/data.edn")
+(def json-path "public/workers/autocomplete/data.json")
 (def records (atom (edn/read-string (slurp data-path))))
 
 (defn save-results []
@@ -22,11 +22,11 @@
   (empty? (apply concat (vals (select-keys record [:syn :rel :exc])))))
 
 (defn commit [record count-info]
-  (let [message
-        (str "Keywords for "
-             (:code record) " " (:label record)
-             " (" count-info ")" " [skip ci]")]
-    (shell {:out :string :err :string} "git" "commit" data-path "-m" message)))
+  (let [message (str "Keywords for "
+                     (:code record) " " (:label record)
+                     " (" count-info ")" " [skip ci]")]
+    (shell "./src/convert/generate-json.clj")
+    (shell {:out :string :err :string} "git" "commit" data-path json-path "-m" message)))
 
 (defn my-sorted-set [coll]
   (apply sorted-set-by #(compare (str/lower-case %1) (str/lower-case %2)) coll))
@@ -120,18 +120,21 @@
         (str processed-item-count " of " (count (get-records)))]
     (body cursor record count-info)))
 
-; Make sure all the sets are sorted.
-; Without this the sets we load get all mixed up.
-(defn post-process [cursor record]
-  (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record))))
-  (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record))))
-  (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record)))))
+(defn process [{:keys [cursor record]}]
+  (when (processed? record)
+    (edit-record cursor record)))
 
-(defn process [{:keys [cursor record] :as item}]
-  (if (processed? record)
-    (edit-record cursor record)
-    (post-process cursor record)))
+(let [items (get-records)
+      grouped-items (group-by #(processed? (:record %)) items)
+      processed-items (get grouped-items false)
+      unprocessed-items (get grouped-items true)]
 
-(let [records (get-records)]
-  (loop [item (rand-nth records)]
+  ; Make sure all the sets are sorted.
+  ; Without this the sets we load get all mixed up.
+  (doseq [{:keys [cursor record]} processed-items]
+    (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record))))
+    (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record))))
+    (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record)))))
+
+  (doseq [item (shuffle unprocessed-items)]
     (process item)))
