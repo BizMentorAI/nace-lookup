@@ -2562,9 +2562,9 @@
     }, {
       "code" : "10.41.71",
       "label" : "Vegetable waxes (excluding triglycerides)",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "coloured vegetable waxes", "refined vegetable waxes", "vegetables waxes" ],
+      "rel" : [ "vegetable waxes" ],
+      "exc" : [ "triglycerides" ]
     }, {
       "code" : "10.41.72",
       "label" : "Degras; residues resulting from treatment of fatty substances or animal or vegetable waxes",
