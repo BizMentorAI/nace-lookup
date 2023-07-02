@@ -121,8 +121,16 @@
         (str processed-item-count " of " (count (get-records)))]
     (body cursor record count-info)))
 
+; Make sure all the sets are sorted.
+; Without this the sets we load get all mixed up.
+(defn post-process [cursor record]
+  (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record))))
+  (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record))))
+  (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record)))))
+
 (defn process [{:keys [cursor record] :as item}]
-  (when (processed? record)
-    (edit-record cursor record)))
+  (if (processed? record)
+    (edit-record cursor record)
+    (post-process cursor record)))
 
 (doseq [item (get-records)] (process item))
