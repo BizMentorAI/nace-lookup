@@ -21842,7 +21842,7 @@
     }, {
       "code" : "84.21.12",
       "label" : "Foreign economic aid-related services",
-      "syn" : [ ],
+      "syn" : [ "public administrative services for economic aid to developing countries", "international organisations", "non-military aid programmes to developing countries", "provision of or support for technical assistance and training", "international assistance such as refugee or hunger relief programmes", "foreign economic aid services", "foreign economic aid", "economic aid missions accredited to foreign governments" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
