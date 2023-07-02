@@ -9940,7 +9940,7 @@
     }, {
       "code" : "26.52.13",
       "label" : "Instrument panel clocks and clocks of a similar type for vehicles",
-      "syn" : [ ],
+      "syn" : [ "spacecraft panel clocks", "vehicle chronographs", "vehicle clocks", "clocks with watch movements", "aircraft panel clocks", "alarm clocks", "vessels panel clocks", "aircraft chronographs", "wall clocks", "electric panel clocks", "instrument panel clocks", "vessels chronographs", "vehicle panel clocks" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
