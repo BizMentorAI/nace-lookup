@@ -25,8 +25,8 @@
 (defn processed? [record]
   (empty? (apply concat (vals (select-keys record [:syn :rel :exc])))))
 
-(defn commit [record]
-  (let [message (str "Keywords for " (:code record) " " (:label record))]
+(defn commit [record count-info]
+  (let [message (str "Keywords for " (:code record) " " (:label record) " (" count-info ")")]
     (shell {:out :string :err :string} "git" "commit" data-path "-m" message)))
 
 (defn my-sorted-set [coll]
@@ -49,7 +49,7 @@
   (handle-int #(System/exit 0)))
 
 (defn body [cursor record count-info]
-  (print (str count-info ": "))
+  (print (str "\n" count-info ": "))
   (puget/cprint (select-keys record [:code :label]))
   (println)
 
@@ -77,7 +77,7 @@
     (future
       (pause-ctrl-c)
       (save-results)
-      (commit record)
+      (commit record count-info)
       (resume-ctrl-c))))
 
 (defn get-records
@@ -121,21 +121,16 @@
         (str processed-item-count " of " (count (get-records)))]
     (body cursor record count-info)))
 
+; Make sure all the sets are sorted.
+; Without this the sets we load get all mixed up.
 (defn post-process [cursor record]
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record)))))
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record)))))
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record))))))
+  (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record))))
+  (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record))))
+  (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record)))))
 
 (defn process [{:keys [cursor record] :as item}]
   (if (processed? record)
     (edit-record cursor record)
     (post-process cursor record)))
-
-;; (pprint (get-records))
-;; (prn (map #(get-in % [:record]) (get-records)))
-;; (pprint (count (map #(get-in % [:record :code]) (get-records))))
 
 (doseq [item (get-records)] (process item))
