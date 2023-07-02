@@ -11567,9 +11567,9 @@
     }, {
       "code" : "28.30.22",
       "label" : "Tractors, with an engine power > 37 kW but ≤ 59 kW",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "forestry tractors", "agricultural tractors", "tractors" ],
+      "rel" : [ "vehicles" ],
+      "exc" : [ "road tractors for semi-trailers", "track-laying tractors", "pedestrian-controlled tractors" ]
     }, {
       "code" : "28.30.23",
       "label" : "Tractors, with an engine power > 59 kW",
