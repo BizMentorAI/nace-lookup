@@ -20635,8 +20635,8 @@
   }, {
     "code" : "73.12",
     "label" : "Media representation services",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "social media management", "advertising", "public relations services", "social media", "PR services", "community management", "media representation services", "community manager", "ads", "social media manager", "online ads", "online advertising" ],
+    "rel" : [ "media" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "73.12.11",
