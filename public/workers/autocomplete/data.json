@@ -14507,8 +14507,8 @@
     }, {
       "code" : "38.32.22",
       "label" : "Secondary raw material of ferrous metals",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "alloy steel waste", "ferrous waste", "shredded iron", "cast iron scrap", "secondary raw material of ferrous metals", "ferrous scrap", "stainless steel scrap", "alloy steel scrap", "shredded steel", "tinned iron scrap", "fragmentised steel", "tinned iron waste", "fragmentised iron", "stainless steel waste", "cast iron waste" ],
+      "rel" : [ "nickel", "trimmings", "scrap metal", "waste" ],
       "exc" : [ ]
     }, {
       "code" : "38.32.23",
