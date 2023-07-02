@@ -4807,7 +4807,7 @@
     }, {
       "code" : "16.22.99",
       "label" : "Sub-contracted operations as part of manufacturing of assembled parquet floors",
-      "syn" : [ ],
+      "syn" : [ "sub-contracted operations", "carpentry manufacturing services", "manufacturing of assembled parquet floors" ],
       "rel" : [ ],
       "exc" : [ ]
     } ]
