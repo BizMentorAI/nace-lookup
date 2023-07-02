@@ -9,6 +9,7 @@
 (require '[babashka.process :refer [shell]])
 
 ; Next steps:
+; - Select random rather than linear.
 ; - Review data.edn (above all rel).
 ;
 ; - Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn. Write the algorythm (for the documentation) of how the matching will work.
