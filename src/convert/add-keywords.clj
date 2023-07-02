@@ -64,7 +64,7 @@
                   (:extra record))]
     (if (and (nil? extra-body)
              (= (count (str/split (:code record) #"\.")) 2))
-      (println "\nNo extra metadata (L4 item).")
+      (println "No extra metadata (L4 item).")
       (puget/cprint extra-body)))
 
   (println)
