@@ -26,7 +26,10 @@
   (empty? (apply concat (vals (select-keys record [:syn :rel :exc])))))
 
 (defn commit [record count-info]
-  (let [message (str "Keywords for " (:code record) " " (:label record) " (" count-info ") [skip ci]")]
+  (let [message
+        (str "Keywords for "
+             (:code record) " " (:label record)
+             " (" count-info ")" " [skip ci]")]
     (shell {:out :string :err :string} "git" "commit" data-path "-m" message)))
 
 (defn my-sorted-set [coll]
