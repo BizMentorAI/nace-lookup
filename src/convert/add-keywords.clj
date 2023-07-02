@@ -121,21 +121,8 @@
         (str processed-item-count " of " (count (get-records)))]
     (body cursor record count-info)))
 
-(defn post-process [cursor record]
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record)))))
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record)))))
-  (when (not (vector? (get-in @records cursor)))
-    (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record))))))
-
 (defn process [{:keys [cursor record] :as item}]
-  (if (processed? record)
-    (edit-record cursor record)
-    (post-process cursor record)))
-
-;; (pprint (get-records))
-;; (prn (map #(get-in % [:record]) (get-records)))
-;; (pprint (count (map #(get-in % [:record :code]) (get-records))))
+  (when (processed? record)
+    (edit-record cursor record)))
 
 (doseq [item (get-records)] (process item))
