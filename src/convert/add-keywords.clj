@@ -49,7 +49,7 @@
   (handle-int #(System/exit 0)))
 
 (defn body [cursor record count-info]
-  (print (str count-info ": "))
+  (print (str "\n" count-info ": "))
   (puget/cprint (select-keys record [:code :label]))
   (println)
 
