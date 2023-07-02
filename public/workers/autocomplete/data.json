@@ -22059,8 +22059,8 @@
   }, {
     "code" : "85.41",
     "label" : "Post-secondary non-tertiary education services",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "post-secondary non-tertiary education services", "online educational services", "technical education programmes", "secondary education services", "vocational programmes", "tertiary education services", "curriculum" ],
+    "rel" : [ "education", "online education", "courses", "online courses" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "85.41.11",
