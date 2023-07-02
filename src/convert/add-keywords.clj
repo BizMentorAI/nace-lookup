@@ -9,14 +9,9 @@
 (require '[babashka.process :refer [shell]])
 
 ; Next steps:
-; - Select random rather than linear.
 ; - Review data.edn (above all rel).
-;
 ; - Document this. For instance seed in L4 has weight, but less than L6 rel and that is still less than L6 syn. Write the algorythm (for the documentation) of how the matching will work.
 ;
-; - Delete extra? Probably yes for this current version.
-; - Convert to JSON.
-
 (def data-path "public/workers/autocomplete/data.edn")
 (def records (atom (edn/read-string (slurp data-path))))
 
@@ -137,4 +132,6 @@
     (edit-record cursor record)
     (post-process cursor record)))
 
-(doseq [item (get-records)] (process item))
+(let [records (get-records)]
+  (loop [item (rand-nth records)]
+    (process item)))
