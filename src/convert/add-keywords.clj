@@ -25,8 +25,8 @@
 (defn processed? [record]
   (empty? (apply concat (vals (select-keys record [:syn :rel :exc])))))
 
-(defn commit [record]
-  (let [message (str "Keywords for " (:code record) " " (:label record))]
+(defn commit [record count-info]
+  (let [message (str "Keywords for " (:code record) " " (:label record) " (" count-info ")")]
     (shell {:out :string :err :string} "git" "commit" data-path "-m" message)))
 
 (defn my-sorted-set [coll]
@@ -77,7 +77,7 @@
     (future
       (pause-ctrl-c)
       (save-results)
-      (commit record)
+      (commit record count-info)
       (resume-ctrl-c))))
 
 (defn get-records
