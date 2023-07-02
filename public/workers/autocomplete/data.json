@@ -15246,8 +15246,8 @@
     }, {
       "code" : "43.99.50",
       "label" : "Structural steel components erection works",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "special trade construction works on steel frameworks", "welding work services", "associated welding works", "erection works", "electricity transmission towers", "structural steel components for bridges overhead cranes or electricity transmission towers", "erection works of prefabricated", "structural steel components for buildings", "erection of curtain walls", "special trade construction services of steel frameworks", "overhead cranes", "erection services of prefabricated structural steel components for buildings and bridges", "structural steel" ],
+      "rel" : [ "steel works" ],
       "exc" : [ ]
     }, {
       "code" : "43.99.60",
