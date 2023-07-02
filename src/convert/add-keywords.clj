@@ -122,16 +122,19 @@
 
 ; Make sure all the sets are sorted.
 ; Without this the sets we load get all mixed up.
-(defn post-process [cursor record]
+(defn post-process [{:keys [cursor record]}]
+  (prn :r record)
   (reset! records (assoc-in @records (conj cursor :syn) (my-sorted-set (:syn record))))
   (reset! records (assoc-in @records (conj cursor :rel) (my-sorted-set (:rel record))))
   (reset! records (assoc-in @records (conj cursor :exc) (my-sorted-set (:exc record)))))
 
-(defn process [{:keys [cursor record] :as item}]
-  (if (processed? record)
-    (edit-record cursor record)
-    (post-process cursor record)))
+(defn process [{:keys [cursor record]}]
+  (when (processed? record)
+    (edit-record cursor record)))
 
-(let [records (get-records)]
-  (loop [item (rand-nth records)]
-    (process item)))
+(let [records (get-records)
+      grouped-records (group-by #(processed? (:record %)) records)
+      processed-records (get grouped-records false)
+      unprocessed-records (get grouped-records true)]
+  (doseq [record (shuffle unprocessed-records)]
+    (process record)))
