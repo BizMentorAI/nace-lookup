@@ -5004,8 +5004,8 @@
     "items" : [ {
       "code" : "17.12.11",
       "label" : "Newsprint, in rolls or sheets",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "newsprint in rolls", "newsprint in sheets" ],
+      "rel" : [ "fibres" ],
       "exc" : [ ]
     }, {
       "code" : "17.12.12",
