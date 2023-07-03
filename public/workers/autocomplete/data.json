@@ -662,8 +662,8 @@
     }, {
       "code" : "01.25.13",
       "label" : "Strawberries",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "strawberries" ],
+      "rel" : [ "fresh fruits" ],
       "exc" : [ ]
     }, {
       "code" : "01.25.19",
@@ -1155,8 +1155,8 @@
     }, {
       "code" : "01.49.31",
       "label" : "Raw fur skins, except of fur-bearing lambs",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "tails", "mink skins", "paws", "raw furskins", "lamb furskins", "fur cuttings", "fox fur", "fox skins", "lamb skins", "furriers", "mink fur", "heads", "lamb fur", "raw fur skins" ],
+      "rel" : [ "skin", "furskin", "fur" ],
       "exc" : [ ]
     }, {
       "code" : "01.49.32",
@@ -2562,9 +2562,9 @@
     }, {
       "code" : "10.41.71",
       "label" : "Vegetable waxes (excluding triglycerides)",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "coloured vegetable waxes", "refined vegetable waxes", "vegetables waxes" ],
+      "rel" : [ "vegetable waxes" ],
+      "exc" : [ "triglycerides" ]
     }, {
       "code" : "10.41.72",
       "label" : "Degras; residues resulting from treatment of fatty substances or animal or vegetable waxes",
@@ -4807,7 +4807,7 @@
     }, {
       "code" : "16.22.99",
       "label" : "Sub-contracted operations as part of manufacturing of assembled parquet floors",
-      "syn" : [ ],
+      "syn" : [ "sub-contracted operations", "carpentry manufacturing services", "manufacturing of assembled parquet floors" ],
       "rel" : [ ],
       "exc" : [ ]
     } ]
@@ -4973,7 +4973,7 @@
     }, {
       "code" : "17.11.12",
       "label" : "Chemical wood pulp, soda or sulphate, other than dissolving grades",
-      "syn" : [ ],
+      "syn" : [ "sulphite", "soda", "sulphate", "wood pulp", "non-coniferous", "soda or sulphate", "chemical wood pulp", "coniferous chemical wood pulp", "bleached", "semi-bleached" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -5550,7 +5550,7 @@
     }, {
       "code" : "19.20.27",
       "label" : "Medium petroleum oils; medium preparations n.e.c.",
-      "syn" : [ ],
+      "syn" : [ "medium petroleum oils", "light preparations", "bituminous minerals oils", "petroleum oils", "petroleum", "light oils", "industrial spirit", "non-fuel purposes", "kerosene", "SBP", "refined distillate intermediates with a distillation in the naphtha/kerosene range", "bituminous minerals", "special boiling point industrial spirits", "specific process", "white spirit and special boiling point industrial spirits", "medium preparations", "white spirit" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -7065,8 +7065,8 @@
     }, {
       "code" : "22.21.41",
       "label" : "Other plates, sheets, film, foil and strip, of plastics, cellular",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "foil", "cellular polymers of vinyl chloride", "cellular polyurethane", "polystyrene", "polyurethanes", "regenerated cellular cellulose", "styrene polymers", "strip", "plastics", "cellular", "plates", "sheets", "film" ],
+      "rel" : [ "plastics" ],
       "exc" : [ ]
     }, {
       "code" : "22.21.42",
@@ -9577,7 +9577,7 @@
   }, {
     "code" : "26.30",
     "label" : "Communication equipment",
-    "syn" : [ ],
+    "syn" : [ "radio broadcasting", "transmission apparatus", "reception apparatus", "television", "communication equipment" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
@@ -9940,7 +9940,7 @@
     }, {
       "code" : "26.52.13",
       "label" : "Instrument panel clocks and clocks of a similar type for vehicles",
-      "syn" : [ ],
+      "syn" : [ "spacecraft panel clocks", "vehicle chronographs", "vehicle clocks", "clocks with watch movements", "aircraft panel clocks", "alarm clocks", "vessels panel clocks", "aircraft chronographs", "wall clocks", "electric panel clocks", "instrument panel clocks", "vessels chronographs", "vehicle panel clocks" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -11567,9 +11567,9 @@
     }, {
       "code" : "28.30.22",
       "label" : "Tractors, with an engine power > 37 kW but ≤ 59 kW",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "forestry tractors", "agricultural tractors", "tractors" ],
+      "rel" : [ "vehicles" ],
+      "exc" : [ "road tractors for semi-trailers", "track-laying tractors", "pedestrian-controlled tractors" ]
     }, {
       "code" : "28.30.23",
       "label" : "Tractors, with an engine power > 59 kW",
@@ -12040,8 +12040,8 @@
     }, {
       "code" : "28.93.20",
       "label" : "Machines for cleaning, sorting or grading seed, grain or dried leguminous vegetables",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "machines for cleaning sorting or grading seed grain or dried leguminous vegetables" ],
+      "rel" : [ "machines", "equipment" ],
       "exc" : [ ]
     }, {
       "code" : "28.93.31",
@@ -12381,8 +12381,8 @@
     }, {
       "code" : "29.10.52",
       "label" : "Vehicles for travelling on snow, golf cars and the like, with engines",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "motor vehicles", "semi-diesel", "golf cards", "diesel", "internal combustion piston engine", "transport of persons", "snow vehicles", "spark-ignition internal combustion piston engine" ],
+      "rel" : [ "vehicles" ],
       "exc" : [ ]
     }, {
       "code" : "29.10.59",
@@ -12969,9 +12969,9 @@
     }, {
       "code" : "31.00.14",
       "label" : "Parts of seats",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "parts of seats", "wooden parts of seats", "wood part of seats" ],
+      "rel" : [ "furniture" ],
+      "exc" : [ "aircraft" ]
     }, {
       "code" : "31.00.20",
       "label" : "Parts of furniture (except seats)",
@@ -14100,7 +14100,7 @@
     }, {
       "code" : "35.30.21",
       "label" : "Ice, including ice for cooling (i.e. non-food) purposes",
-      "syn" : [ ],
+      "syn" : [ "natural ice", "natural snow", "cooling ice", "artificially frozen water", "ice" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -14507,8 +14507,8 @@
     }, {
       "code" : "38.32.22",
       "label" : "Secondary raw material of ferrous metals",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "alloy steel waste", "ferrous waste", "shredded iron", "cast iron scrap", "secondary raw material of ferrous metals", "ferrous scrap", "stainless steel scrap", "alloy steel scrap", "shredded steel", "tinned iron scrap", "fragmentised steel", "tinned iron waste", "fragmentised iron", "stainless steel waste", "cast iron waste" ],
+      "rel" : [ "nickel", "trimmings", "scrap metal", "waste" ],
       "exc" : [ ]
     }, {
       "code" : "38.32.23",
@@ -15246,8 +15246,8 @@
     }, {
       "code" : "43.99.50",
       "label" : "Structural steel components erection works",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "special trade construction works on steel frameworks", "welding work services", "associated welding works", "erection works", "electricity transmission towers", "structural steel components for bridges overhead cranes or electricity transmission towers", "erection works of prefabricated", "structural steel components for buildings", "erection of curtain walls", "special trade construction services of steel frameworks", "overhead cranes", "erection services of prefabricated structural steel components for buildings and bridges", "structural steel" ],
+      "rel" : [ "steel works" ],
       "exc" : [ ]
     }, {
       "code" : "43.99.60",
@@ -17842,8 +17842,8 @@
   }, {
     "code" : "52.29",
     "label" : "Other transportation support services",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "transport", "ship broker services", "freight transport services" ],
+    "rel" : [ "transportation" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "52.29.11",
@@ -20105,7 +20105,7 @@
     }, {
       "code" : "71.11.23",
       "label" : "Historical restoration architectural services",
-      "syn" : [ ],
+      "syn" : [ "historic building", "legal", "historical restoration architectural services" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -20635,8 +20635,8 @@
   }, {
     "code" : "73.12",
     "label" : "Media representation services",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "social media management", "advertising", "public relations services", "social media", "PR services", "community management", "media representation services", "community manager", "ads", "social media manager", "online ads", "online advertising" ],
+    "rel" : [ "media" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "73.12.11",
@@ -21842,7 +21842,7 @@
     }, {
       "code" : "84.21.12",
       "label" : "Foreign economic aid-related services",
-      "syn" : [ ],
+      "syn" : [ "public administrative services for economic aid to developing countries", "international organisations", "non-military aid programmes to developing countries", "provision of or support for technical assistance and training", "international assistance such as refugee or hunger relief programmes", "foreign economic aid services", "foreign economic aid", "economic aid missions accredited to foreign governments" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -22059,8 +22059,8 @@
   }, {
     "code" : "85.41",
     "label" : "Post-secondary non-tertiary education services",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "post-secondary non-tertiary education services", "online educational services", "technical education programmes", "secondary education services", "vocational programmes", "tertiary education services", "curriculum" ],
+    "rel" : [ "education", "online education", "courses", "online courses" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "85.41.11",
