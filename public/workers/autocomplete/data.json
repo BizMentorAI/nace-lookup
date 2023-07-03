@@ -14100,7 +14100,7 @@
     }, {
       "code" : "35.30.21",
       "label" : "Ice, including ice for cooling (i.e. non-food) purposes",
-      "syn" : [ ],
+      "syn" : [ "natural ice", "natural snow", "cooling ice", "artificially frozen water", "ice" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
