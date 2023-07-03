@@ -12571,9 +12571,9 @@
     }, {
       "code" : "30.11.24",
       "label" : "Dry cargo ships",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "vessels", "cargo ships", "bulk carriers", "ro-ro cargo ships", "dry cargo ships", "ferry boats", "ferry", "persons transport", "goods transport", "seagoing", "container carriers" ],
+      "rel" : [ "transport", "transportation", "vessels", "boats" ],
+      "exc" : [ "ferry-boats", "tankers", "refrigerated vessels" ]
     }, {
       "code" : "30.11.31",
       "label" : "Fishing vessels; factory ships and other vessels for processing or preserving fishery products",
