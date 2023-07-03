@@ -13834,9 +13834,9 @@
     "items" : [ {
       "code" : "33.16.10",
       "label" : "Repair and maintenance services of aircraft and spacecraft",
-      "syn" : [ ],
+      "syn" : [ "transport equipment", "pleasure and sporting boats", "repair of aircraft", "maintenance of aircraft", "repair of spacecraft", "railway and tramway locomotives and rolling stock", "maintenance of spacecraft", "ships and floating platforms and structures", "aircraft and aircraft engines" ],
       "rel" : [ ],
-      "exc" : [ ]
+      "exc" : [ "airport" ]
     } ]
   }, {
     "code" : "33.17",
