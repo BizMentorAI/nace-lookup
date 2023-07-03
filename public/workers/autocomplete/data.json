@@ -10830,9 +10830,9 @@
   }, {
     "code" : "28.11",
     "label" : "Engines and turbines, except aircraft, vehicle and cycle engines",
-    "syn" : [ ],
-    "rel" : [ ],
-    "exc" : [ ],
+    "syn" : [ "turbines", "engines" ],
+    "rel" : [ "engines" ],
+    "exc" : [ "motor vehicles", "cycle engines", "motorcycles", "aircraft" ],
     "items" : [ {
       "code" : "28.11.11",
       "label" : "Outboard motors for marine propulsion",
