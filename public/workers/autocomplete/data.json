@@ -883,7 +883,7 @@
   }, {
     "code" : "01.30",
     "label" : "Planting material: live plants, bulbs, tubers and roots, cuttings and slips; mushroom spawn",
-    "syn" : [ ],
+    "syn" : [ "planting material", "cuttings", "roots", "tubers", "live plants", "bulbs", "mushroom spawn", "plants", "slips" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
