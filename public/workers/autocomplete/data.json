@@ -10781,8 +10781,8 @@
     }, {
       "code" : "27.90.51",
       "label" : "Fixed capacitors for 50/60 Hz circuits having a reactive power handling capacity ≥ 0,5 kvar",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "tantalum", "electrical capacitors", "fixed capacitors for 50/60 Hz circuits", "power capacitors", "single layer", "dielectric of paper or plastics", "ceramic dielectric", "aluminium electrolytic", "multilayer", "variable or adjustable preset capacitors" ],
+      "rel" : [ "electrical capacitors" ],
       "exc" : [ ]
     }, {
       "code" : "27.90.52",
