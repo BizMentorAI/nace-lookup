@@ -9473,7 +9473,7 @@
     }, {
       "code" : "26.12.91",
       "label" : "Services connected with printing of circuits and micro assembling on printed circuits",
-      "syn" : [ ],
+      "syn" : [ "etching", "printing of circuits", "assembly services of micro assemblies on printed circuits", "coating by varnish and by vapour deposition of printed circuits and semiconductors", "micro assembling on printed circuits", "electronic component and board manufacturing services" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
