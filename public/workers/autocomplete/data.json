@@ -527,8 +527,8 @@
     }, {
       "code" : "01.22.14",
       "label" : "Figs",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "fresh figs", "Ficus carica", "dried figs" ],
+      "rel" : [ "fruits" ],
       "exc" : [ ]
     }, {
       "code" : "01.22.19",
@@ -883,7 +883,7 @@
   }, {
     "code" : "01.30",
     "label" : "Planting material: live plants, bulbs, tubers and roots, cuttings and slips; mushroom spawn",
-    "syn" : [ ],
+    "syn" : [ "planting material", "cuttings", "roots", "tubers", "live plants", "bulbs", "mushroom spawn", "plants", "slips" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
@@ -1083,8 +1083,8 @@
     "items" : [ {
       "code" : "01.49.11",
       "label" : "Domestic rabbits, live",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "Oryctolagus cuniculus", "live domestic rabbits", "Lepus", "hares" ],
+      "rel" : [ "domestic animals" ],
       "exc" : [ ]
     }, {
       "code" : "01.49.12",
@@ -1294,8 +1294,8 @@
     }, {
       "code" : "02.20.14",
       "label" : "Fuel wood of coniferous wood",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "billets", "coniferous", "faggots", "coniferous wood", "roots", "rough sticks", "logs", "traditional forest-produced charcoal", "vine stems", "fuel wood", "tree stumps", "twigs" ],
+      "rel" : [ "fuel wood" ],
       "exc" : [ ]
     }, {
       "code" : "02.20.15",
@@ -2223,7 +2223,7 @@
     }, {
       "code" : "10.31.12",
       "label" : "Dried potatoes whether or not cut or sliced but not further prepared",
-      "syn" : [ ],
+      "syn" : [ "dried potatoes", "cut potatoes", "sliced potatoes" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -3029,7 +3029,7 @@
     }, {
       "code" : "10.83.13",
       "label" : "Green tea (not fermented), black tea (fermented) and partly fermented tea, in immediate packings of a content ≤ 3 kg",
-      "syn" : [ ],
+      "syn" : [ "tea bags", "fermented tea", "green tea", "black tea", "tea" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -3402,8 +3402,8 @@
   }, {
     "code" : "11.07",
     "label" : "Soft drinks; mineral waters and other bottled waters",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "mineral water", "soft drinks", "non-alcoholic beverages", "bottled waters", "soda" ],
+    "rel" : [ "drinks", "beverages" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "11.07.11",
@@ -4062,8 +4062,8 @@
   }, {
     "code" : "14.11",
     "label" : "Leather clothes",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "leather apparel", "leather clothes" ],
+    "rel" : [ "clothes", "apparel" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "14.11.10",
@@ -5016,8 +5016,8 @@
     }, {
       "code" : "17.12.13",
       "label" : "Paper and paperboard used as a base for photo-sensitive, heat-sensitive or electro-sensitive paper; carbonising base paper; wallpaper base",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "electro-sensitive paper", "fibres", "photo-sensitive paper", "punchcard stock", "graphic paper", "writing paper", "electrosensitive paper", "printing paper", "photosensitive paper", "wallpaper", "carbonising base paper", "rolls", "sheets", "wallpaper base", "heatsensitive paper", "punch tape paper", "heat-sensitive paper", "punch card stock", "paperboard" ],
+      "rel" : [ "paper", "paperboard" ],
       "exc" : [ ]
     }, {
       "code" : "17.12.14",
@@ -5040,7 +5040,7 @@
     }, {
       "code" : "17.12.32",
       "label" : "White top kraftliner; coated kraftliner",
-      "syn" : [ ],
+      "syn" : [ "unbleached plies", "coniferous wood sulphate", "kraftliner in sheets", "kraftliner in rolls", "semi-bleached plies", "coated kraftliner", "fibre", "soda pulp", "kraftliner", "bleached plies", "uncoated kraftliner", "white top kraftliner" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -5303,7 +5303,7 @@
   }, {
     "code" : "17.29",
     "label" : "Other articles of paper and paperboard",
-    "syn" : [ ],
+    "syn" : [ "paper", "paperboard" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
@@ -5532,9 +5532,9 @@
     }, {
       "code" : "19.20.24",
       "label" : "Spirit type and kerosene jet fuel",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "light oils and preparations", "aviation turbine power units", "spirit type", "oils from bituminous minerals", "light hydrocarbons", "naphtha", "petroleum oils", "jet fuel", "gasolene jet fuel", "kerosene", "spirit type jet fuel", "kerosene jet fuel", "gasoline" ],
+      "rel" : [ "fuel" ],
+      "exc" : [ "biodiesel", "crude", "waste oils" ]
     }, {
       "code" : "19.20.25",
       "label" : "Naphtha",
@@ -6041,7 +6041,7 @@
   }, {
     "code" : "20.15",
     "label" : "Fertilisers and nitrogen compounds",
-    "syn" : [ ],
+    "syn" : [ "nitrogen compounds", "fertilisers" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
@@ -7391,9 +7391,9 @@
     }, {
       "code" : "23.19.12",
       "label" : "Paving blocks, bricks, tiles and other articles of pressed or moulded glass; leaded lights and the like; multicellular or foam glass in blocks, plates or similar forms",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "pressed glass", "moulded glass", "paving tiles", "construction", "panels", "squares", "multicellular glass in blocks", "bricks", "paving blocks", "glass in plates", "leaded lights", "blocks", "foam glass in blocks", "shells", "paving", "building", "slabs", "paving bricks" ],
+      "rel" : [ "construction", "building" ],
+      "exc" : [ "laminated safety glass", "multiple-walled insulating glass units" ]
     }, {
       "code" : "23.19.21",
       "label" : "Glass envelopes, open, and glass parts thereof, for electric lamps, cathode-ray tubes or the like",
@@ -8101,8 +8101,8 @@
     }, {
       "code" : "24.10.65",
       "label" : "Bars and rods, hot rolled, in irregularly wound coils, of other alloy steel",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "rods", "silico-manganese steel", "bars", "alloy steel", "hot rolled", "high-speed steel", "stainless steel", "irregular wound coils" ],
+      "rel" : [ "boron", "rods", "carbon", "silicomanganese steel", "bars", "molybdenum", "chromium", "alloy", "steel" ],
       "exc" : [ ]
     }, {
       "code" : "24.10.66",
@@ -8462,7 +8462,7 @@
     }, {
       "code" : "24.42.25",
       "label" : "Aluminium foil, of a thickness ≤ 0,2 mm",
-      "syn" : [ ],
+      "syn" : [ "foil", "aluminium composite panel", "aluminium foil", "aluminium" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -8615,8 +8615,8 @@
     }, {
       "code" : "24.45.12",
       "label" : "Nickel mattes, nickel oxide sinters and other intermediate products of nickel metallurgy",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "nickel oxide sinters", "nickel metallurgy products", "nickel mattes" ],
+      "rel" : [ "metallurgy" ],
       "exc" : [ ]
     }, {
       "code" : "24.45.21",
@@ -8889,9 +8889,9 @@
     "items" : [ {
       "code" : "25.30.11",
       "label" : "Steam or other vapour generating boilers; super-heated water boilers",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "vapour generating boilers", "fire tube boilers", "water tube boilers", "superheated water boilers", "steam boilers", "super-heated water boilers", "watertube boilers", "firetube boilers" ],
+      "rel" : [ "boilers" ],
+      "exc" : [ "central heating" ]
     }, {
       "code" : "25.30.12",
       "label" : "Auxiliary plant for use with boilers; condensers for steam or other vapour power units",
@@ -9473,7 +9473,7 @@
     }, {
       "code" : "26.12.91",
       "label" : "Services connected with printing of circuits and micro assembling on printed circuits",
-      "syn" : [ ],
+      "syn" : [ "etching", "printing of circuits", "assembly services of micro assemblies on printed circuits", "coating by varnish and by vapour deposition of printed circuits and semiconductors", "micro assembling on printed circuits", "electronic component and board manufacturing services" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -9747,7 +9747,7 @@
   }, {
     "code" : "26.51",
     "label" : "Measuring, testing and navigating equipment",
-    "syn" : [ ],
+    "syn" : [ "compasses", "testing", "GPS", "measuring", "Galileo", "navigating equipment" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
@@ -9783,8 +9783,8 @@
     }, {
       "code" : "26.51.33",
       "label" : "Instruments for measuring length, for use in the hand (including micrometers and callipers) n.e.c.",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "measuring length", "callipers", "gauges", "micrometers", "length measure" ],
+      "rel" : [ "mathematical equipment", "measuring instruments" ],
       "exc" : [ ]
     }, {
       "code" : "26.51.41",
@@ -10410,8 +10410,8 @@
     }, {
       "code" : "27.32.13",
       "label" : "Other electric conductors, for a voltage ≤ 1 000 V",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "electric conductors", "cables", "insulated electric wires", "electric wires", "wires", "insulated electric cables", "electric cables" ],
+      "rel" : [ "telecommunications" ],
       "exc" : [ ]
     }, {
       "code" : "27.32.14",
@@ -10830,9 +10830,9 @@
   }, {
     "code" : "28.11",
     "label" : "Engines and turbines, except aircraft, vehicle and cycle engines",
-    "syn" : [ ],
-    "rel" : [ ],
-    "exc" : [ ],
+    "syn" : [ "turbines", "engines" ],
+    "rel" : [ "engines" ],
+    "exc" : [ "motor vehicles", "cycle engines", "motorcycles", "aircraft" ],
     "items" : [ {
       "code" : "28.11.11",
       "label" : "Outboard motors for marine propulsion",
@@ -11207,7 +11207,7 @@
     }, {
       "code" : "28.21.99",
       "label" : "Sub-contracted operations as part of manufacturing of ovens, furnaces and furnace burners",
-      "syn" : [ ],
+      "syn" : [ "furnaces manufacturing sub-contracted operations", "ovens manufacturing sub-contracted operations", "furnace burners" ],
       "rel" : [ ],
       "exc" : [ ]
     } ]
@@ -11250,7 +11250,7 @@
     }, {
       "code" : "28.22.16",
       "label" : "Lifts, skip hoists, escalators and moving walkways",
-      "syn" : [ ],
+      "syn" : [ "skip hoists", "lifts", "moving walkways", "escalators" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -11287,9 +11287,9 @@
   }, {
     "code" : "28.23",
     "label" : "Office machinery and equipment (except computers and peripheral equipment)",
-    "syn" : [ ],
+    "syn" : [ "office equipment", "office machinery" ],
     "rel" : [ ],
-    "exc" : [ ],
+    "exc" : [ "peripheral equipment", "computers" ],
     "items" : [ {
       "code" : "28.23.10",
       "label" : "Accounting machines and similar machines incorporating a calculating device",
@@ -11961,8 +11961,8 @@
     }, {
       "code" : "28.92.50",
       "label" : "Track-laying tractors",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "track-laying tractors" ],
+      "rel" : [ "vehicles", "tractors" ],
       "exc" : [ ]
     }, {
       "code" : "28.92.61",
@@ -12137,7 +12137,7 @@
     }, {
       "code" : "28.94.30",
       "label" : "Machinery for working hides, skins or leather or for making or repairing footwear and other articles",
-      "syn" : [ ],
+      "syn" : [ "skins", "footwear manufasture", "footwear repair", "tanning hides", "machinery for working hides", "leather", "tanning leather" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -12236,8 +12236,8 @@
     }, {
       "code" : "28.99.13",
       "label" : "Offset printing machinery, excluding those of the office type",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "equipment for preparing or making plates cylinders or other printing components", "reel", "letterpress", "machines for printing on corks tubes or candles", "reelfed", "machines for printing tin foil boxes", "type-setting", "booksewing machines", "apparatus", "letter press printing machinery", "sheet", "printing machinery for numbering", "ancillary", "warp printing machines", "clock or watch dial-printing machines", "flexographic printing machinery", "book-sewing machines", "rotary presses", "bookbinding machinery", "repetitive printing", "screen printing machines", "electrostatic printing machines", "flexographic printing", "label-printing machines", "gravure printing machinery", "offset printing machinery", "container-printing machines" ],
+      "rel" : [ "equipment", "machinery" ],
       "exc" : [ ]
     }, {
       "code" : "28.99.14",
@@ -12303,8 +12303,8 @@
     "items" : [ {
       "code" : "29.10.11",
       "label" : "Spark-ignition reciprocating internal combustion piston engines for vehicles, of a cylinder capacity ≤ 1 000 cm³",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "spark-ignition reciprocating internal combustion piston engines for vehicles", "spark-ignition reciprocating piston engine", "cylinder capacity", "propulsion of vehicles" ],
+      "rel" : [ "engines", "piston engines" ],
       "exc" : [ ]
     }, {
       "code" : "29.10.12",
@@ -12565,15 +12565,15 @@
     }, {
       "code" : "30.11.23",
       "label" : "Refrigerated vessels, except tankers",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "seagoing", "refrigerated ships", "sea-going", "refrigerated vessels", "sea going" ],
+      "rel" : [ "transport" ],
+      "exc" : [ "tankers" ]
     }, {
       "code" : "30.11.24",
       "label" : "Dry cargo ships",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "vessels", "cargo ships", "bulk carriers", "ro-ro cargo ships", "dry cargo ships", "persons transport", "goods transport", "seagoing", "container carriers" ],
+      "rel" : [ "transport", "transportation", "vessels", "boats" ],
+      "exc" : [ "ferry-boats", "tankers", "refrigerated vessels" ]
     }, {
       "code" : "30.11.31",
       "label" : "Fishing vessels; factory ships and other vessels for processing or preserving fishery products",
@@ -13031,8 +13031,8 @@
     "items" : [ {
       "code" : "31.02.10",
       "label" : "Kitchen furniture",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "fitted kitchen units", "kitchen wooden furniture", "kitchen furniture" ],
+      "rel" : [ "furniture" ],
       "exc" : [ ]
     }, {
       "code" : "31.02.99",
@@ -13834,9 +13834,9 @@
     "items" : [ {
       "code" : "33.16.10",
       "label" : "Repair and maintenance services of aircraft and spacecraft",
-      "syn" : [ ],
+      "syn" : [ "transport equipment", "pleasure and sporting boats", "repair of aircraft", "maintenance of aircraft", "repair of spacecraft", "railway and tramway locomotives and rolling stock", "maintenance of spacecraft", "ships and floating platforms and structures", "aircraft and aircraft engines" ],
       "rel" : [ ],
-      "exc" : [ ]
+      "exc" : [ "airport" ]
     } ]
   }, {
     "code" : "33.17",
@@ -14299,8 +14299,8 @@
     "items" : [ {
       "code" : "38.12.11",
       "label" : "Collection services of hazardous medical and other biohazardous waste",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "medical laboratories", "biohazard", "hospitals", "non-anatomical wastes", "pathological wastes", "biohazardous waste", "dental practices", "medical practices", "anatomical wastes", "needless", "hazardous medical waste", "scalpels", "biological infectious wastes", "sharp wastes", "collection services" ],
+      "rel" : [ "waste collection", "waste management" ],
       "exc" : [ ]
     }, {
       "code" : "38.12.12",
@@ -14537,7 +14537,7 @@
     }, {
       "code" : "38.32.31",
       "label" : "Secondary raw material of glass",
-      "syn" : [ ],
+      "syn" : [ "waste and scrap of glass", "slag", "residues from the incineration of municipal waste", "seaweed ash", "mica waste", "secondary raw material of glass", "ash", "kelp", "cullet", "non-metal waste or scrap" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -14686,8 +14686,8 @@
     }, {
       "code" : "41.00.26",
       "label" : "Reservoirs, silos and warehouses",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "tanks", "shopping malls", "transport terminals", "office buildings", "exhibition halls", "reservoirs for oil", "workshops", "industrial buildings", "silos for dry aggregates", "silos for cereals", "detached shops", "agricultural buildings", "boutiques", "silos for cement", "petrol stations", "factories", "reservoirs", "buildings for production and assembly activities of industrial establishments", "warehouses", "service stations", "wholesale trade", "plants", "storage areas", "department stores", "shopping centres", "indoor markets", "storage facilities", "retail trade", "bank buildings", "reservoirs for gas", "specialised warehouses", "parking garages", "cold stores", "silos" ],
+      "rel" : [ "commercial buildings" ],
       "exc" : [ ]
     }, {
       "code" : "41.00.27",
@@ -15025,7 +15025,7 @@
     }, {
       "code" : "43.12.12",
       "label" : "Excavating and earthmoving works",
-      "syn" : [ ],
+      "syn" : [ "roadworks", "earthmoving works in making embankments or cuttings", "cuttings", "urban drainage", "earthmoving works", "land re-creation works", "excavations", "contaminated top soil stripping works", "sloping services", "motorways", "constructions digging", "large-scale earthworks", "sloping", "embankments", "railways", "digging of trenches", "highway construction", "excavating works", "roads" ],
       "rel" : [ ],
       "exc" : [ ]
     } ]
@@ -15146,9 +15146,9 @@
     }, {
       "code" : "43.33.21",
       "label" : "Terrazzo, marble, granite and slate works",
-      "syn" : [ ],
+      "syn" : [ "cleaning of outer walls by steam cleaning or sandblasting", "granite works", "acoustic services involving the application of acoustic panels tiles to interior walls and ceilings", "terrazzo works", "building completion and finishing services", "general repair and maintenance services", "construction services of poured-in-place terrazzo and interior marble granite or slate work", "slate works", "marble works" ],
       "rel" : [ ],
-      "exc" : [ ]
+      "exc" : [ "floor and wall tiling services using ceramic concrete stone or brick", "sound insulation services", "installation work of tiles" ]
     }, {
       "code" : "43.33.29",
       "label" : "Other floor laying and covering, wall covering and wallpapering works n.e.c.",
@@ -16103,7 +16103,7 @@
   }, {
     "code" : "46.44",
     "label" : "Wholesale trade services of china and glassware and cleaning materials",
-    "syn" : [ ],
+    "syn" : [ "china wholesale trade", "glassware wholesale trade", "cleaning materials" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
@@ -16302,9 +16302,9 @@
     }, {
       "code" : "46.52.12",
       "label" : "Wholesale trade services of electronic equipment and parts",
-      "syn" : [ ],
+      "syn" : [ "tapes", "solid-state non-volatile storage devices", "discs", "wholesale trade of electronic equipment and parts", "electronic tubes", "cellular networks", "wireless networks", "electronic parts", "voice reception", "telephone sets", "chip cards", "transmission apparatus", "telephones", "electronic valves", "magnetic strips cards", "apparatus for communication in a wired or wireless network", "images reception", "data reception", "electronic components" ],
       "rel" : [ ],
-      "exc" : [ ]
+      "exc" : [ "fee", "contract" ]
     }, {
       "code" : "46.52.13",
       "label" : "Wholesale trade services of blank audio and video tapes and diskettes, magnetic and optical disks CDs and DVDs",
@@ -16702,8 +16702,8 @@
     }, {
       "code" : "47.00.15",
       "label" : "Retail trade services of fish, crustaceans and molluscs",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "live crustaceans", "sea food", "prepared fish", "preserved fish", "aquatic invertebrates", "retail trade of crustaceans", "retail trade of fish", "chilled molluscs", "retail trade of mollusc", "fresh fish", "chilled seafood", "live molluscs", "fresh crustaceans", "live fish", "chilled crustaceans", "seafood", "chilled fish", "fresh seefood", "live seafood", "fresh molluscs", "aquatic animals" ],
+      "rel" : [ "sea food", "seafood", "fish" ],
       "exc" : [ ]
     }, {
       "code" : "47.00.16",
@@ -16906,8 +16906,8 @@
     }, {
       "code" : "47.00.63",
       "label" : "Retail trade services of stationery",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "books", "diaries", "magazines", "banknotes", "pictures", "manuscripts", "daily newspapers", "printed books", "printed maps", "paper", "brochures", "letter pads", "stationery", "binders", "forms", "blotting-pads", "mail order", "file covers", "music", "stamps", "newspapers", "advertising material", "leaflets", "internet retail", "postcards", "stock certificates", "stationary retail trade", "plans", "cheque forms", "periodicals", "greeting cards", "account books", "paperboard", "registers", "notebooks" ],
+      "rel" : [ "stationery" ],
       "exc" : [ ]
     }, {
       "code" : "47.00.64",
@@ -17478,9 +17478,9 @@
     }, {
       "code" : "50.30.19",
       "label" : "Other inland passenger water transport services",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "inland waters", "canals", "rivers", "inland passenger water transport services", "water taxis" ],
+      "rel" : [ "water transport" ],
+      "exc" : [ "ferries", "ferry", "sightseeing boats" ]
     }, {
       "code" : "50.30.20",
       "label" : "Rental services of inland water vessels for passengers with operator",
@@ -17755,7 +17755,7 @@
     }, {
       "code" : "52.22.14",
       "label" : "Pilotage and berthing services on inland waters",
-      "syn" : [ ],
+      "syn" : [ "inland waters", "pilot vessels", "tugboat services", "pilotage", "berthing", "docking and undocking of vessels" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -18251,8 +18251,8 @@
     }, {
       "code" : "58.13.31",
       "label" : "Advertising space in newspapers, printed",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "printed advertising", "sale of advertising space in newspapers", "printed", "advertising", "forms", "sale of advertising space in periodicals", "advertising space in brochures", "advertising space in books", "posters", "advertising space in pamphlets", "newspapers", "print", "postcards", "sale of advertising space in journals", "ads", "timetables", "printed ads" ],
+      "rel" : [ "advertisement" ],
       "exc" : [ ]
     }, {
       "code" : "58.13.32",
@@ -18374,8 +18374,8 @@
   }, {
     "code" : "58.21",
     "label" : "Publishing services of computer games",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "computer games", "gaming" ],
+    "rel" : [ "online", "downloads", "gambling", "RPG" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "58.21.10",
@@ -19691,7 +19691,7 @@
   }, {
     "code" : "66.22",
     "label" : "Services of insurance agents and brokers",
-    "syn" : [ ],
+    "syn" : [ "insurance agencies", "insurance agents", "insurance brokers" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
@@ -20410,8 +20410,8 @@
     }, {
       "code" : "72.19.22",
       "label" : "Applied research services in chemistry and biology",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "animals", "applied research services in biology", "fermentation", "biology", "applied research services in chemistry", "catalyses", "plants", "micro-organisms", "physiology" ],
+      "rel" : [ "research" ],
       "exc" : [ ]
     }, {
       "code" : "72.19.23",
@@ -21483,9 +21483,9 @@
     }, {
       "code" : "81.21.12",
       "label" : "Other general cleaning services of buildings",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "floor waxing", "industrial buildings", "furniture polishing", "cleaning of dwellings", "interior wall cleaning", "cleaning services of buildings", "maintainance of dwellings", "cleaning of commercial buildings", "floor cleaning", "maintainance of commercial buildings", "maintaining of dwellings", "janitorial maintenance services", "administrative buildings", "minor repairs" ],
+      "rel" : [ "cleaning", "maintenance" ],
+      "exc" : [ "window cleaning" ]
     } ]
   }, {
     "code" : "81.22",
@@ -23141,8 +23141,8 @@
     "items" : [ {
       "code" : "95.29.11",
       "label" : "Repair and alteration services of garment and household textile articles",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "clothes alterations", "renovation of used textile garments", "household textile repair", "garment alterations", "invisible mending", "garment repair" ],
+      "rel" : [ "repair services" ],
       "exc" : [ ]
     }, {
       "code" : "95.29.12",
@@ -23290,7 +23290,7 @@
   }, {
     "code" : "96.09",
     "label" : "Other personal services n.e.c.",
-    "syn" : [ ],
+    "syn" : [ "graphology", "piercing", "escort", "astrology", "genealogy", "shoeshining", "car parking", "coin-operated machines", "chiromancy", "tattoo", "public washroom services", "marriage agencies", "spirituality", "personal services", "prostitutes", "pet care", "lockers" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
