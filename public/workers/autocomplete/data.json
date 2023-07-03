@@ -12638,9 +12638,9 @@
     }, {
       "code" : "30.12.12",
       "label" : "Inflatable vessels for pleasure or sports",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "rigid hull inflatable boats", "inflatable vessels", "motor boats", "sports inflatable vessels", "canoes" ],
+      "rel" : [ "sport vessels", "sport boats" ],
+      "exc" : [ "sailboats", "outboard motorboats", "motorboats" ]
     }, {
       "code" : "30.12.19",
       "label" : "Other vessels for pleasure or sports; rowing boats and canoes",
