@@ -16103,7 +16103,7 @@
   }, {
     "code" : "46.44",
     "label" : "Wholesale trade services of china and glassware and cleaning materials",
-    "syn" : [ ],
+    "syn" : [ "china wholesale trade", "glassware wholesale trade", "cleaning materials" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
