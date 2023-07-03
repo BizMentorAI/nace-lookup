@@ -11207,7 +11207,7 @@
     }, {
       "code" : "28.21.99",
       "label" : "Sub-contracted operations as part of manufacturing of ovens, furnaces and furnace burners",
-      "syn" : [ ],
+      "syn" : [ "furnaces manufacturing sub-contracted operations", "ovens manufacturing sub-contracted operations", "furnace burners" ],
       "rel" : [ ],
       "exc" : [ ]
     } ]
