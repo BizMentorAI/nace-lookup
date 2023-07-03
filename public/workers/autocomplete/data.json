@@ -1294,8 +1294,8 @@
     }, {
       "code" : "02.20.14",
       "label" : "Fuel wood of coniferous wood",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "billets", "coniferous", "faggots", "coniferous wood", "roots", "rough sticks", "logs", "traditional forest-produced charcoal", "vine stems", "fuel wood", "tree stumps", "twigs" ],
+      "rel" : [ "fuel wood" ],
       "exc" : [ ]
     }, {
       "code" : "02.20.15",
