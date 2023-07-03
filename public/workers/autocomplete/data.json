@@ -12040,8 +12040,8 @@
     }, {
       "code" : "28.93.20",
       "label" : "Machines for cleaning, sorting or grading seed, grain or dried leguminous vegetables",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "machines for cleaning sorting or grading seed grain or dried leguminous vegetables" ],
+      "rel" : [ "machines", "equipment" ],
       "exc" : [ ]
     }, {
       "code" : "28.93.31",
