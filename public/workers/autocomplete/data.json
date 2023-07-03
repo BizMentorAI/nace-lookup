@@ -4973,7 +4973,7 @@
     }, {
       "code" : "17.11.12",
       "label" : "Chemical wood pulp, soda or sulphate, other than dissolving grades",
-      "syn" : [ ],
+      "syn" : [ "sulphite", "soda", "sulphate", "wood pulp", "non-coniferous", "soda or sulphate", "chemical wood pulp", "coniferous chemical wood pulp", "bleached", "semi-bleached" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
