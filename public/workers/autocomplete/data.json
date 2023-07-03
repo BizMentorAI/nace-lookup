@@ -15025,7 +15025,7 @@
     }, {
       "code" : "43.12.12",
       "label" : "Excavating and earthmoving works",
-      "syn" : [ ],
+      "syn" : [ "roadworks", "earthmoving works in making embankments or cuttings", "cuttings", "urban drainage", "earthmoving works", "land re-creation works", "excavations", "contaminated top soil stripping works", "sloping services", "motorways", "constructions digging", "large-scale earthworks", "sloping", "embankments", "railways", "digging of trenches", "highway construction", "excavating works", "roads" ],
       "rel" : [ ],
       "exc" : [ ]
     } ]
