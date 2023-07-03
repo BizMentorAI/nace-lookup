@@ -12565,9 +12565,9 @@
     }, {
       "code" : "30.11.23",
       "label" : "Refrigerated vessels, except tankers",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "seagoing", "refrigerated ships", "sea-going", "refrigerated vessels", "sea going" ],
+      "rel" : [ "transport" ],
+      "exc" : [ "tankers" ]
     }, {
       "code" : "30.11.24",
       "label" : "Dry cargo ships",
