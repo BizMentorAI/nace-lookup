@@ -15146,9 +15146,9 @@
     }, {
       "code" : "43.33.21",
       "label" : "Terrazzo, marble, granite and slate works",
-      "syn" : [ ],
+      "syn" : [ "cleaning of outer walls by steam cleaning or sandblasting", "granite works", "acoustic services involving the application of acoustic panels tiles to interior walls and ceilings", "terrazzo works", "building completion and finishing services", "general repair and maintenance services", "construction services of poured-in-place terrazzo and interior marble granite or slate work", "slate works", "marble works" ],
       "rel" : [ ],
-      "exc" : [ ]
+      "exc" : [ "floor and wall tiling services using ceramic concrete stone or brick", "sound insulation services", "installation work of tiles" ]
     }, {
       "code" : "43.33.29",
       "label" : "Other floor laying and covering, wall covering and wallpapering works n.e.c.",
