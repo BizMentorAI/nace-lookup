@@ -23141,8 +23141,8 @@
     "items" : [ {
       "code" : "95.29.11",
       "label" : "Repair and alteration services of garment and household textile articles",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "clothes alterations", "renovation of used textile garments", "household textile repair", "garment alterations", "invisible mending", "garment repair" ],
+      "rel" : [ "repair services" ],
       "exc" : [ ]
     }, {
       "code" : "95.29.12",
