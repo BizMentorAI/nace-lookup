@@ -8889,9 +8889,9 @@
     "items" : [ {
       "code" : "25.30.11",
       "label" : "Steam or other vapour generating boilers; super-heated water boilers",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "vapour generating boilers", "fire tube boilers", "water tube boilers", "superheated water boilers", "steam boilers", "super-heated water boilers", "watertube boilers", "firetube boilers" ],
+      "rel" : [ "boilers" ],
+      "exc" : [ "central heating" ]
     }, {
       "code" : "25.30.12",
       "label" : "Auxiliary plant for use with boilers; condensers for steam or other vapour power units",
