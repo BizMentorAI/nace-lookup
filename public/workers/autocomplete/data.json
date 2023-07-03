@@ -3029,7 +3029,7 @@
     }, {
       "code" : "10.83.13",
       "label" : "Green tea (not fermented), black tea (fermented) and partly fermented tea, in immediate packings of a content ≤ 3 kg",
-      "syn" : [ ],
+      "syn" : [ "tea bags", "fermented tea", "green tea", "black tea", "tea" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
