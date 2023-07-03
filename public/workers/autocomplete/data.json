@@ -14537,7 +14537,7 @@
     }, {
       "code" : "38.32.31",
       "label" : "Secondary raw material of glass",
-      "syn" : [ ],
+      "syn" : [ "waste and scrap of glass", "slag", "residues from the incineration of municipal waste", "seaweed ash", "mica waste", "secondary raw material of glass", "ash", "kelp", "cullet", "non-metal waste or scrap" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
