@@ -9783,8 +9783,8 @@
     }, {
       "code" : "26.51.33",
       "label" : "Instruments for measuring length, for use in the hand (including micrometers and callipers) n.e.c.",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "measuring length", "callipers", "gauges", "micrometers", "length measure" ],
+      "rel" : [ "mathematical equipment", "measuring instruments" ],
       "exc" : [ ]
     }, {
       "code" : "26.51.41",
