@@ -527,8 +527,8 @@
     }, {
       "code" : "01.22.14",
       "label" : "Figs",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "fresh figs", "Ficus carica", "dried figs" ],
+      "rel" : [ "fruits" ],
       "exc" : [ ]
     }, {
       "code" : "01.22.19",
