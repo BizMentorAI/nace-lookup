@@ -12969,9 +12969,9 @@
     }, {
       "code" : "31.00.14",
       "label" : "Parts of seats",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "parts of seats", "wooden parts of seats", "wood part of seats" ],
+      "rel" : [ "furniture" ],
+      "exc" : [ "aircraft" ]
     }, {
       "code" : "31.00.20",
       "label" : "Parts of furniture (except seats)",
