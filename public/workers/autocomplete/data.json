@@ -16302,9 +16302,9 @@
     }, {
       "code" : "46.52.12",
       "label" : "Wholesale trade services of electronic equipment and parts",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "tapes", "solid-state non-volatile storage devices", "discs", "wholesale trade of electronic equipment and parts", "electronic tubes", "cellular networks", "wireless networks", "electronic parts", "voice reception", "telephone sets", "chip cards", "transmission apparatus", "telephones", "electronic valves", "magnetic strips cards", "apparatus for communication in a wired or wireless network", "images reception", "data reception", "electronic components" ],
+      "rel" : [ "fee", "contract" ],
+      "exc" : [ "fee", "contract" ]
     }, {
       "code" : "46.52.13",
       "label" : "Wholesale trade services of blank audio and video tapes and diskettes, magnetic and optical disks CDs and DVDs",
