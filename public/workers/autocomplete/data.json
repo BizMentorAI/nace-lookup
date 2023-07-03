@@ -17755,7 +17755,7 @@
     }, {
       "code" : "52.22.14",
       "label" : "Pilotage and berthing services on inland waters",
-      "syn" : [ ],
+      "syn" : [ "inland waters", "pilot vessels", "tugboat services", "pilotage", "berthing", "docking and undocking of vessels" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
