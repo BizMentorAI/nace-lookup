@@ -8615,8 +8615,8 @@
     }, {
       "code" : "24.45.12",
       "label" : "Nickel mattes, nickel oxide sinters and other intermediate products of nickel metallurgy",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "nickel oxide sinters", "nickel metallurgy products", "nickel mattes" ],
+      "rel" : [ "metallurgy" ],
       "exc" : [ ]
     }, {
       "code" : "24.45.21",
