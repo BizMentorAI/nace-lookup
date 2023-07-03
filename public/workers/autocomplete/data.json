@@ -12381,8 +12381,8 @@
     }, {
       "code" : "29.10.52",
       "label" : "Vehicles for travelling on snow, golf cars and the like, with engines",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "motor vehicles", "semi-diesel", "golf cards", "diesel", "internal combustion piston engine", "transport of persons", "snow vehicles", "spark-ignition internal combustion piston engine" ],
+      "rel" : [ "vehicles" ],
       "exc" : [ ]
     }, {
       "code" : "29.10.59",
