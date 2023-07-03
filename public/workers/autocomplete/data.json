@@ -19691,7 +19691,7 @@
   }, {
     "code" : "66.22",
     "label" : "Services of insurance agents and brokers",
-    "syn" : [ ],
+    "syn" : [ "insurance agencies", "insurance agents", "insurance brokers" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
