@@ -11287,9 +11287,9 @@
   }, {
     "code" : "28.23",
     "label" : "Office machinery and equipment (except computers and peripheral equipment)",
-    "syn" : [ ],
+    "syn" : [ "office equipment", "office machinery" ],
     "rel" : [ ],
-    "exc" : [ ],
+    "exc" : [ "peripheral equipment", "computers" ],
     "items" : [ {
       "code" : "28.23.10",
       "label" : "Accounting machines and similar machines incorporating a calculating device",
