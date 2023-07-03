@@ -16906,8 +16906,8 @@
     }, {
       "code" : "47.00.63",
       "label" : "Retail trade services of stationery",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "books", "diaries", "magazines", "banknotes", "pictures", "manuscripts", "daily newspapers", "printed books", "printed maps", "paper", "brochures", "letter pads", "stationery", "binders", "forms", "blotting-pads", "mail order", "file covers", "music", "stamps", "newspapers", "advertising material", "leaflets", "internet retail", "postcards", "stock certificates", "stationary retail trade", "plans", "cheque forms", "periodicals", "greeting cards", "account books", "paperboard", "registers", "notebooks" ],
+      "rel" : [ "stationery" ],
       "exc" : [ ]
     }, {
       "code" : "47.00.64",
