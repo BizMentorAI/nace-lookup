@@ -10410,8 +10410,8 @@
     }, {
       "code" : "27.32.13",
       "label" : "Other electric conductors, for a voltage ≤ 1 000 V",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "electric conductors", "cables", "insulated electric wires", "electric wires", "wires", "insulated electric cables", "electric cables" ],
+      "rel" : [ "telecommunications" ],
       "exc" : [ ]
     }, {
       "code" : "27.32.14",
@@ -12571,7 +12571,7 @@
     }, {
       "code" : "30.11.24",
       "label" : "Dry cargo ships",
-      "syn" : [ "vessels", "cargo ships", "bulk carriers", "ro-ro cargo ships", "dry cargo ships", "ferry boats", "ferry", "persons transport", "goods transport", "seagoing", "container carriers" ],
+      "syn" : [ "vessels", "cargo ships", "bulk carriers", "ro-ro cargo ships", "dry cargo ships", "persons transport", "goods transport", "seagoing", "container carriers" ],
       "rel" : [ "transport", "transportation", "vessels", "boats" ],
       "exc" : [ "ferry-boats", "tankers", "refrigerated vessels" ]
     }, {
