@@ -5040,7 +5040,7 @@
     }, {
       "code" : "17.12.32",
       "label" : "White top kraftliner; coated kraftliner",
-      "syn" : [ ],
+      "syn" : [ "unbleached plies", "coniferous wood sulphate", "kraftliner in sheets", "kraftliner in rolls", "semi-bleached plies", "coated kraftliner", "fibre", "soda pulp", "kraftliner", "bleached plies", "uncoated kraftliner", "white top kraftliner" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
