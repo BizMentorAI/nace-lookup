@@ -9577,7 +9577,7 @@
   }, {
     "code" : "26.30",
     "label" : "Communication equipment",
-    "syn" : [ ],
+    "syn" : [ "radio broadcasting", "transmission apparatus", "reception apparatus", "television", "communication equipment" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
