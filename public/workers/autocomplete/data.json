@@ -11961,8 +11961,8 @@
     }, {
       "code" : "28.92.50",
       "label" : "Track-laying tractors",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "track-laying tractors" ],
+      "rel" : [ "vehicles", "tractors" ],
       "exc" : [ ]
     }, {
       "code" : "28.92.61",
