@@ -2223,7 +2223,7 @@
     }, {
       "code" : "10.31.12",
       "label" : "Dried potatoes whether or not cut or sliced but not further prepared",
-      "syn" : [ ],
+      "syn" : [ "dried potatoes", "cut potatoes", "sliced potatoes" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
@@ -16303,7 +16303,7 @@
       "code" : "46.52.12",
       "label" : "Wholesale trade services of electronic equipment and parts",
       "syn" : [ "tapes", "solid-state non-volatile storage devices", "discs", "wholesale trade of electronic equipment and parts", "electronic tubes", "cellular networks", "wireless networks", "electronic parts", "voice reception", "telephone sets", "chip cards", "transmission apparatus", "telephones", "electronic valves", "magnetic strips cards", "apparatus for communication in a wired or wireless network", "images reception", "data reception", "electronic components" ],
-      "rel" : [ "fee", "contract" ],
+      "rel" : [ ],
       "exc" : [ "fee", "contract" ]
     }, {
       "code" : "46.52.13",
