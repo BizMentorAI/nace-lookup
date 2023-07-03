@@ -18251,8 +18251,8 @@
     }, {
       "code" : "58.13.31",
       "label" : "Advertising space in newspapers, printed",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "printed advertising", "sale of advertising space in newspapers", "printed", "advertising", "forms", "sale of advertising space in periodicals", "advertising space in brochures", "advertising space in books", "posters", "advertising space in pamphlets", "newspapers", "print", "postcards", "sale of advertising space in journals", "ads", "timetables", "printed ads" ],
+      "rel" : [ "advertisement" ],
       "exc" : [ ]
     }, {
       "code" : "58.13.32",
