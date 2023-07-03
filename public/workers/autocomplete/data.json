@@ -6041,7 +6041,7 @@
   }, {
     "code" : "20.15",
     "label" : "Fertilisers and nitrogen compounds",
-    "syn" : [ ],
+    "syn" : [ "nitrogen compounds", "fertilisers" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
