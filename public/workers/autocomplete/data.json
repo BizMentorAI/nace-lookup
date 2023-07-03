@@ -8462,7 +8462,7 @@
     }, {
       "code" : "24.42.25",
       "label" : "Aluminium foil, of a thickness ≤ 0,2 mm",
-      "syn" : [ ],
+      "syn" : [ "foil", "aluminium composite panel", "aluminium foil", "aluminium" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
