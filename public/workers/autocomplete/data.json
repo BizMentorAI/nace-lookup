@@ -17478,9 +17478,9 @@
     }, {
       "code" : "50.30.19",
       "label" : "Other inland passenger water transport services",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "inland waters", "canals", "rivers", "inland passenger water transport services", "water taxis" ],
+      "rel" : [ "water transport" ],
+      "exc" : [ "ferries", "ferry", "sightseeing boats" ]
     }, {
       "code" : "50.30.20",
       "label" : "Rental services of inland water vessels for passengers with operator",
