@@ -13031,8 +13031,8 @@
     "items" : [ {
       "code" : "31.02.10",
       "label" : "Kitchen furniture",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "fitted kitchen units", "kitchen wooden furniture", "kitchen furniture" ],
+      "rel" : [ "furniture" ],
       "exc" : [ ]
     }, {
       "code" : "31.02.99",
