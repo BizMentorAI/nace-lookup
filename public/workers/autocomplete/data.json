@@ -4062,8 +4062,8 @@
   }, {
     "code" : "14.11",
     "label" : "Leather clothes",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "leather apparel", "leather clothes" ],
+    "rel" : [ "clothes", "apparel" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "14.11.10",
