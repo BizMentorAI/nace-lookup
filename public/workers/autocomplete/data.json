@@ -7391,9 +7391,9 @@
     }, {
       "code" : "23.19.12",
       "label" : "Paving blocks, bricks, tiles and other articles of pressed or moulded glass; leaded lights and the like; multicellular or foam glass in blocks, plates or similar forms",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "pressed glass", "moulded glass", "paving tiles", "construction", "panels", "squares", "multicellular glass in blocks", "bricks", "paving blocks", "glass in plates", "leaded lights", "blocks", "foam glass in blocks", "shells", "paving", "building", "slabs", "paving bricks" ],
+      "rel" : [ "construction", "building" ],
+      "exc" : [ "laminated safety glass", "multiple-walled insulating glass units" ]
     }, {
       "code" : "23.19.21",
       "label" : "Glass envelopes, open, and glass parts thereof, for electric lamps, cathode-ray tubes or the like",
