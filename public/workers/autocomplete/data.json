@@ -12137,7 +12137,7 @@
     }, {
       "code" : "28.94.30",
       "label" : "Machinery for working hides, skins or leather or for making or repairing footwear and other articles",
-      "syn" : [ ],
+      "syn" : [ "skins", "footwear manufasture", "footwear repair", "tanning hides", "machinery for working hides", "leather", "tanning leather" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
