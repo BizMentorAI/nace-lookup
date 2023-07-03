@@ -23290,7 +23290,7 @@
   }, {
     "code" : "96.09",
     "label" : "Other personal services n.e.c.",
-    "syn" : [ ],
+    "syn" : [ "graphology", "piercing", "escort", "astrology", "genealogy", "shoeshining", "car parking", "coin-operated machines", "chiromancy", "tattoo", "public washroom services", "marriage agencies", "spirituality", "personal services", "prostitutes", "pet care", "lockers" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
