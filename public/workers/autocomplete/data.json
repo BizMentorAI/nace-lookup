@@ -8101,8 +8101,8 @@
     }, {
       "code" : "24.10.65",
       "label" : "Bars and rods, hot rolled, in irregularly wound coils, of other alloy steel",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "rods", "silico-manganese steel", "bars", "alloy steel", "hot rolled", "high-speed steel", "stainless steel", "irregular wound coils" ],
+      "rel" : [ "boron", "rods", "carbon", "silicomanganese steel", "bars", "molybdenum", "chromium", "alloy", "steel" ],
       "exc" : [ ]
     }, {
       "code" : "24.10.66",
