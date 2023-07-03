@@ -21483,9 +21483,9 @@
     }, {
       "code" : "81.21.12",
       "label" : "Other general cleaning services of buildings",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "floor waxing", "industrial buildings", "furniture polishing", "cleaning of dwellings", "interior wall cleaning", "cleaning services of buildings", "maintainance of dwellings", "cleaning of commercial buildings", "floor cleaning", "maintainance of commercial buildings", "maintaining of dwellings", "janitorial maintenance services", "administrative buildings", "minor repairs" ],
+      "rel" : [ "cleaning", "maintenance" ],
+      "exc" : [ "window cleaning" ]
     } ]
   }, {
     "code" : "81.22",
