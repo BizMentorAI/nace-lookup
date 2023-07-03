@@ -14686,8 +14686,8 @@
     }, {
       "code" : "41.00.26",
       "label" : "Reservoirs, silos and warehouses",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "tanks", "shopping malls", "transport terminals", "office buildings", "exhibition halls", "reservoirs for oil", "workshops", "industrial buildings", "silos for dry aggregates", "silos for cereals", "detached shops", "agricultural buildings", "boutiques", "silos for cement", "petrol stations", "factories", "reservoirs", "buildings for production and assembly activities of industrial establishments", "warehouses", "service stations", "wholesale trade", "plants", "storage areas", "department stores", "shopping centres", "indoor markets", "storage facilities", "retail trade", "bank buildings", "reservoirs for gas", "specialised warehouses", "parking garages", "cold stores", "silos" ],
+      "rel" : [ "commercial buildings" ],
       "exc" : [ ]
     }, {
       "code" : "41.00.27",
