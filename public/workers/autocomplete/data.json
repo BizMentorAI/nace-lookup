@@ -1083,8 +1083,8 @@
     "items" : [ {
       "code" : "01.49.11",
       "label" : "Domestic rabbits, live",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "Oryctolagus cuniculus", "live domestic rabbits", "Lepus", "hares" ],
+      "rel" : [ "domestic animals" ],
       "exc" : [ ]
     }, {
       "code" : "01.49.12",
