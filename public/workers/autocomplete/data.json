@@ -18374,8 +18374,8 @@
   }, {
     "code" : "58.21",
     "label" : "Publishing services of computer games",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "computer games", "gaming" ],
+    "rel" : [ "online", "downloads", "gambling", "RPG" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "58.21.10",
