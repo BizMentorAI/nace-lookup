@@ -5550,7 +5550,7 @@
     }, {
       "code" : "19.20.27",
       "label" : "Medium petroleum oils; medium preparations n.e.c.",
-      "syn" : [ ],
+      "syn" : [ "medium petroleum oils", "light preparations", "bituminous minerals oils", "petroleum oils", "petroleum", "light oils", "industrial spirit", "non-fuel purposes", "kerosene", "SBP", "refined distillate intermediates with a distillation in the naphtha/kerosene range", "bituminous minerals", "special boiling point industrial spirits", "specific process", "white spirit and special boiling point industrial spirits", "medium preparations", "white spirit" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
