@@ -3402,8 +3402,8 @@
   }, {
     "code" : "11.07",
     "label" : "Soft drinks; mineral waters and other bottled waters",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "mineral water", "soft drinks", "non-alcoholic beverages", "bottled waters", "soda" ],
+    "rel" : [ "drinks", "beverages" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "11.07.11",
