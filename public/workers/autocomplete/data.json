@@ -8113,8 +8113,8 @@
     }, {
       "code" : "24.10.67",
       "label" : "Hollow drill bars and rods",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "rods", "hollow drill bars" ],
+      "rel" : [ "alloy", "non-alloy", "steel" ],
       "exc" : [ ]
     }, {
       "code" : "24.10.71",
@@ -10781,8 +10781,8 @@
     }, {
       "code" : "27.90.51",
       "label" : "Fixed capacitors for 50/60 Hz circuits having a reactive power handling capacity ≥ 0,5 kvar",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "tantalum", "electrical capacitors", "fixed capacitors for 50/60 Hz circuits", "power capacitors", "single layer", "dielectric of paper or plastics", "ceramic dielectric", "aluminium electrolytic", "multilayer", "variable or adjustable preset capacitors" ],
+      "rel" : [ "electrical capacitors" ],
       "exc" : [ ]
     }, {
       "code" : "27.90.52",
@@ -12638,9 +12638,9 @@
     }, {
       "code" : "30.12.12",
       "label" : "Inflatable vessels for pleasure or sports",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "rigid hull inflatable boats", "inflatable vessels", "motor boats", "sports inflatable vessels", "canoes" ],
+      "rel" : [ "sport vessels", "sport boats" ],
+      "exc" : [ "sailboats", "outboard motorboats", "motorboats" ]
     }, {
       "code" : "30.12.19",
       "label" : "Other vessels for pleasure or sports; rowing boats and canoes",
