@@ -1155,8 +1155,8 @@
     }, {
       "code" : "01.49.31",
       "label" : "Raw fur skins, except of fur-bearing lambs",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "tails", "mink skins", "paws", "raw furskins", "lamb furskins", "fur cuttings", "fox fur", "fox skins", "lamb skins", "furriers", "mink fur", "heads", "lamb fur", "raw fur skins" ],
+      "rel" : [ "skin", "furskin", "fur" ],
       "exc" : [ ]
     }, {
       "code" : "01.49.32",
