@@ -7065,8 +7065,8 @@
     }, {
       "code" : "22.21.41",
       "label" : "Other plates, sheets, film, foil and strip, of plastics, cellular",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "foil", "cellular polymers of vinyl chloride", "cellular polyurethane", "polystyrene", "polyurethanes", "regenerated cellular cellulose", "styrene polymers", "strip", "plastics", "cellular", "plates", "sheets", "film" ],
+      "rel" : [ "plastics" ],
       "exc" : [ ]
     }, {
       "code" : "22.21.42",
