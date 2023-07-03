@@ -11250,7 +11250,7 @@
     }, {
       "code" : "28.22.16",
       "label" : "Lifts, skip hoists, escalators and moving walkways",
-      "syn" : [ ],
+      "syn" : [ "skip hoists", "lifts", "moving walkways", "escalators" ],
       "rel" : [ ],
       "exc" : [ ]
     }, {
