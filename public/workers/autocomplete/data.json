@@ -5303,7 +5303,7 @@
   }, {
     "code" : "17.29",
     "label" : "Other articles of paper and paperboard",
-    "syn" : [ ],
+    "syn" : [ "paper", "paperboard" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
