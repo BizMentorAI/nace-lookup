@@ -9747,7 +9747,7 @@
   }, {
     "code" : "26.51",
     "label" : "Measuring, testing and navigating equipment",
-    "syn" : [ ],
+    "syn" : [ "compasses", "testing", "GPS", "measuring", "Galileo", "navigating equipment" ],
     "rel" : [ ],
     "exc" : [ ],
     "items" : [ {
