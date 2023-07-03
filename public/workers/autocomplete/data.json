@@ -20410,8 +20410,8 @@
     }, {
       "code" : "72.19.22",
       "label" : "Applied research services in chemistry and biology",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "animals", "applied research services in biology", "fermentation", "biology", "applied research services in chemistry", "catalyses", "plants", "micro-organisms", "physiology" ],
+      "rel" : [ "research" ],
       "exc" : [ ]
     }, {
       "code" : "72.19.23",
