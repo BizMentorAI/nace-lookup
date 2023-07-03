@@ -5532,9 +5532,9 @@
     }, {
       "code" : "19.20.24",
       "label" : "Spirit type and kerosene jet fuel",
-      "syn" : [ ],
-      "rel" : [ ],
-      "exc" : [ ]
+      "syn" : [ "light oils and preparations", "aviation turbine power units", "spirit type", "oils from bituminous minerals", "light hydrocarbons", "naphtha", "petroleum oils", "jet fuel", "gasolene jet fuel", "kerosene", "spirit type jet fuel", "kerosene jet fuel", "gasoline" ],
+      "rel" : [ "fuel" ],
+      "exc" : [ "biodiesel", "crude", "waste oils" ]
     }, {
       "code" : "19.20.25",
       "label" : "Naphtha",
