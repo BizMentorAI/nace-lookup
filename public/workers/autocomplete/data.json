@@ -17842,8 +17842,8 @@
   }, {
     "code" : "52.29",
     "label" : "Other transportation support services",
-    "syn" : [ ],
-    "rel" : [ ],
+    "syn" : [ "transport", "ship broker services", "freight transport services" ],
+    "rel" : [ "transportation" ],
     "exc" : [ ],
     "items" : [ {
       "code" : "52.29.11",
