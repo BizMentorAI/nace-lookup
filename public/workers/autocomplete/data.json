@@ -8113,8 +8113,8 @@
     }, {
       "code" : "24.10.67",
       "label" : "Hollow drill bars and rods",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "rods", "hollow drill bars" ],
+      "rel" : [ "alloy", "non-alloy", "steel" ],
       "exc" : [ ]
     }, {
       "code" : "24.10.71",
