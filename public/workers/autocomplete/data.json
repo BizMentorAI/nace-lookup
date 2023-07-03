@@ -5016,8 +5016,8 @@
     }, {
       "code" : "17.12.13",
       "label" : "Paper and paperboard used as a base for photo-sensitive, heat-sensitive or electro-sensitive paper; carbonising base paper; wallpaper base",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "electro-sensitive paper", "fibres", "photo-sensitive paper", "punchcard stock", "graphic paper", "writing paper", "electrosensitive paper", "printing paper", "photosensitive paper", "wallpaper", "carbonising base paper", "rolls", "sheets", "wallpaper base", "heatsensitive paper", "punch tape paper", "heat-sensitive paper", "punch card stock", "paperboard" ],
+      "rel" : [ "paper", "paperboard" ],
       "exc" : [ ]
     }, {
       "code" : "17.12.14",
