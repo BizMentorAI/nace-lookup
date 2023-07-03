@@ -14299,8 +14299,8 @@
     "items" : [ {
       "code" : "38.12.11",
       "label" : "Collection services of hazardous medical and other biohazardous waste",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "medical laboratories", "biohazard", "hospitals", "non-anatomical wastes", "pathological wastes", "biohazardous waste", "dental practices", "medical practices", "anatomical wastes", "needless", "hazardous medical waste", "scalpels", "biological infectious wastes", "sharp wastes", "collection services" ],
+      "rel" : [ "waste collection", "waste management" ],
       "exc" : [ ]
     }, {
       "code" : "38.12.12",
