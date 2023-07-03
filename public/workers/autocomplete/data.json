@@ -16702,8 +16702,8 @@
     }, {
       "code" : "47.00.15",
       "label" : "Retail trade services of fish, crustaceans and molluscs",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "live crustaceans", "sea food", "prepared fish", "preserved fish", "aquatic invertebrates", "retail trade of crustaceans", "retail trade of fish", "chilled molluscs", "retail trade of mollusc", "fresh fish", "chilled seafood", "live molluscs", "fresh crustaceans", "live fish", "chilled crustaceans", "seafood", "chilled fish", "fresh seefood", "live seafood", "fresh molluscs", "aquatic animals" ],
+      "rel" : [ "sea food", "seafood", "fish" ],
       "exc" : [ ]
     }, {
       "code" : "47.00.16",
