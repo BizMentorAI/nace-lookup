@@ -12236,8 +12236,8 @@
     }, {
       "code" : "28.99.13",
       "label" : "Offset printing machinery, excluding those of the office type",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "equipment for preparing or making plates cylinders or other printing components", "reel", "letterpress", "machines for printing on corks tubes or candles", "reelfed", "machines for printing tin foil boxes", "type-setting", "booksewing machines", "apparatus", "letter press printing machinery", "sheet", "printing machinery for numbering", "ancillary", "warp printing machines", "clock or watch dial-printing machines", "flexographic printing machinery", "book-sewing machines", "rotary presses", "bookbinding machinery", "repetitive printing", "screen printing machines", "electrostatic printing machines", "flexographic printing", "label-printing machines", "gravure printing machinery", "offset printing machinery", "container-printing machines" ],
+      "rel" : [ "equipment", "machinery" ],
       "exc" : [ ]
     }, {
       "code" : "28.99.14",
