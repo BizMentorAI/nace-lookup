@@ -12303,8 +12303,8 @@
     "items" : [ {
       "code" : "29.10.11",
       "label" : "Spark-ignition reciprocating internal combustion piston engines for vehicles, of a cylinder capacity ≤ 1 000 cm³",
-      "syn" : [ ],
-      "rel" : [ ],
+      "syn" : [ "spark-ignition reciprocating internal combustion piston engines for vehicles", "spark-ignition reciprocating piston engine", "cylinder capacity", "propulsion of vehicles" ],
+      "rel" : [ "engines", "piston engines" ],
       "exc" : [ ]
     }, {
       "code" : "29.10.12",
